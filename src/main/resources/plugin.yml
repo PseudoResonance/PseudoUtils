@@ -1,0 +1,35 @@
+name: WolfMusic
+author: WolfLeader116
+main: io.github.wolfleader116.wolfmusic.bukkit.WolfMusic
+version: 1.0
+description: Adds the ability to play music to players
+depend: [WolfAPI]
+softdepend: [TitleAPI]
+commands:
+  wolfmusic:
+    description: WolfMusic Menu
+permissions:
+  wolfmusic.reset:
+    description: Allows the player to reset the config
+    default: op
+  wolfmusic.reload:
+    description: Allows the player to reload the plugin
+    default: op
+  wolfmusic.browse:
+    description: Allows the player to browse music
+    default: true
+  wolfmusic.play:
+    description: Allows the player to start music
+    default: true
+  wolfmusic.stop:
+    description: Allows the player to stop music
+    default: true
+  wolfmusic.*:
+    description: Gives the user all WolfMusic permissions
+    default: op
+    children:
+      wolfmusic.reset: true
+      wolfmusic.reload: true
+      wolfmusic.browse: true
+      wolfmusic.play: true
+      wolfmusic.stop: true

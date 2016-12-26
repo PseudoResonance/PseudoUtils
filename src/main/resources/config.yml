@@ -1,0 +1,104 @@
+#########################
+#WolfMusic Bukkit Config#
+#########################
+
+#DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
+Version: 1
+
+
+########
+#Player#
+########
+
+#Auto-start player upon login?
+AutoStart: true
+
+#Auto-start delay (in seconds)
+AutoStartDelay: 5
+
+#Auto-start next song?
+Playlist: true
+
+#Playlist delay (in seconds)
+PlaylistDelay: 5
+
+
+#######
+#Music#
+#######
+
+#Song Folder Path (From WolfMusic Plugin Folder)
+SongPath: songs
+
+#Interface Name
+InterfaceName: "&c&lWolfMusic"
+
+#Last Page Button
+#{page} = Page number
+LastPageName: "Page {page}"
+LastPageItem: Paper
+#Number between 1-9
+LastPageLocation: 1
+
+#Next Page Button
+#{page} = Page number
+NextPageName: "Page {page}"
+NextPageItem: Paper
+#Number between 1-9
+NextPageLocation: 9
+
+#Last Song Button
+#{name} = Song name
+LastSongName: "Play {name}"
+LastSongItem: Feather
+#Number between 1-9
+LastSongLocation: 3
+
+#Next Song Button
+#{name} = Song name
+NextSongName: "Play {name}"
+NextSongItem: Feather
+#Number between 1-9
+NextSongLocation: 7
+
+#Stop Button
+#{name} = Song name
+StopName: "Stop Playing"
+StopItem: Barrier
+#Number between 1-9
+StopLocation: 5
+
+
+#########
+#BossBar#
+#########
+
+#Use BossBar to show current song?
+BossBar: true
+
+#How long should the BossBar be visible? (in seconds) (0 stays on while song is playing)
+BarVisibility: 0
+
+#BossBar Message
+#{name} = Song name
+#{cname} = Colored song name
+BarMessage: "&c&lPlaying {cname}"
+
+
+#######
+#Title#
+#######
+
+#Use Title to show current song?
+Title: true
+
+#How long should the title be visible? (in seconds)
+TitleVisibility: 5
+
+#Title fade in/out time (in ticks)
+TitleFade: 10
+
+#Title Message
+#{name} = Song name
+#{cname} = Colored song name
+TitleMessage: "&c&lPlaying {cname}"
