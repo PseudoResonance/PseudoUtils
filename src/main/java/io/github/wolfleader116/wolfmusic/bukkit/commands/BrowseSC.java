@@ -10,9 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.wolfleader116.wolfapi.bukkit.Errors;
-import io.github.wolfleader116.wolfapi.bukkit.Message;
 import io.github.wolfleader116.wolfapi.bukkit.SubCommandExecutor;
-import io.github.wolfleader116.wolfapi.bukkit.WolfAPI;
 import io.github.wolfleader116.wolfmusic.bukkit.ConfigOptions;
 import io.github.wolfleader116.wolfmusic.bukkit.JukeboxController;
 import io.github.wolfleader116.wolfmusic.bukkit.SongFile;
@@ -20,8 +18,6 @@ import io.github.wolfleader116.wolfmusic.bukkit.WolfMusic;
 import net.md_5.bungee.api.ChatColor;
 
 public class BrowseSC implements SubCommandExecutor {
-	
-	Message message = new Message(WolfMusic.plugin);
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
@@ -36,10 +32,14 @@ public class BrowseSC implements SubCommandExecutor {
 					if (args.length == 0) {
 						WolfMusic.setPage(p.getName(), 1);
 						if (WolfMusic.getSongs().length > 1) {
-		 					inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-							inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+							if (p.hasPermission("wolfmusic.play")) {
+								inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+								inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+							}
 						}
-						inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+						if (p.hasPermission("wolfmusic.stop")) {
+							inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+						}
 						if (songs.length >= 45) {
 							inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§5§f" + ConfigOptions.nextPageName.replace("{page}", "2")));
 						}
@@ -54,18 +54,22 @@ public class BrowseSC implements SubCommandExecutor {
 							int page = Integer.parseInt(args[0]);
 							int total = (int) Math.ceil((double) songs.length / 45);
 							if (page > total) {
-								message.sendPluginError(sender, Errors.CUSTOM, "Only " + total + " pages available!");
+								WolfMusic.message.sendPluginError(sender, Errors.CUSTOM, "Only " + total + " pages available!");
 								return false;
 							} else if (page <= 0) {
-								message.sendPluginError(sender, Errors.CUSTOM, "Please select a page.");
+								WolfMusic.message.sendPluginError(sender, Errors.CUSTOM, "Please select a page.");
 								return false;
 							} else if (page == 1) {
 								WolfMusic.setPage(p.getName(), 1);
 								if (WolfMusic.getSongs().length > 1) {
-				 					inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-									inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									if (p.hasPermission("wolfmusic.play")) {
+										inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+										inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									}
 								}
-								inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								if (p.hasPermission("wolfmusic.stop")) {
+									inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								}
 								if (songs.length >= 45) {
 									inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§5§f" + ConfigOptions.nextPageName.replace("{page}", "2")));
 								}
@@ -78,10 +82,14 @@ public class BrowseSC implements SubCommandExecutor {
 							} else if (page == total) {
 								WolfMusic.setPage(p.getName(), total);
 								if (WolfMusic.getSongs().length > 1) {
-				 					inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-									inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									if (p.hasPermission("wolfmusic.play")) {
+										inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+										inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									}
 								}
-								inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								if (p.hasPermission("wolfmusic.stop")) {
+									inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								}
 								if (songs.length >= 45) {
 									inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§4§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 								}
@@ -94,12 +102,15 @@ public class BrowseSC implements SubCommandExecutor {
 									}
 								}
 							} else {
-								WolfMusic.setPage(p.getName(), page);
 								if (WolfMusic.getSongs().length > 1) {
-				 					inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-									inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									if (p.hasPermission("wolfmusic.play")) {
+										inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+										inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+									}
 								}
-								inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								if (p.hasPermission("wolfmusic.stop")) {
+									inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+								}
 								if (songs.length >= 45) {
 									inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§4§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 									inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§5§f" + ConfigOptions.nextPageName.replace("{page}", Integer.toString(page + 1))));
@@ -114,20 +125,20 @@ public class BrowseSC implements SubCommandExecutor {
 								}
 							}
 						} else {
-							message.sendPluginError(sender, Errors.NOT_A_NUMBER, args[0]);
+							WolfMusic.message.sendPluginError(sender, Errors.NOT_A_NUMBER, args[0]);
 							return false;
 						}
 					}
 					p.openInventory(inv);
 				} else {
-					message.sendPluginError(sender, Errors.CUSTOM, "There are no songs on the server!");
+					WolfMusic.message.sendPluginError(sender, Errors.CUSTOM, "There are no songs on the server!");
 				}
 			} else {
-				WolfAPI.message.sendPluginError(sender, Errors.NO_PERMISSION, "browse the music!");
+				WolfMusic.message.sendPluginError(sender, Errors.NO_PERMISSION, "browse the music!");
 				return false;
 			}
 		} else {
-			message.sendPluginError(sender, Errors.CUSTOM, "This command is for players only!");
+			WolfMusic.message.sendPluginError(sender, Errors.CUSTOM, "This command is for players only!");
 			return false;
 		}
 		return true;

@@ -3,12 +3,15 @@
 #########################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
-Version: 1
+Version: 3
 
 
 ########
 #Player#
 ########
+
+#Global or private player?
+PlayerType: private
 
 #Auto-start player upon login?
 AutoStart: true
@@ -82,7 +85,13 @@ BarVisibility: 0
 #BossBar Message
 #{name} = Song name
 #{cname} = Colored song name
-BarMessage: "&c&lPlaying {cname}"
+#{time} = Current time
+#{total} = Song length
+BarMessage: "&c&lPlaying {cname} &3&l - &f{time} &c&l- &f{total}"
+
+#How frequenty should the bar be updated (in ticks)
+#Increase this number if your server is lagging!
+BarUpdate: 10
 
 
 #######

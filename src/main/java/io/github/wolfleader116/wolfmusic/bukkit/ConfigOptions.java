@@ -9,6 +9,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class ConfigOptions {
 
+	public static PlayerType playerType = PlayerType.PRIVATE;
 	public static boolean autoStart = true;
 	public static double autoStartDelay = 5.0;
 	public static boolean playlist = true;
@@ -32,15 +33,15 @@ public class ConfigOptions {
 	public static int stopInt = 4;
 	public static boolean bossBar = true;
 	public static long barVisibility = 0;
-	public static String barMessage = "&c&lPlaying {cname}";
+	public static String barMessage = "&c&lPlaying {cname} &3&l - &f{time} &c&l- &f{total}";
+	public static long barUpdate = 10;
 	public static boolean title = true;
 	public static int titleVisibility = 100;
 	public static int titleFade = 10;
 	public static String titleMessage = "&c&lPlaying {cname}";
 	
 	public static boolean updateConfig() {
-		reloadConfig();
-		if (WolfMusic.plugin.getConfig().getInt("Version") == 1) {
+		if (WolfMusic.plugin.getConfig().getInt("Version") == 3) {
 			Message.sendConsoleMessage(ChatColor.GREEN + "Config is up to date!");
 		} else {
 			try {
@@ -66,10 +67,24 @@ public class ConfigOptions {
 				return false;
 			}
 		}
+		reloadConfig();
 		return true;
 	}
 	
 	public static void reloadConfig() {
+		try {
+			String s = WolfMusic.plugin.getConfig().getString("PlayerType");
+			if (s.equalsIgnoreCase("global")) {
+				playerType = PlayerType.GLOBAL;
+			} else if (s.equalsIgnoreCase("private")) {
+				playerType = PlayerType.PRIVATE;
+			} else {
+				playerType = PlayerType.PRIVATE;
+				Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for PlayerType!");
+			}
+		} catch (Exception e) {
+			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for PlayerType!");
+		}
 		try {
 			String s = WolfMusic.plugin.getConfig().getString("AutoStart");
 			if (s.equalsIgnoreCase("true")) {
@@ -194,6 +209,12 @@ public class ConfigOptions {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for BarVisibility!");
 		}
 		barMessage = ChatColor.translateAlternateColorCodes('&', WolfMusic.plugin.getConfig().getString("BarMessage"));
+		int barUpdate = WolfMusic.plugin.getConfig().getInt("BarUpdate");
+		if (barUpdate > 0) {
+			ConfigOptions.barUpdate = barUpdate;
+		} else {
+			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for BarUpdate!");
+		}
 		try {
 			String s = WolfMusic.plugin.getConfig().getString("Title");
 			if (s.equalsIgnoreCase("true")) {

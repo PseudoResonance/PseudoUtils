@@ -13,8 +13,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class GUISetPage {
 	
-	static Message message = new Message(WolfMusic.plugin);
-	
 	public static void setPage(Player p, int page) {
 		SongFile[] songs = WolfMusic.getSongs();
 		if (songs.length >= 1) {
@@ -31,9 +29,15 @@ public class GUISetPage {
 				return;
 			} else if (page == 1) {
 				WolfMusic.setPage(p.getName(), 1);
-				inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-				inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
-				inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				if (WolfMusic.getSongs().length > 1) {
+					if (p.hasPermission("wolfmusic.play")) {
+						inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+						inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+					}
+				}
+				if (p.hasPermission("wolfmusic.stop")) {
+					inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				}
 				if (songs.length >= 45) {
 					inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§5§f" + ConfigOptions.nextPageName.replace("{page}", "2")));
 				}
@@ -45,9 +49,15 @@ public class GUISetPage {
 				}
 			} else if (page == total) {
 				WolfMusic.setPage(p.getName(), total);
-				inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-				inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
-				inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				if (WolfMusic.getSongs().length > 1) {
+					if (p.hasPermission("wolfmusic.play")) {
+						inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+						inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+					}
+				}
+				if (p.hasPermission("wolfmusic.stop")) {
+					inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				}
 				if (songs.length >= 45) {
 					inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§4§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 				}
@@ -61,9 +71,15 @@ public class GUISetPage {
 				}
 			} else {
 				WolfMusic.setPage(p.getName(), page);
-				inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
-				inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
-				inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				if (WolfMusic.getSongs().length > 1) {
+					if (p.hasPermission("wolfmusic.play")) {
+						inv.setItem(ConfigOptions.lastSongInt, newStack(ConfigOptions.lastSongMaterial, 1, "§1§f" + ConfigOptions.lastSongName.replace("{name}", lastSong)));
+						inv.setItem(ConfigOptions.nextSongInt, newStack(ConfigOptions.nextSongMaterial, 1, "§2§f" + ConfigOptions.nextSongName.replace("{name}", nextSong)));
+					}
+				}
+				if (p.hasPermission("wolfmusic.stop")) {
+					inv.setItem(ConfigOptions.stopInt, newStack(ConfigOptions.stopMaterial, 1, "§3§f" + ConfigOptions.stopName.replace("{name}", currentSong)));
+				}
 				if (songs.length >= 45) {
 					inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§4§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 					inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§5§f" + ConfigOptions.nextPageName.replace("{page}", Integer.toString(page + 1))));
@@ -79,7 +95,7 @@ public class GUISetPage {
 			}
 			p.openInventory(inv);
 		} else {
-			message.sendPluginError(p, Errors.CUSTOM, "There are no songs on the server!");
+			WolfMusic.message.sendPluginError(p, Errors.CUSTOM, "There are no songs on the server!");
 		}
 	}
 	

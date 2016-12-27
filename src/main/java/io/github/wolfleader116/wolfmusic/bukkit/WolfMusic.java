@@ -1,7 +1,10 @@
 package io.github.wolfleader116.wolfmusic.bukkit;
 
 import java.io.File;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,14 +101,16 @@ public class WolfMusic extends WolfPlugin implements Listener {
 	}
 	
 	public static void updateSongs() {
-		songs = new ArrayList<SongFile>();
+		List<SongFile> songs = new ArrayList<SongFile>();
 		File file = ConfigOptions.songPath;
 		String[] files = file.list();
+		Collections.sort(Arrays.asList(files), Collator.getInstance());
 		for (String string : files) {
 			if (string.endsWith(".nbs")) {
 				songs.add(new SongFile(string));
 			}
 		}
+		WolfMusic.songs = songs;
 	}
 	
 	public static Map<String, Integer> getPages() {

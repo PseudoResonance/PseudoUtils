@@ -12,7 +12,6 @@ import com.xxmicloxx.noteblockapi.Song;
 
 public class SongFile {
 	
-	private String file = "";
 	private String name = "";
 	private Material disk;
 	private ChatColor color;
@@ -20,7 +19,6 @@ public class SongFile {
 	private Song song;
 	
 	SongFile(String file) {
-		this.file = file;
 		this.name = file.replace(".nbs", "");
 		Random rand = new Random(seed(name));
 		int diskNumber = rand.nextInt((11 - 1) + 1) + 1;
@@ -87,10 +85,6 @@ public class SongFile {
 			break;
 		}
 		this.song = NBSDecoder.parse(new File(ConfigOptions.songPath, file));
-	}
-	
-	public String getFile() {
-		return this.file;
 	}
 	
 	public String getName() {

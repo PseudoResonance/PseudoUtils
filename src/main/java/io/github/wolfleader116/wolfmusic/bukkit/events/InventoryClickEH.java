@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.github.wolfleader116.wolfapi.bukkit.Errors;
 import io.github.wolfleader116.wolfmusic.bukkit.ConfigOptions;
 import io.github.wolfleader116.wolfmusic.bukkit.GUISetPage;
 import io.github.wolfleader116.wolfmusic.bukkit.JukeboxController;
@@ -57,9 +58,13 @@ public class InventoryClickEH implements Listener {
 					String songName = ChatColor.stripColor(name);
 					for (SongFile sf : WolfMusic.getSongs()) {
 						if (sf.getName().equalsIgnoreCase(songName)) {
-							JukeboxController.setSong(p, sf);
-							p.closeInventory();
-							GUISetPage.setPage(p, page);
+							if (p.hasPermission("wolfmusic.play")) {
+								JukeboxController.setSong(p, sf);
+								p.closeInventory();
+								GUISetPage.setPage(p, page);
+							} else {
+								WolfMusic.message.sendPluginError(p, Errors.NO_PERMISSION, "select a song!");
+							}
 							e.setCancelled(true);
 						}
 					}

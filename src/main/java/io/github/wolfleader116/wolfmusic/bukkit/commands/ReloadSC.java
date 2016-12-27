@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import io.github.wolfleader116.wolfapi.bukkit.ConfigOptions;
 import io.github.wolfleader116.wolfapi.bukkit.Errors;
 import io.github.wolfleader116.wolfapi.bukkit.SubCommandExecutor;
-import io.github.wolfleader116.wolfapi.bukkit.WolfAPI;
 import io.github.wolfleader116.wolfmusic.bukkit.JukeboxController;
 import io.github.wolfleader116.wolfmusic.bukkit.WolfMusic;
 
@@ -23,16 +22,20 @@ public class ReloadSC implements SubCommandExecutor {
 					WolfMusic.message.sendPluginError(sender, Errors.GENERIC);
 					return false;
 				}
-				ConfigOptions.reloadConfig();
 				JukeboxController.kill();
+				for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+					JukeboxController.disconnect(p);
+				}
+				ConfigOptions.reloadConfig();
 				WolfMusic.updateSongs();
 				for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-					JukeboxController.nextSong(p);
+					JukeboxController.connect(p);
 				}
+				JukeboxController.start();
 				WolfMusic.message.sendPluginMessage(sender, "Plugin config reloaded!");
 				return true;
 			} else {
-				WolfAPI.message.sendPluginError(sender, Errors.NO_PERMISSION, "reload the config!");
+				WolfMusic.message.sendPluginError(sender, Errors.NO_PERMISSION, "reload the config!");
 				return false;
 			}
 		} else {
@@ -42,12 +45,16 @@ public class ReloadSC implements SubCommandExecutor {
 				WolfMusic.message.sendPluginError(sender, Errors.GENERIC);
 				return false;
 			}
-			ConfigOptions.reloadConfig();
 			JukeboxController.kill();
+			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+				JukeboxController.disconnect(p);
+			}
+			ConfigOptions.reloadConfig();
 			WolfMusic.updateSongs();
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-				JukeboxController.nextSong(p);
+				JukeboxController.connect(p);
 			}
+			JukeboxController.start();
 			WolfMusic.message.sendPluginMessage(sender, "Plugin config reloaded!");
 			return true;
 		}
