@@ -16,6 +16,7 @@ public class Jukebox {
 	protected SongPlayer songPlayer;
 	protected boolean playing = false;
 	protected BossBar bossBar;
+	protected BarUpdate barUpdate;
 	
 	Jukebox(Player player) {
 		this.player = player;
@@ -51,8 +52,8 @@ public class Jukebox {
 					}
 				}, ConfigOptions.barVisibility);
 			} else {
-				BarUpdate bu = new BarUpdate(this);
-				bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+				barUpdate = new BarUpdate(this);
+				barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 			}
 		}
 		if (ConfigOptions.title) {
@@ -77,6 +78,9 @@ public class Jukebox {
 	
 	public void kill() {
 		if (ConfigOptions.bossBar) {
+			if (barUpdate != null) {
+				barUpdate.cancel();
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 			}
@@ -132,6 +136,11 @@ public class Jukebox {
 			if (songPlayer != null) {
 				songPlayer.destroy();
 			}
+			if (ConfigOptions.bossBar) {
+				if (barUpdate != null) {
+					barUpdate.cancel();
+				}
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 			}
@@ -173,8 +182,8 @@ public class Jukebox {
 						}
 					}, ConfigOptions.barVisibility);
 				} else {
-					BarUpdate bu = new BarUpdate(this);
-					bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+					barUpdate = new BarUpdate(this);
+					barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 				}
 			}
 			if (ConfigOptions.title) {
@@ -190,6 +199,11 @@ public class Jukebox {
 		if (WolfMusic.songs.size() >= 1) {
 			if (songPlayer != null) {
 				songPlayer.destroy();
+			}
+			if (ConfigOptions.bossBar) {
+				if (barUpdate != null) {
+					barUpdate.cancel();
+				}
 			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
@@ -232,8 +246,8 @@ public class Jukebox {
 						}
 					}, ConfigOptions.barVisibility);
 				} else {
-					BarUpdate bu = new BarUpdate(this);
-					bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+					barUpdate = new BarUpdate(this);
+					barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 				}
 			}
 			if (ConfigOptions.title) {
@@ -247,6 +261,9 @@ public class Jukebox {
 	
 	public void done() {
 		if (ConfigOptions.bossBar) {
+			if (barUpdate != null) {
+				barUpdate.cancel();
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 			}

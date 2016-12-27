@@ -20,6 +20,7 @@ public class GlobalJukebox {
 	protected boolean playing = false;
 	protected BossBar bossBar;
 	protected boolean bossBarVisibility = false;
+	protected GlobalBarUpdate barUpdate;
 	
 	GlobalJukebox() {
 		nextSong();
@@ -58,8 +59,8 @@ public class GlobalJukebox {
 					}
 				}, ConfigOptions.barVisibility);
 			} else {
-				GlobalBarUpdate bu = new GlobalBarUpdate(this);
-				bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+				barUpdate = new GlobalBarUpdate(this);
+				barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 			}
 		}
 		if (ConfigOptions.title) {
@@ -112,6 +113,9 @@ public class GlobalJukebox {
 	
 	public void kill() {
 		if (ConfigOptions.bossBar) {
+			if (barUpdate != null) {
+				barUpdate.cancel();
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 				bossBarVisibility = false;
@@ -168,6 +172,11 @@ public class GlobalJukebox {
 			if (songPlayer != null) {
 				songPlayer.destroy();
 			}
+			if (ConfigOptions.bossBar) {
+				if (barUpdate != null) {
+					barUpdate.cancel();
+				}
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 				bossBarVisibility = false;
@@ -214,8 +223,8 @@ public class GlobalJukebox {
 						}
 					}, ConfigOptions.barVisibility);
 				} else {
-					GlobalBarUpdate bu = new GlobalBarUpdate(this);
-					bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+					barUpdate = new GlobalBarUpdate(this);
+					barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 				}
 			}
 			if (ConfigOptions.title) {
@@ -233,6 +242,11 @@ public class GlobalJukebox {
 		if (WolfMusic.songs.size() >= 1) {
 			if (songPlayer != null) {
 				songPlayer.destroy();
+			}
+			if (ConfigOptions.bossBar) {
+				if (barUpdate != null) {
+					barUpdate.cancel();
+				}
 			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
@@ -280,8 +294,8 @@ public class GlobalJukebox {
 						}
 					}, ConfigOptions.barVisibility);
 				} else {
-					GlobalBarUpdate bu = new GlobalBarUpdate(this);
-					bu.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
+					barUpdate = new GlobalBarUpdate(this);
+					barUpdate.runTaskTimer(WolfMusic.plugin, ConfigOptions.barUpdate, ConfigOptions.barUpdate);
 				}
 			}
 			if (ConfigOptions.title) {
@@ -297,6 +311,9 @@ public class GlobalJukebox {
 	
 	public void done() {
 		if (ConfigOptions.bossBar) {
+			if (barUpdate != null) {
+				barUpdate.cancel();
+			}
 			if (bossBar != null) {
 				bossBar.setVisible(false);
 				bossBarVisibility = false;
