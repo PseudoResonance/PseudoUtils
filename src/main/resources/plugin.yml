@@ -1,34 +1,46 @@
-name: WolfMusic
+name: WolfSpawners
 author: WolfLeader116
-main: io.github.wolfleader116.wolfmusic.bukkit.WolfMusic
-version: 1.1.1
-description: Adds the ability to play music to players
+main: io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners
+version: 1.0
+description: Adds the ability to collect and change spawner types
 depend: [WolfAPI]
 commands:
-  wolfmusic:
-    description: WolfMusic Menu
+  wolfspawners:
+    description: WolfSpawners Menu
+  spawner:
+    description: Alias for WolfSpawners spawner
 permissions:
-  wolfmusic.reset:
+  wolfspawners.reset:
     description: Allows the player to reset the config
     default: op
-  wolfmusic.reload:
+  wolfspawners.reload:
     description: Allows the player to reload the plugin
     default: op
-  wolfmusic.browse:
-    description: Allows the player to browse music
+  wolfspawners.collect:
+    description: Allows the player to collect spawners
     default: true
-  wolfmusic.play:
-    description: Allows the player to start music
-    default: true
-  wolfmusic.stop:
-    description: Allows the player to stop music
-    default: true
-  wolfmusic.*:
-    description: Gives the user all WolfMusic permissions
+  wolfspawners.collect.nosilk:
+    description: Allows the player to collect spawners without silk touch
     default: op
     children:
-      wolfmusic.reset: true
-      wolfmusic.reload: true
-      wolfmusic.browse: true
-      wolfmusic.play: true
-      wolfmusic.stop: true
+      wolfspawners.collect: true
+  wolfspawners.modify:
+    description: Allows the player to change spawner types
+    default: true
+  wolfspawners.spawner:
+    description: Allows the player to change spawner types without an egg
+    default: op
+    children:
+      wolfspawners.modify: true
+  wolfspawners.override:
+    description: Allows the player to change override disallowed spawner types
+    default: false
+  wolfspawners.*:
+    description: Gives the user all WolfSpawners permissions
+    default: op
+    children:
+      wolfspawners.reset: true
+      wolfspawners.reload: true
+      wolfspawners.collect.nosilk: true
+      wolfspawners.spawner: true
+      wolfspawners.override: true

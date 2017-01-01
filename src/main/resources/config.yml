@@ -1,113 +1,138 @@
-#########################
-#WolfMusic Bukkit Config#
-#########################
+############################
+#WolfSpawners Bukkit Config#
+############################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
-Version: 3
+Version: 1
 
 
-########
-#Player#
-########
-
-#Global or private player?
-PlayerType: private
-
-#Auto-start player upon login?
-AutoStart: true
-
-#Auto-start delay (in seconds)
-AutoStartDelay: 5
-
-#Auto-start next song?
-Playlist: true
-
-#Playlist delay (in seconds)
-PlaylistDelay: 5
-
-
-#######
-#Music#
-#######
-
-#Song Folder Path (From WolfMusic Plugin Folder)
-SongPath: songs
+#####
+#GUI#
+#####
 
 #Interface Name
-InterfaceName: "&c&lWolfMusic"
+InterfaceName: "&c&lWolfSpawners"
 
 #Last Page Button
 #{page} = Page number
 LastPageName: "Page {page}"
 LastPageItem: Paper
 #Number between 1-9
-LastPageLocation: 1
+LastPageLocation: 2
 
 #Next Page Button
 #{page} = Page number
 NextPageName: "Page {page}"
 NextPageItem: Paper
 #Number between 1-9
-NextPageLocation: 9
-
-#Last Song Button
-#{name} = Song name
-LastSongName: "Play {name}"
-LastSongItem: Feather
-#Number between 1-9
-LastSongLocation: 3
-
-#Next Song Button
-#{name} = Song name
-NextSongName: "Play {name}"
-NextSongItem: Feather
-#Number between 1-9
-NextSongLocation: 7
-
-#Stop Button
-#{name} = Song name
-StopName: "Stop Playing"
-StopItem: Barrier
-#Number between 1-9
-StopLocation: 5
+NextPageLocation: 8
 
 
-#########
-#BossBar#
-#########
+##########
+#Spawners#
+##########
 
-#Use BossBar to show current song?
-BossBar: true
+#What mob types are not allowed?
+#List of possible mob types here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
+Disallow:
+  - area_effect_cloud
+  - armor_stand
+  - arrow
+  - boat
+  - complex_part
+  - dragon_fireball
+  - dropped_item
+  - egg
+  - ender_crystal
+  - ender_pearl
+  - ender_signal
+  - evoker_fangs
+  - experience_orb
+  - falling_block
+  - fireball
+  - firework
+  - fishing_hook
+  - giant
+  - item_frame
+  - leash_hitch
+  - lightning
+  - lingering_potion
+  - llama_spit
+  - minecart
+  - minecart_chest
+  - minecart_command
+  - minecart_furnace
+  - minecart_hopper
+  - minecart_mob_spawner
+  - minecart_tnt
+  - painting
+  - primed_tnt
+  - shulker_bullet
+  - small_fireball
+  - snowball
+  - spectral_arrow
+  - splash_potion
+  - thrown_exp_bottle
+  - tipped_arrow
+  - unknown
+  - weather
+  - wither_skull
 
-#How long should the BossBar be visible? (in seconds) (0 stays on while song is playing)
-BarVisibility: 0
 
-#BossBar Message
-#{name} = Song name
-#{cname} = Colored song name
-#{time} = Current time
-#{total} = Song length
-BarMessage: "&c&lPlaying {cname} &3&l - &f{time} &c&l- &f{total}"
+###########
+#Mob Names#
+###########
 
-#How frequenty should the bar be updated (in ticks)
-#Increase this number if your server is lagging!
-BarUpdate: 10
+#What chat color should the mob type be?
+Color: e
 
-
-#######
-#Title#
-#######
-
-#Use Title to show current song?
-Title: true
-
-#How long should the title be visible? (in seconds)
-TitleVisibility: 5
-
-#Title fade in/out time (in ticks)
-TitleFade: 10
-
-#Title Message
-#{name} = Song name
-#{cname} = Colored song name
-TitleMessage: "&c&lPlaying {cname}"
+#What are the names of different mob types?
+#List of possible mob types here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
+Names:
+  bat: "Bat"
+  blaze: "Blaze"
+  cave_spider: "Cave Spider"
+  chicken: "Chicken"
+  cow: "Cow"
+  creeper: "Creeper"
+  donkey: "Donkey"
+  elder_guardian: "Elder Guardian"
+  ender_dragon: "Ender Dragon"
+  enderman: "Enderman"
+  endermite: "Endermite"
+  evoker: "Evoker"
+  ghast: "Ghast"
+  giant: "Giant"
+  guardian: "Guardian"
+  horse: "Horse"
+  husk: "Husk"
+  iron_golem: "Iron Golem"
+  llama: "Llama"
+  magma_cube: "Magma Cube"
+  mule: "Mule"
+  mushroom_cow: "Mooshroom"
+  ocelot: "Ocelot"
+  pig: "Pig"
+  pig_zombie: "Zombie Pigman"
+  polar_bear: "Polar Bear"
+  rabbit: "Rabbit"
+  sheep: "Sheep"
+  shulker: "Shulker"
+  silverfish: "Silverfish"
+  skeleton: "Skeleton"
+  skeleton_horse: "Skeleton Horse"
+  slime: "Slime"
+  snowman: "Snow Golem"
+  spider: "Spider"
+  squid: "Squid"
+  stray: "Stray"
+  vex: "Vex"
+  villager: "Villager"
+  vindicator: "Vindicator"
+  witch: "Witch"
+  wither: "Wither"
+  wither_skeleton: "Wither Skeleton"
+  wolf: "Wolf"
+  zombie: "Zombie"
+  zombie_horse: "Zombie Horse"
+  zombie_villager: "Zombie Villager"
