@@ -164,7 +164,7 @@ public class ConfigOptions implements ConfigOption {
 		try {
 			return EntityType.valueOf(name);
 		} catch (IllegalArgumentException e) {
-			throw e;
+			return null;
 		}
 	}
 
