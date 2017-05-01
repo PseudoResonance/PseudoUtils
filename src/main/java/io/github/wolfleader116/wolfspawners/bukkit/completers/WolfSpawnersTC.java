@@ -16,9 +16,15 @@ public class WolfSpawnersTC implements TabCompleter {
 		List<String> possible = new ArrayList<String>();
 		if (args.length == 1) {
 			possible.add("help");
-			possible.add("reload");
-			possible.add("reset");
-			possible.add("spawner");
+			if (sender.hasPermission("wolfspawners.reload")) {
+				possible.add("reload");
+			}
+			if (sender.hasPermission("wolfspawners.reset")) {
+				possible.add("reset");
+			}
+			if (sender.hasPermission("wolfspawners.spawner")) {
+				possible.add("spawner");
+			}
 			if (args[0].equalsIgnoreCase("")) {
 				return possible;
 			} else {
@@ -31,9 +37,11 @@ public class WolfSpawnersTC implements TabCompleter {
 				return checked;
 			}
 		} else if (args.length == 2) {
-			if (args[0].equalsIgnoreCase("spawner")) {
+			if (args[0].equalsIgnoreCase("spawner") && sender.hasPermission("wolfspawners.spawner")) {
 				for (EntityType et : ConfigOptions.allow) {
-					possible.add(ConfigOptions.getName(et));
+					if (sender.hasPermission("wolfspawners.spawner." + et.toString().toLowerCase())) {
+						possible.add(ConfigOptions.getName(et));
+					}
 				}
 				if (args[1].equalsIgnoreCase("")) {
 					return possible;

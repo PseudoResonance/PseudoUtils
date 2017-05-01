@@ -3,13 +3,16 @@ package io.github.wolfleader116.wolfspawners.bukkit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import io.github.wolfleader116.wolfapi.bukkit.CommandDescription;
 import io.github.wolfleader116.wolfapi.bukkit.HelpSC;
 import io.github.wolfleader116.wolfapi.bukkit.MainCommand;
 import io.github.wolfleader116.wolfapi.bukkit.Message;
+import io.github.wolfleader116.wolfapi.bukkit.WolfAPI;
 import io.github.wolfleader116.wolfapi.bukkit.WolfPlugin;
 import io.github.wolfleader116.wolfspawners.bukkit.commands.ReloadSC;
 import io.github.wolfleader116.wolfspawners.bukkit.commands.ResetSC;
@@ -29,6 +32,8 @@ public class WolfSpawners extends WolfPlugin {
 	private static MainCommand mainCommand;
 	private static HelpSC helpSubCommand;
 	
+	private static ConfigOptions configOptions;
+	
 	private static Map<String, Integer> page = new HashMap<String, Integer>();
 	
 	@Override
@@ -36,6 +41,7 @@ public class WolfSpawners extends WolfPlugin {
 		super.onEnable();
 		this.saveDefaultConfig();
 		plugin = this;
+		configOptions = new ConfigOptions();
 		ConfigOptions.updateConfig();
 		message = new Message(this);
 		mainCommand = new MainCommand(plugin);
@@ -45,11 +51,18 @@ public class WolfSpawners extends WolfPlugin {
 		initializeSubCommands();
 		initializeListeners();
 		setCommandDescriptions();
+		configOptions.reloadConfig();
+		WolfAPI.registerConfig(configOptions);
+		createRecipes();
 	}
 	
 	@Override
 	public void onDisable() {
 		super.onDisable();
+	}
+	
+	public static ConfigOptions getConfigOptions() {
+		return WolfSpawners.configOptions;
 	}
 
 	private void initializeCommands() {
@@ -106,6 +119,15 @@ public class WolfSpawners extends WolfPlugin {
 		im.setDisplayName(name);
 		is.setItemMeta(im);
 		return is;
+	}
+	
+	private static void createRecipes() {
+		ItemStack spawner = new ItemStack(Material.MOB_SPAWNER, 1);
+		ShapedRecipe rec = new ShapedRecipe(spawner);
+		rec.shape("***", "*%*", "***");
+		rec.setIngredient('*', Material.IRON_FENCE);
+		rec.setIngredient('%', Material.MONSTER_EGG);
+		Bukkit.getServer().addRecipe(rec);
 	}
 
 }

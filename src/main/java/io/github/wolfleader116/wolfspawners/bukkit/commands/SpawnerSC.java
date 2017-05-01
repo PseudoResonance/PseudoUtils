@@ -1,9 +1,12 @@
 package io.github.wolfleader116.wolfspawners.bukkit.commands;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -26,7 +29,13 @@ public class SpawnerSC implements SubCommandExecutor {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (sender.hasPermission("wolfspawners.spawner")) {
-				List<EntityType> entities = ConfigOptions.allow;
+				List<EntityType> ent = ConfigOptions.allow;
+				List<EntityType> entities = new ArrayList<EntityType>();
+				for (EntityType enti : ent) {
+					if (p.hasPermission("wolfspawners.spawner." + enti.toString())) {
+						entities.add(enti);
+					}
+				}
 				if (entities.size() >= 1) {
 					if (args.length == 0) {
 						WolfSpawners.setPage(p.getName(), 1);
@@ -72,7 +81,14 @@ public class SpawnerSC implements SubCommandExecutor {
 										s.setSpawnedType(entity);
 										s.update();
 									} else {
-										WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+										if (p.getGameMode() == GameMode.CREATIVE) {
+											HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
+											if (drop.containsKey(0)) {
+												p.getWorld().dropItem(p.getLocation(), drop.get(0));
+											}
+										} else {
+											WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+										}
 									}
 								} catch (Exception e) {
 									WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
@@ -105,7 +121,14 @@ public class SpawnerSC implements SubCommandExecutor {
 												s.setSpawnedType(entity);
 												s.update();
 											} else {
-												WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+												if (p.getGameMode() == GameMode.CREATIVE) {
+													HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
+													if (drop.containsKey(0)) {
+														p.getWorld().dropItem(p.getLocation(), drop.get(0));
+													}
+												} else {
+													WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+												}
 											}
 										} catch (Exception e) {
 											WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
@@ -130,6 +153,14 @@ public class SpawnerSC implements SubCommandExecutor {
 			return true;
 		}
 		return true;
+	}
+	
+	private static ItemStack newSpawner(String name) {
+		ItemStack is = new ItemStack(Material.MOB_SPAWNER, 1);
+		ItemMeta im = is.getItemMeta();
+		im.setDisplayName(name);
+		is.setItemMeta(im);
+		return is;
 	}
 
 }

@@ -16,7 +16,9 @@ public class SpawnerTC implements TabCompleter {
 		List<String> possible = new ArrayList<String>();
 		if (args.length == 1) {
 			for (EntityType et : ConfigOptions.allow) {
-				possible.add(ConfigOptions.getName(et));
+				if (sender.hasPermission("wolfspawners.spawner." + et.toString().toLowerCase())) {
+					possible.add(ConfigOptions.getName(et));
+				}
 			}
 			if (args[0].equalsIgnoreCase("")) {
 				return possible;

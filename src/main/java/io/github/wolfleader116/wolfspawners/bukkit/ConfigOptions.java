@@ -12,10 +12,11 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
+import io.github.wolfleader116.wolfapi.bukkit.ConfigOption;
 import io.github.wolfleader116.wolfapi.bukkit.Message;
 import net.md_5.bungee.api.ChatColor;
 
-public class ConfigOptions {
+public class ConfigOptions implements ConfigOption {
 
 	public static List<EntityType> disallow = new ArrayList<EntityType>();
 	public static List<EntityType> allow = new ArrayList<EntityType>();
@@ -57,11 +58,10 @@ public class ConfigOptions {
 				return false;
 			}
 		}
-		reloadConfig();
 		return true;
 	}
 	
-	public static void reloadConfig() {
+	public void reloadConfig() {
 		String config = "";
 		try {
 			List<String> l = WolfSpawners.plugin.getConfig().getStringList("Disallow");

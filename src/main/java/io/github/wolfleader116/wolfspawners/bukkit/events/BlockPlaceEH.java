@@ -57,9 +57,14 @@ public class BlockPlaceEH implements Listener {
 						if (et == entity) {
 							try {
 								if (b.getType() == Material.MOB_SPAWNER) {
-									CreatureSpawner s = (CreatureSpawner) b.getState();
-									s.setSpawnedType(entity);
-									s.update();
+									if (p.hasPermission("wolfspawners.spawner." + entity.toString().toLowerCase())) {
+										CreatureSpawner s = (CreatureSpawner) b.getState();
+										s.setSpawnedType(entity);
+										s.update();
+									} else {
+										WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "You do not have permission to use that spawner!");
+										e.setCancelled(true);
+									}
 									return;
 								} else {
 									WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not looking at a spawner!");

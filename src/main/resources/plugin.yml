@@ -16,6 +16,9 @@ permissions:
   wolfspawners.reload:
     description: Allows the player to reload the plugin
     default: op
+  wolfspawners.craft:
+    description: Allows the player to craft spawners
+    default: true
   wolfspawners.collect:
     description: Allows the player to collect spawners
     default: true
@@ -44,3 +47,4 @@ permissions:
       wolfspawners.collect.nosilk: true
       wolfspawners.spawner: true
       wolfspawners.override: true
+      wolfspawners.craft: true

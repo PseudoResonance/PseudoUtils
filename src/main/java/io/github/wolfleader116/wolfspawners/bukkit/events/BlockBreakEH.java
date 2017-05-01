@@ -26,33 +26,31 @@ public class BlockBreakEH implements Listener {
 		if (e.getBlock().getType() == Material.MOB_SPAWNER) {
 			Block b = e.getBlock();
 			ItemMeta im = is.getItemMeta();
+			boolean silk = false;
 			if (im.hasEnchants()) {
-				boolean silk = false;
 				Map<Enchantment, Integer> enchs = im.getEnchants();
 				for (Enchantment ench : enchs.keySet()) {
 					if (ench == Enchantment.SILK_TOUCH) {
 						silk = true;
 					}
 				}
-				boolean creative = false;
-				if (p.getGameMode() == GameMode.CREATIVE) {
-					creative = true;
-				}
-				if (p.hasPermission("wolfspawners.collect.nosilk")) {
-					silk = true;
-				}
-				if (silk && !creative) {
-					CreatureSpawner cs = (CreatureSpawner) b.getState();
-					EntityType entity = cs.getSpawnedType();
-					if (p.hasPermission("wolfspawners.override")) {
-						String name = ConfigOptions.getName(entity);
-						String full = ConfigOptions.color + name + " Spawner";
-						ItemStack spawner = newSpawner(full);
-						b.getWorld().dropItem(b.getLocation(), spawner);
-						e.setExpToDrop(0);
-					} else {
-						for (EntityType et : ConfigOptions.allow) {
-							if (et == entity) {
+			}
+			if (p.hasPermission("wolfspawners.collect.nosilk")) {
+				silk = true;
+			}
+			if (silk && p.getGameMode() != GameMode.CREATIVE) {
+				CreatureSpawner cs = (CreatureSpawner) b.getState();
+				EntityType entity = cs.getSpawnedType();
+				if (p.hasPermission("wolfspawners.override")) {
+					String name = ConfigOptions.getName(entity);
+					String full = ConfigOptions.color + name + " Spawner";
+					ItemStack spawner = newSpawner(full);
+					b.getWorld().dropItem(b.getLocation(), spawner);
+					e.setExpToDrop(0);
+				} else {
+					for (EntityType et : ConfigOptions.allow) {
+						if (et == entity) {
+							if (p.hasPermission("wolfspawners.spawner." + entity.toString().toLowerCase())) {
 								String name = ConfigOptions.getName(entity);
 								String full = ConfigOptions.color + name + " Spawner";
 								ItemStack spawner = newSpawner(full);
