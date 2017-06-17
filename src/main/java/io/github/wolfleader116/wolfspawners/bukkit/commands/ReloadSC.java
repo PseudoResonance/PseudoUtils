@@ -12,7 +12,7 @@ public class ReloadSC implements SubCommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
-			if (sender.hasPermission("wolfmusic.reload")) {
+			if (sender.hasPermission("wolfspawners.reload")) {
 				try {
 					WolfSpawners.plugin.reloadConfig();
 				} catch (Exception e) {

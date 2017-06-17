@@ -14,7 +14,7 @@ public class ResetSC implements SubCommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
-			if (sender.hasPermission("wolfmusic.reset")) {
+			if (sender.hasPermission("wolfspawners.reset")) {
 				try {
 					File conf = new File(WolfSpawners.plugin.getDataFolder(), "config.yml");
 					conf.delete();

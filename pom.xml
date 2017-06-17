@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.WolfLeader116</groupId>
 	<artifactId>WolfSpawners</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.11-R0.1-SNAPSHOT</version>
+			<version>1.12-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.WolfLeader116</groupId>

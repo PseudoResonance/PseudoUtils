@@ -1,7 +1,7 @@
 name: WolfSpawners
 author: WolfLeader116
 main: io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners
-version: 1.0
+version: 1.0.3
 description: Adds the ability to collect and change spawner types
 depend: [WolfAPI]
 commands:

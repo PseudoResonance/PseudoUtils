@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -122,8 +123,9 @@ public class WolfSpawners extends WolfPlugin {
 	}
 	
 	private static void createRecipes() {
+		NamespacedKey key = new NamespacedKey(plugin, "spawner");
 		ItemStack spawner = new ItemStack(Material.MOB_SPAWNER, 1);
-		ShapedRecipe rec = new ShapedRecipe(spawner);
+		ShapedRecipe rec = new ShapedRecipe(key, spawner);
 		rec.shape("***", "*%*", "***");
 		rec.setIngredient('*', Material.IRON_FENCE);
 		rec.setIngredient('%', Material.MONSTER_EGG);
