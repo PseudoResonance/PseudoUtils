@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit.events;
+package io.github.pseudoresonance.pseudospawners.bukkit.events;
 
 import java.util.HashSet;
 
@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 
+import io.github.pseudoresonance.pseudospawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.PseudoSpawners;
 import io.github.wolfleader116.wolfapi.bukkit.Errors;
-import io.github.wolfleader116.wolfspawners.bukkit.ConfigOptions;
-import io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners;
 
 public class PlayerInteractEH implements Listener {
 	
@@ -33,8 +33,8 @@ public class PlayerInteractEH implements Listener {
 					ItemMeta im = is.getItemMeta();
 					SpawnEggMeta sem = (SpawnEggMeta) im;
 					EntityType entity = sem.getSpawnedType();
-					if (p.hasPermission("wolfspawners.override")) {
-						if (p.hasPermission("wolfspawners.modify")) {
+					if (p.hasPermission("pseudospawners.override")) {
+						if (p.hasPermission("pseudospawners.modify")) {
 							if (e.getHand() == EquipmentSlot.HAND) {
 								p.getInventory().setItemInMainHand(null);
 								CreatureSpawner s = (CreatureSpawner) b.getState();
@@ -49,13 +49,13 @@ public class PlayerInteractEH implements Listener {
 								e.setCancelled(true);
 							}
 						} else {
-							WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type!");
+							PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type!");
 						}
 					} else {
 						for (EntityType et : ConfigOptions.allow) {
 							if (et.equals(entity)) {
-								if (p.hasPermission("wolfspawners.spawner." + entity.toString().toLowerCase())) {
-									if (p.hasPermission("wolfspawners.modify")) {
+								if (p.hasPermission("pseudospawners.spawner." + entity.toString().toLowerCase())) {
+									if (p.hasPermission("pseudospawners.modify")) {
 										if (e.getHand() == EquipmentSlot.HAND) {
 											p.getInventory().setItemInMainHand(null);
 											CreatureSpawner s = (CreatureSpawner) b.getState();
@@ -70,16 +70,16 @@ public class PlayerInteractEH implements Listener {
 											e.setCancelled(true);
 										}
 									} else {
-										WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type!");
+										PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type!");
 									}
 								} else {
-									WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set spawner to that type!");
+									PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set spawner to that type!");
 								}
 							}
 						}
 					}
 					if (!e.isCancelled()) {
-						WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "That entity type is disabled!");
+						PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "That entity type is disabled!");
 					}
 				}
 			}

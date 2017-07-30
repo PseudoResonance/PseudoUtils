@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit.events;
+package io.github.pseudoresonance.pseudospawners.bukkit.events;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,10 +22,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 
+import io.github.pseudoresonance.pseudospawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.GUISetPage;
+import io.github.pseudoresonance.pseudospawners.bukkit.PseudoSpawners;
 import io.github.wolfleader116.wolfapi.bukkit.Errors;
-import io.github.wolfleader116.wolfspawners.bukkit.ConfigOptions;
-import io.github.wolfleader116.wolfspawners.bukkit.GUISetPage;
-import io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners;
 
 public class InventoryClickEH implements Listener {
 	
@@ -38,9 +38,9 @@ public class InventoryClickEH implements Listener {
 			if (matrix[0].getType() == Material.IRON_FENCE && matrix[1].getType() == Material.IRON_FENCE && matrix[2].getType() == Material.IRON_FENCE && matrix[3].getType() == Material.IRON_FENCE && matrix[4].getType() == Material.MONSTER_EGG && matrix[5].getType() == Material.IRON_FENCE && matrix[6].getType() == Material.IRON_FENCE && matrix[7].getType() == Material.IRON_FENCE && matrix[8].getType() == Material.IRON_FENCE) {
 				SpawnEggMeta sem = (SpawnEggMeta) matrix[4].getItemMeta();
 				EntityType et = sem.getSpawnedType();
-				if (p.hasPermission("wolfspawners.craft")) {
+				if (p.hasPermission("pseudospawners.craft")) {
 					try {
-						if (p.hasPermission("wolfspawners.craft." + et.toString().toLowerCase()) || p.hasPermission("wolfspawners.override")) {
+						if (p.hasPermission("pseudospawners.craft." + et.toString().toLowerCase()) || p.hasPermission("pseudospawners.override")) {
 							ItemStack spawner = newSpawner(ConfigOptions.color + ConfigOptions.getName(et) + " Spawner");
 							inv.setResult(spawner);
 							p.updateInventory();
@@ -61,7 +61,7 @@ public class InventoryClickEH implements Listener {
 		if (i instanceof AnvilInventory) {
 			if (e.getCurrentItem().getType() == Material.MOB_SPAWNER) {
 				e.setCancelled(true);
-				WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You can't put a spawner in an anvil!");
+				PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You can't put a spawner in an anvil!");
 			}
 		} else {
 			if (i != null) {
@@ -71,7 +71,7 @@ public class InventoryClickEH implements Listener {
 					ItemMeta im = is.getItemMeta();
 					if (im.hasDisplayName()) {
 						String name = im.getDisplayName();
-						int page = WolfSpawners.getPage(p.getName());
+						int page = PseudoSpawners.getPage(p.getName());
 						if (name.startsWith("§1§f")) {
 							int o = page + 1;
 							p.closeInventory();
@@ -87,7 +87,7 @@ public class InventoryClickEH implements Listener {
 							EntityType entity = ConfigOptions.getEntity(entityName);
 							for (EntityType et : ConfigOptions.allow) {
 								if (et == entity) {
-									if (p.hasPermission("wolfspawners.spawner")) {
+									if (p.hasPermission("pseudospawners.spawner")) {
 										if (p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
 											ItemStack item = p.getInventory().getItemInMainHand();
 											ItemMeta meta = item.getItemMeta();
@@ -109,19 +109,19 @@ public class InventoryClickEH implements Listener {
 												s.setSpawnedType(entity);
 												s.update();
 											} else {
-												if (p.getGameMode() == GameMode.CREATIVE) {
+												if (p.getGameMode() == GameMode.CREATIVE || p.hasPermission("pseudospawners.spawn")) {
 													HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
 													if (drop.containsKey(0)) {
 														p.getWorld().dropItem(p.getLocation(), drop.get(0));
 													}
 												} else {
-													WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+													PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
 												}
 											}
 										}
 										p.closeInventory();
 									} else {
-										WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
+										PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
 									}
 									e.setCancelled(true);
 								}

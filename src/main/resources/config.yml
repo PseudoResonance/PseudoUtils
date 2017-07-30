@@ -1,6 +1,6 @@
-############################
-#WolfSpawners Bukkit Config#
-############################
+##############################
+#PseudoSpawners Bukkit Config#
+##############################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
 Version: 1
@@ -11,7 +11,7 @@ Version: 1
 #####
 
 #Interface Name
-InterfaceName: "&c&lWolfSpawners"
+InterfaceName: "&c&lPseudoSpawners"
 
 #Last Page Button
 #{page} = Page number

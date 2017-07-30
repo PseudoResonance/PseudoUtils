@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit.completers;
+package io.github.pseudoresonance.pseudospawners.bukkit.completers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
 
-import io.github.wolfleader116.wolfspawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.ConfigOptions;
 
 public class SpawnerTC implements TabCompleter {
 
@@ -16,8 +16,8 @@ public class SpawnerTC implements TabCompleter {
 		List<String> possible = new ArrayList<String>();
 		if (args.length == 1) {
 			for (EntityType et : ConfigOptions.allow) {
-				if (sender.hasPermission("wolfspawners.spawner." + et.toString().toLowerCase())) {
-					possible.add(ConfigOptions.getName(et));
+				if (sender.hasPermission("pseudospawners.spawner." + et.toString().toLowerCase())) {
+					possible.add(ConfigOptions.getName(et).replace(" ", "_"));
 				}
 			}
 			if (args[0].equalsIgnoreCase("")) {

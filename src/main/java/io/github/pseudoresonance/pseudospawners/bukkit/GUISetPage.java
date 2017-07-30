@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit;
+package io.github.pseudoresonance.pseudospawners.bukkit;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class GUISetPage {
 				Message.sendConsoleMessage(ChatColor.RED + "Programming Error! Negative page number!");
 				return;
 			} else if (page == 1) {
-				WolfSpawners.setPage(p.getName(), 1);
+				PseudoSpawners.setPage(p.getName(), 1);
 				if (entities.size() >= 45) {
 					inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§1§f" + ConfigOptions.nextPageName.replace("{page}", "2")));
 				}
@@ -40,7 +40,7 @@ public class GUISetPage {
 					}
 				}
 			} else if (page == total) {
-				WolfSpawners.setPage(p.getName(), total);
+				PseudoSpawners.setPage(p.getName(), total);
 				if (entities.size() >= 45) {
 					inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§2§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 				}
@@ -53,7 +53,7 @@ public class GUISetPage {
 					}
 				}
 			} else {
-				WolfSpawners.setPage(p.getName(), page);
+				PseudoSpawners.setPage(p.getName(), page);
 				if (entities.size() >= 45) {
 					inv.setItem(ConfigOptions.lastPageInt, newStack(ConfigOptions.lastPageMaterial, 1, "§1§f" + ConfigOptions.lastPageName.replace("{page}", Integer.toString(page - 1))));
 					inv.setItem(ConfigOptions.nextPageInt, newStack(ConfigOptions.nextPageMaterial, 1, "§2§f" + ConfigOptions.nextPageName.replace("{page}", Integer.toString(page + 1))));
@@ -69,7 +69,7 @@ public class GUISetPage {
 			}
 			p.openInventory(inv);
 		} else {
-			WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "There are no songs on the server!");
+			PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "There are no entities enabled on the server!");
 		}
 	}
 	

@@ -1,5 +1,6 @@
-package io.github.wolfleader116.wolfspawners.bukkit.events;
+package io.github.pseudoresonance.pseudospawners.bukkit.events;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.bukkit.GameMode;
@@ -15,7 +16,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.wolfleader116.wolfspawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.SpawnerSettings;
 
 public class BlockBreakEH implements Listener {
 	
@@ -35,25 +37,27 @@ public class BlockBreakEH implements Listener {
 					}
 				}
 			}
-			if (p.hasPermission("wolfspawners.collect.nosilk")) {
+			if (p.hasPermission("pseudospawners.collect.nosilk")) {
 				silk = true;
 			}
 			if (silk && p.getGameMode() != GameMode.CREATIVE) {
 				CreatureSpawner cs = (CreatureSpawner) b.getState();
 				EntityType entity = cs.getSpawnedType();
-				if (p.hasPermission("wolfspawners.override")) {
+				if (p.hasPermission("pseudospawners.override")) {
+					ArrayList<String> lore = SpawnerSettings.getSettings(b);
 					String name = ConfigOptions.getName(entity);
 					String full = ConfigOptions.color + name + " Spawner";
-					ItemStack spawner = newSpawner(full);
+					ItemStack spawner = newSpawner(full, lore);
 					b.getWorld().dropItem(b.getLocation(), spawner);
 					e.setExpToDrop(0);
 				} else {
 					for (EntityType et : ConfigOptions.allow) {
 						if (et == entity) {
-							if (p.hasPermission("wolfspawners.spawner." + entity.toString().toLowerCase())) {
+							if (p.hasPermission("pseudospawners.spawner." + entity.toString().toLowerCase())) {
+								ArrayList<String> lore = SpawnerSettings.getSettings(b);
 								String name = ConfigOptions.getName(entity);
 								String full = ConfigOptions.color + name + " Spawner";
-								ItemStack spawner = newSpawner(full);
+								ItemStack spawner = newSpawner(full, lore);
 								b.getWorld().dropItem(b.getLocation(), spawner);
 								e.setExpToDrop(0);
 							}
@@ -64,10 +68,11 @@ public class BlockBreakEH implements Listener {
 		}
 	}
 	
-	private static ItemStack newSpawner(String name) {
+	private static ItemStack newSpawner(String name, ArrayList<String> lore) {
 		ItemStack is = new ItemStack(Material.MOB_SPAWNER, 1);
 		ItemMeta im = is.getItemMeta();
 		im.setDisplayName(name);
+		im.setLore(lore);
 		is.setItemMeta(im);
 		return is;
 	}

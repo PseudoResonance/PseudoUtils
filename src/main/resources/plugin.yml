@@ -1,50 +1,60 @@
-name: WolfSpawners
-author: WolfLeader116
-main: io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners
-version: 1.0.3
+name: PseudoSpawners
+author: PseudoResonance
+main: io.github.pseudoresonance.pseudospawners.bukkit.PseudoSpawners
+version: 1.0.4
 description: Adds the ability to collect and change spawner types
 depend: [WolfAPI]
 commands:
-  wolfspawners:
-    description: WolfSpawners Menu
+  pseudospawners:
+    description: PseudoSpawners Menu
   spawner:
-    description: Alias for WolfSpawners spawner
+    description: Alias for PseudoSpawners spawner
+  editspawner:
+    description: Alias for PseudoSpawners editspawner
 permissions:
-  wolfspawners.reset:
+  pseudospawners.reset:
     description: Allows the player to reset the config
     default: op
-  wolfspawners.reload:
+  pseudospawners.reload:
     description: Allows the player to reload the plugin
     default: op
-  wolfspawners.craft:
+  pseudospawners.craft:
     description: Allows the player to craft spawners
     default: true
-  wolfspawners.collect:
+  pseudospawners.collect:
     description: Allows the player to collect spawners
     default: true
-  wolfspawners.collect.nosilk:
+  pseudospawners.collect.nosilk:
     description: Allows the player to collect spawners without silk touch
     default: op
     children:
-      wolfspawners.collect: true
-  wolfspawners.modify:
+      pseudospawners.collect: true
+  pseudospawners.modify:
     description: Allows the player to change spawner types
     default: true
-  wolfspawners.spawner:
+  pseudospawners.spawner:
     description: Allows the player to change spawner types without an egg
     default: op
     children:
-      wolfspawners.modify: true
-  wolfspawners.override:
+      pseudospawners.modify: true
+  pseudospawners.spawn:
+    description: Allows the player to spawn spawners
+    default: op
+  pseudospawners.edit:
+    description: Allows the player to edit spawner data
+    default: op
+  pseudospawners.override:
     description: Allows the player to change override disallowed spawner types
     default: false
-  wolfspawners.*:
-    description: Gives the user all WolfSpawners permissions
+  pseudospawners.*:
+    description: Gives the user all PseudoSpawners permissions
     default: op
     children:
-      wolfspawners.reset: true
-      wolfspawners.reload: true
-      wolfspawners.collect.nosilk: true
-      wolfspawners.spawner: true
-      wolfspawners.override: true
-      wolfspawners.craft: true
+      pseudospawners.reset: true
+      pseudospawners.reload: true
+      pseudospawners.collect.nosilk: true
+      pseudospawners.spawner: true
+      pseudospawners.override: true
+      pseudospawners.craft: true
+      pseudospawners.spawn: true
+      pseudospawners.edit: true

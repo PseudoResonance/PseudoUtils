@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit.commands;
+package io.github.pseudoresonance.pseudospawners.bukkit.commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,28 +17,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.github.pseudoresonance.pseudospawners.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudospawners.bukkit.GUISetPage;
+import io.github.pseudoresonance.pseudospawners.bukkit.PseudoSpawners;
 import io.github.wolfleader116.wolfapi.bukkit.Errors;
 import io.github.wolfleader116.wolfapi.bukkit.SubCommandExecutor;
-import io.github.wolfleader116.wolfspawners.bukkit.ConfigOptions;
-import io.github.wolfleader116.wolfspawners.bukkit.GUISetPage;
-import io.github.wolfleader116.wolfspawners.bukkit.WolfSpawners;
 
 public class SpawnerSC implements SubCommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (sender.hasPermission("wolfspawners.spawner")) {
+			if (sender.hasPermission("pseudospawners.spawner")) {
 				List<EntityType> ent = ConfigOptions.allow;
 				List<EntityType> entities = new ArrayList<EntityType>();
 				for (EntityType enti : ent) {
-					if (p.hasPermission("wolfspawners.spawner." + enti.toString())) {
+					if (p.hasPermission("pseudospawners.spawner." + enti.toString())) {
 						entities.add(enti);
 					}
 				}
 				if (entities.size() >= 1) {
 					if (args.length == 0) {
-						WolfSpawners.setPage(p.getName(), 1);
+						PseudoSpawners.setPage(p.getName(), 1);
 						GUISetPage.setPage(p, 1);
 					} else {
 						String build = "";
@@ -54,11 +54,11 @@ public class SpawnerSC implements SubCommandExecutor {
 							try {
 								entity = EntityType.valueOf(build.toUpperCase());
 							} catch (IllegalArgumentException e) {
-								WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "That is an invalid entity type!");
+								PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "That is an invalid entity type!");
 								return true;
 							}
 						}
-						if (p.hasPermission("wolfspawners.override")) {
+						if (p.hasPermission("pseudospawners.override")) {
 							if (p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
 								ItemStack item = p.getInventory().getItemInMainHand();
 								ItemMeta meta = item.getItemMeta();
@@ -81,17 +81,17 @@ public class SpawnerSC implements SubCommandExecutor {
 										s.setSpawnedType(entity);
 										s.update();
 									} else {
-										if (p.getGameMode() == GameMode.CREATIVE) {
+										if (p.getGameMode() == GameMode.CREATIVE || p.hasPermission("pseudospawners.spawn")) {
 											HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
 											if (drop.containsKey(0)) {
 												p.getWorld().dropItem(p.getLocation(), drop.get(0));
 											}
 										} else {
-											WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+											PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
 										}
 									}
 								} catch (Exception e) {
-									WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
+									PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
 								}
 							}
 							p.closeInventory();
@@ -121,17 +121,17 @@ public class SpawnerSC implements SubCommandExecutor {
 												s.setSpawnedType(entity);
 												s.update();
 											} else {
-												if (p.getGameMode() == GameMode.CREATIVE) {
+												if (p.getGameMode() == GameMode.CREATIVE || p.hasPermission("pseudospawners.spawn")) {
 													HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
 													if (drop.containsKey(0)) {
 														p.getWorld().dropItem(p.getLocation(), drop.get(0));
 													}
 												} else {
-													WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+													PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
 												}
 											}
 										} catch (Exception e) {
-											WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
+											PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "Minecraft disallows that entity type!");
 										}
 									}
 									p.closeInventory();
@@ -139,17 +139,17 @@ public class SpawnerSC implements SubCommandExecutor {
 								}
 							}
 						}
-						WolfSpawners.message.sendPluginError(p, Errors.CUSTOM, "That entity type is disabled!");
+						PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "That entity type is disabled!");
 					}
 				} else {
-					WolfSpawners.message.sendPluginError(sender, Errors.CUSTOM, "There are no entities enabled on the server!");
+					PseudoSpawners.message.sendPluginError(sender, Errors.CUSTOM, "There are no entities enabled on the server!");
 				}
 			} else {
-				WolfSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
+				PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
 				return true;
 			}
 		} else {
-			WolfSpawners.message.sendPluginError(sender, Errors.CUSTOM, "This command is for players only!");
+			PseudoSpawners.message.sendPluginError(sender, Errors.CUSTOM, "This command is for players only!");
 			return true;
 		}
 		return true;

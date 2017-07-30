@@ -1,4 +1,4 @@
-package io.github.wolfleader116.wolfspawners.bukkit;
+package io.github.pseudoresonance.pseudospawners.bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,23 +9,26 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import io.github.pseudoresonance.pseudospawners.bukkit.commands.ReloadSC;
+import io.github.pseudoresonance.pseudospawners.bukkit.commands.ResetSC;
+import io.github.pseudoresonance.pseudospawners.bukkit.commands.EditSpawnerSC;
+import io.github.pseudoresonance.pseudospawners.bukkit.commands.SpawnerSC;
+import io.github.pseudoresonance.pseudospawners.bukkit.completers.EditSpawnerTC;
+import io.github.pseudoresonance.pseudospawners.bukkit.completers.SpawnerTC;
+import io.github.pseudoresonance.pseudospawners.bukkit.completers.WolfSpawnersTC;
+import io.github.pseudoresonance.pseudospawners.bukkit.events.BlockBreakEH;
+import io.github.pseudoresonance.pseudospawners.bukkit.events.BlockPlaceEH;
+import io.github.pseudoresonance.pseudospawners.bukkit.events.InventoryClickEH;
+import io.github.pseudoresonance.pseudospawners.bukkit.events.PlayerInteractEH;
 import io.github.wolfleader116.wolfapi.bukkit.CommandDescription;
 import io.github.wolfleader116.wolfapi.bukkit.HelpSC;
 import io.github.wolfleader116.wolfapi.bukkit.MainCommand;
 import io.github.wolfleader116.wolfapi.bukkit.Message;
 import io.github.wolfleader116.wolfapi.bukkit.WolfAPI;
 import io.github.wolfleader116.wolfapi.bukkit.WolfPlugin;
-import io.github.wolfleader116.wolfspawners.bukkit.commands.ReloadSC;
-import io.github.wolfleader116.wolfspawners.bukkit.commands.ResetSC;
-import io.github.wolfleader116.wolfspawners.bukkit.commands.SpawnerSC;
-import io.github.wolfleader116.wolfspawners.bukkit.completers.SpawnerTC;
-import io.github.wolfleader116.wolfspawners.bukkit.completers.WolfSpawnersTC;
-import io.github.wolfleader116.wolfspawners.bukkit.events.BlockBreakEH;
-import io.github.wolfleader116.wolfspawners.bukkit.events.BlockPlaceEH;
-import io.github.wolfleader116.wolfspawners.bukkit.events.InventoryClickEH;
-import io.github.wolfleader116.wolfspawners.bukkit.events.PlayerInteractEH;
 
-public class WolfSpawners extends WolfPlugin {
+public class PseudoSpawners extends WolfPlugin {
 
 	public static WolfPlugin plugin;
 	public static Message message;
@@ -63,12 +66,13 @@ public class WolfSpawners extends WolfPlugin {
 	}
 	
 	public static ConfigOptions getConfigOptions() {
-		return WolfSpawners.configOptions;
+		return PseudoSpawners.configOptions;
 	}
 
 	private void initializeCommands() {
-		this.getCommand("wolfspawners").setExecutor(mainCommand);
+		this.getCommand("pseudospawners").setExecutor(mainCommand);
 		this.getCommand("spawner").setExecutor(new SpawnerSC());
+		this.getCommand("editspawner").setExecutor(new EditSpawnerSC());
 	}
 
 	private void initializeSubCommands() {
@@ -76,11 +80,13 @@ public class WolfSpawners extends WolfPlugin {
 		subCommands.put("reload", new ReloadSC());
 		subCommands.put("reset", new ResetSC());
 		subCommands.put("spawner", new SpawnerSC());
+		subCommands.put("editspawner", new EditSpawnerSC());
 	}
 
 	private void initializeTabcompleters() {
-		this.getCommand("wolfspawners").setTabCompleter(new WolfSpawnersTC());
+		this.getCommand("pseudospawners").setTabCompleter(new WolfSpawnersTC());
 		this.getCommand("spawner").setTabCompleter(new SpawnerTC());
+		this.getCommand("editspawner").setTabCompleter(new EditSpawnerTC());
 	}
 	
 	private void initializeListeners() {
@@ -91,11 +97,12 @@ public class WolfSpawners extends WolfPlugin {
 	}
 
 	private void setCommandDescriptions() {
-		commandDescriptions.add(new CommandDescription("wolfspawners", "Shows WolfSpawners information", ""));
-		commandDescriptions.add(new CommandDescription("wolfspawners help", "Shows WolfSpawners commands", ""));
-		commandDescriptions.add(new CommandDescription("wolfspawners reload", "Reloads WolfSpawners config", "wolfspawners.reload"));
-		commandDescriptions.add(new CommandDescription("wolfspawners reset", "Resets WolfSpawners config", "wolfspawners.reset"));
-		commandDescriptions.add(new CommandDescription("wolfspawners spawner", "Sets the type of the spawner you are looking at", "wolfspawners.spawner"));
+		commandDescriptions.add(new CommandDescription("pseudospawners", "Shows WolfSpawners information", ""));
+		commandDescriptions.add(new CommandDescription("pseudospawners help", "Shows WolfSpawners commands", ""));
+		commandDescriptions.add(new CommandDescription("pseudospawners reload", "Reloads WolfSpawners config", "pseudospawners.reload"));
+		commandDescriptions.add(new CommandDescription("pseudospawners reset", "Resets WolfSpawners config", "pseudospawners.reset"));
+		commandDescriptions.add(new CommandDescription("pseudospawners spawner", "Sets the type of the spawner you are looking at", "pseudospawners.spawner"));
+		commandDescriptions.add(new CommandDescription("pseudospawners editspawner", "Edits the data of the spawner you are looking at", "pseudospawners.edit"));
 	}
 	
 	public static Map<String, Integer> getPages() {

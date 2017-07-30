@@ -1,6 +1,10 @@
-package io.github.wolfleader116.wolfspawners.bukkit;
+package io.github.pseudoresonance.pseudospawners.bukkit;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,17 +14,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 
 import io.github.wolfleader116.wolfapi.bukkit.ConfigOption;
 import io.github.wolfleader116.wolfapi.bukkit.Message;
+import io.github.wolfleader116.wolfapi.bukkit.WolfAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class ConfigOptions implements ConfigOption {
 
 	public static List<EntityType> disallow = new ArrayList<EntityType>();
 	public static List<EntityType> allow = new ArrayList<EntityType>();
-	public static String interfaceName = "&c&lWolfSpawners";
+	public static String interfaceName = "&c&lPseudoSpawners";
 	public static Material lastPageMaterial = Material.PAPER;
 	public static String lastPageName = "Page {page}";
 	public static int lastPageInt = 1;
@@ -32,31 +38,45 @@ public class ConfigOptions implements ConfigOption {
 	public static Map<String, EntityType> namesReverse = new HashMap<String, EntityType>();
 	
 	public static boolean updateConfig() {
-		if (WolfSpawners.plugin.getConfig().getInt("Version") == 1) {
-			Message.sendConsoleMessage(ChatColor.GREEN + "Config is up to date!");
-		} else {
+		boolean error = false;
+		InputStream configin = WolfAPI.plugin.getClass().getResourceAsStream("/config.yml"); 
+		BufferedReader configreader = new BufferedReader(new InputStreamReader(configin));
+		YamlConfiguration configc = YamlConfiguration.loadConfiguration(configreader);
+		int configcj = configc.getInt("Version");
+		try {
+			configreader.close();
+			configin.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		if (PseudoSpawners.plugin.getConfig().getInt("Version") != configcj) {
 			try {
 				String oldFile = "";
-				File conf = new File(WolfSpawners.plugin.getDataFolder(), "config.yml");
-				if (new File(WolfSpawners.plugin.getDataFolder(), "config.yml.old").exists()) {
+				File conf = new File(PseudoSpawners.plugin.getDataFolder(), "config.yml");
+				if (new File(PseudoSpawners.plugin.getDataFolder(), "config.yml.old").exists()) {
 					for (int i = 1; i > 0; i++) {
-						if (!(new File(WolfSpawners.plugin.getDataFolder(), "config.yml.old" + i).exists())) {
-							conf.renameTo(new File(WolfSpawners.plugin.getDataFolder(), "config.yml.old" + i));
+						if (!(new File(PseudoSpawners.plugin.getDataFolder(), "config.yml.old" + i).exists())) {
+							conf.renameTo(new File(PseudoSpawners.plugin.getDataFolder(), "config.yml.old" + i));
 							oldFile = "config.yml.old" + i;
 							break;
 						}
 					}
 				} else {
-					conf.renameTo(new File(WolfSpawners.plugin.getDataFolder(), "config.yml.old"));
+					conf.renameTo(new File(PseudoSpawners.plugin.getDataFolder(), "config.yml.old"));
 					oldFile = "config.yml.old";
 				}
-				WolfSpawners.plugin.saveDefaultConfig();
-				WolfSpawners.plugin.reloadConfig();
+				PseudoSpawners.plugin.saveDefaultConfig();
+				PseudoSpawners.plugin.reloadConfig();
 				Message.sendConsoleMessage(ChatColor.GREEN + "Config is up to date! Old config file renamed to " + oldFile + ".");
 			} catch (Exception e) {
 				Message.sendConsoleMessage(ChatColor.RED + "Error while updating config!");
-				return false;
+				error = true;
 			}
+		}
+		if (!error) {
+			Message.sendConsoleMessage(ChatColor.GREEN + "Config is up to date!");
+		} else {
+			return false;
 		}
 		return true;
 	}
@@ -64,7 +84,7 @@ public class ConfigOptions implements ConfigOption {
 	public void reloadConfig() {
 		String config = "";
 		try {
-			List<String> l = WolfSpawners.plugin.getConfig().getStringList("Disallow");
+			List<String> l = PseudoSpawners.plugin.getConfig().getStringList("Disallow");
 			Collections.sort(l, Collator.getInstance());
 			for (String s : l) {
 				String u = s.toUpperCase();
@@ -88,33 +108,33 @@ public class ConfigOptions implements ConfigOption {
 				allow.add(EntityType.valueOf(st));
 			}
 		}
-		interfaceName = ChatColor.translateAlternateColorCodes('&', WolfSpawners.plugin.getConfig().getString("InterfaceName"));
+		interfaceName = ChatColor.translateAlternateColorCodes('&', PseudoSpawners.plugin.getConfig().getString("InterfaceName"));
 		try {
-			lastPageMaterial = Enum.valueOf(Material.class, WolfSpawners.plugin.getConfig().getString("LastPageItem").toUpperCase());
+			lastPageMaterial = Enum.valueOf(Material.class, PseudoSpawners.plugin.getConfig().getString("LastPageItem").toUpperCase());
 		} catch (IllegalArgumentException e) {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid item in config for LastPage!");
 		}
-		lastPageName = ChatColor.translateAlternateColorCodes('&', WolfSpawners.plugin.getConfig().getString("LastPageName"));
-		int lastPageLocation = WolfSpawners.plugin.getConfig().getInt("LastPageLocation");
+		lastPageName = ChatColor.translateAlternateColorCodes('&', PseudoSpawners.plugin.getConfig().getString("LastPageName"));
+		int lastPageLocation = PseudoSpawners.plugin.getConfig().getInt("LastPageLocation");
 		if (lastPageLocation >= 1 && lastPageLocation <= 9) {
 			lastPageInt = lastPageLocation - 1;
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid location in config for LastPage!");
 		}
 		try {
-			nextPageMaterial = Enum.valueOf(Material.class, WolfSpawners.plugin.getConfig().getString("NextPageItem").toUpperCase());
+			nextPageMaterial = Enum.valueOf(Material.class, PseudoSpawners.plugin.getConfig().getString("NextPageItem").toUpperCase());
 		} catch (IllegalArgumentException e) {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid item in config for NextPage!");
 		}
-		nextPageName = ChatColor.translateAlternateColorCodes('&', WolfSpawners.plugin.getConfig().getString("NextPageName"));
-		int nextPageLocation = WolfSpawners.plugin.getConfig().getInt("NextPageLocation");
+		nextPageName = ChatColor.translateAlternateColorCodes('&', PseudoSpawners.plugin.getConfig().getString("NextPageName"));
+		int nextPageLocation = PseudoSpawners.plugin.getConfig().getInt("NextPageLocation");
 		if (nextPageLocation >= 1 && nextPageLocation <= 9 && nextPageLocation != lastPageLocation) {
 			nextPageInt = nextPageLocation - 1;
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid location in config for NextPage!");
 		}
 		try {
-			String c = WolfSpawners.plugin.getConfig().getString("Color");
+			String c = PseudoSpawners.plugin.getConfig().getString("Color");
 			if (c.length() == 1) {
 				char ch = c.charAt(0);
 				color = ChatColor.getByChar(ch);
@@ -127,11 +147,11 @@ public class ConfigOptions implements ConfigOption {
 		try {
 			Map<EntityType, String> nm = new HashMap<EntityType, String>();
 			Map<String, EntityType> nrm = new HashMap<String, EntityType>();
-			Set<String> l = WolfSpawners.plugin.getConfig().getConfigurationSection("Names").getKeys(false);
+			Set<String> l = PseudoSpawners.plugin.getConfig().getConfigurationSection("Names").getKeys(false);
 			for (String s : l) {
 				String u = s.toUpperCase();
 				if (EntityType.valueOf(u) != null && EntityType.valueOf(u) != EntityType.PLAYER) {
-					String n = WolfSpawners.plugin.getConfig().getString("Names." + s);
+					String n = PseudoSpawners.plugin.getConfig().getString("Names." + s);
 					nm.put(EntityType.valueOf(u), n);
 					nrm.put(n, EntityType.valueOf(u));
 				}
