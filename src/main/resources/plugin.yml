@@ -1,9 +1,9 @@
 name: PseudoSpawners
 author: PseudoResonance
-main: io.github.pseudoresonance.pseudospawners.bukkit.PseudoSpawners
-version: 1.0.4
+main: io.github.pseudoresonance.pseudospawners.PseudoSpawners
+version: 1.0.5
 description: Adds the ability to collect and change spawner types
-depend: [WolfAPI]
+depend: [PseudoAPI]
 commands:
   pseudospawners:
     description: PseudoSpawners Menu

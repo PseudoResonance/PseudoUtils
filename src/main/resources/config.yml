@@ -1,6 +1,6 @@
-##############################
-#PseudoSpawners Bukkit Config#
-##############################
+#######################
+#PseudoSpawners Config#
+#######################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
 Version: 1
@@ -34,7 +34,7 @@ NextPageLocation: 8
 
 #What mob types are not allowed?
 #List of possible mob types here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
-Disallow:
+Blacklist:
   - area_effect_cloud
   - armor_stand
   - arrow

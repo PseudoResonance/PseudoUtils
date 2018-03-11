@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.PseudoResonance</groupId>
 	<artifactId>PseudoSpawners</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -23,10 +23,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.6.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -46,20 +46,20 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.12-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.WolfLeader116</groupId>
-			<artifactId>WolfAPI</artifactId>
+			<groupId>io.github.PseudoResonance</groupId>
+			<artifactId>PseudoAPI</artifactId>
 			<version>-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.12-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/../../Dependencies/craftbukkit-1.12.jar</systemPath>
+			<systemPath>${basedir}/../../Dependencies/craftbukkit-1.12.2.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
