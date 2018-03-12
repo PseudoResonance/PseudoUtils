@@ -19,6 +19,7 @@ public class ReloadSC implements SubCommandExecutor {
 					PseudoSpawners.message.sendPluginError(sender, Errors.GENERIC);
 					return false;
 				}
+				PseudoSpawners.getConfigOptions().reloadConfig();
 				PseudoSpawners.message.sendPluginMessage(sender, "Plugin config reloaded!");
 				return true;
 			} else {

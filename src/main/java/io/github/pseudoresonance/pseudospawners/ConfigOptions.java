@@ -160,10 +160,13 @@ public class ConfigOptions implements ConfigOption {
 			Set<String> l = PseudoSpawners.plugin.getConfig().getConfigurationSection("Names").getKeys(false);
 			for (String s : l) {
 				String u = s.toUpperCase();
-				if (EntityType.valueOf(u) != null) {
+				try {
+					EntityType et = EntityType.valueOf(u);
 					String n = PseudoSpawners.plugin.getConfig().getString("Names." + s);
-					nm.put(EntityType.valueOf(u), n);
-					nrm.put(n, EntityType.valueOf(u));
+					nm.put(et, n);
+					nrm.put(n, et);
+				} catch (IllegalArgumentException e) {
+					Message.sendConsoleMessage(ChatColor.RED + "Invalid configuration for mob type names! Unknown entity: " + u);
 				}
 			}
 			names = nm;

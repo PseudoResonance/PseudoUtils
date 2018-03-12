@@ -68,62 +68,66 @@ public class InventoryClickEH implements Listener {
 				String t = i.getName();
 				if (t.equalsIgnoreCase(ConfigOptions.interfaceName)) {
 					ItemStack is = e.getCurrentItem();
-					ItemMeta im = is.getItemMeta();
-					if (im.hasDisplayName()) {
-						String name = im.getDisplayName();
-						int page = PseudoSpawners.getPage(p.getName());
-						if (name.startsWith("§1§f")) {
-							int o = page + 1;
-							p.closeInventory();
-							GUISetPage.setPage(p, o);
-							e.setCancelled(true);
-						} else if (name.startsWith("§2§f")) {
-							int o = page - 1;
-							p.closeInventory();
-							GUISetPage.setPage(p, o);
-							e.setCancelled(true);
-						} else if (isEgg(is)) {
-							String entityName = ChatColor.stripColor(name);
-							EntityType entity = ConfigOptions.getEntity(entityName);
-							for (EntityType et : ConfigOptions.spawnable) {
-								if (et == entity) {
-									if (p.hasPermission("pseudospawners.spawner")) {
-										if (p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
-											ItemStack item = p.getInventory().getItemInMainHand();
-											ItemMeta meta = item.getItemMeta();
-											meta.setDisplayName(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner");
-											item.setItemMeta(meta);
-											p.getInventory().setItemInMainHand(item);
-										} else if (p.getInventory().getItemInOffHand().getType() == Material.MOB_SPAWNER) {
-											ItemStack item = p.getInventory().getItemInOffHand();
-											ItemMeta meta = item.getItemMeta();
-											meta.setDisplayName(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner");
-											item.setItemMeta(meta);
-											p.getInventory().setItemInOffHand(item);
-										} else {
-											Set<Material> set = new HashSet<Material>();
-											set = null;
-											Block b = p.getTargetBlock(set, 5);
-											if (b.getType() == Material.MOB_SPAWNER) {
-												CreatureSpawner s = (CreatureSpawner) b.getState();
-												s.setSpawnedType(entity);
-												s.update();
-											} else {
-												if (p.getGameMode() == GameMode.CREATIVE || p.hasPermission("pseudospawners.spawn")) {
-													HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
-													if (drop.containsKey(0)) {
-														p.getWorld().dropItem(p.getLocation(), drop.get(0));
-													}
-												} else {
-													PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
-												}
-											}
-										}
-										p.closeInventory();
-									} else {
-										PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
-									}
+					if (is != null) {
+						ItemMeta im = is.getItemMeta();
+						if (im != null) {
+							if (im.hasDisplayName()) {
+								String name = im.getDisplayName();
+								int page = PseudoSpawners.getPage(p.getName());
+								if (name.startsWith("§1§f")) {
+									int o = page + 1;
+									p.closeInventory();
+									GUISetPage.setPage(p, o);
 									e.setCancelled(true);
+								} else if (name.startsWith("§2§f")) {
+									int o = page - 1;
+									p.closeInventory();
+									GUISetPage.setPage(p, o);
+									e.setCancelled(true);
+								} else if (isEgg(is)) {
+									String entityName = ChatColor.stripColor(name);
+									EntityType entity = ConfigOptions.getEntity(entityName);
+									for (EntityType et : ConfigOptions.spawnable) {
+										if (et == entity) {
+											if (p.hasPermission("pseudospawners.spawner")) {
+												if (p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
+													ItemStack item = p.getInventory().getItemInMainHand();
+													ItemMeta meta = item.getItemMeta();
+													meta.setDisplayName(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner");
+													item.setItemMeta(meta);
+													p.getInventory().setItemInMainHand(item);
+												} else if (p.getInventory().getItemInOffHand().getType() == Material.MOB_SPAWNER) {
+													ItemStack item = p.getInventory().getItemInOffHand();
+													ItemMeta meta = item.getItemMeta();
+													meta.setDisplayName(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner");
+													item.setItemMeta(meta);
+													p.getInventory().setItemInOffHand(item);
+												} else {
+													Set<Material> set = new HashSet<Material>();
+													set = null;
+													Block b = p.getTargetBlock(set, 5);
+													if (b.getType() == Material.MOB_SPAWNER) {
+														CreatureSpawner s = (CreatureSpawner) b.getState();
+														s.setSpawnedType(entity);
+														s.update();
+													} else {
+														if (p.getGameMode() == GameMode.CREATIVE || p.hasPermission("pseudospawners.spawn")) {
+															HashMap<Integer, ItemStack> drop = p.getInventory().addItem(newSpawner(ConfigOptions.color + ConfigOptions.getName(entity) + " Spawner"));
+															if (drop.containsKey(0)) {
+																p.getWorld().dropItem(p.getLocation(), drop.get(0));
+															}
+														} else {
+															PseudoSpawners.message.sendPluginError(p, Errors.CUSTOM, "You are not holding or looking at a spawner!");
+														}
+													}
+												}
+												p.closeInventory();
+											} else {
+												PseudoSpawners.message.sendPluginError(p, Errors.NO_PERMISSION, "set a spawner type without an egg!");
+											}
+											e.setCancelled(true);
+										}
+									}
 								}
 							}
 						}

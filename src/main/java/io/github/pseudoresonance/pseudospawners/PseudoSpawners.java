@@ -37,14 +37,18 @@ public class PseudoSpawners extends PseudoPlugin {
 	private static HelpSC helpSubCommand;
 	
 	private static ConfigOptions configOptions;
+
+	private static String bukkitVersion;
 	
 	private static Map<String, Integer> page = new HashMap<String, Integer>();
 	
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
 		this.saveDefaultConfig();
 		plugin = this;
+		GetNMSName.getNames();
 		configOptions = new ConfigOptions();
 		ConfigOptions.updateConfig();
 		message = new Message(this);
@@ -128,15 +132,25 @@ public class PseudoSpawners extends PseudoPlugin {
 		is.setItemMeta(im);
 		return is;
 	}
-	
+
+	@SuppressWarnings("deprecation")
 	private static void createRecipes() {
-		NamespacedKey key = new NamespacedKey(plugin, "spawner");
+		ShapedRecipe rec;
 		ItemStack spawner = new ItemStack(Material.MOB_SPAWNER, 1);
-		ShapedRecipe rec = new ShapedRecipe(key, spawner);
+		if (Integer.valueOf(bukkitVersion.split("_")[1]) >= 12) {
+			NamespacedKey key = new NamespacedKey(plugin, "spawner");
+			rec = new ShapedRecipe(key, spawner);
+		} else {
+			rec = new ShapedRecipe(spawner);
+		}
 		rec.shape("***", "*%*", "***");
 		rec.setIngredient('*', Material.IRON_FENCE);
 		rec.setIngredient('%', Material.MONSTER_EGG);
 		Bukkit.getServer().addRecipe(rec);
+	}
+	
+	public static String getBukkitVersion() {
+		return bukkitVersion;
 	}
 
 }
