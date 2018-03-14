@@ -100,11 +100,13 @@ public class ConfigOptions implements ConfigOption {
 			for (String s : l) {
 				String u = s.toUpperCase();
 				config = u;
-				if (EntityType.valueOf(u) != null && EntityType.valueOf(u) != EntityType.PLAYER) {
-					blacklist.add(EntityType.valueOf(u));
+				try {
+					EntityType et = EntityType.valueOf(u);
+					blacklist.add(et);
+				} catch (IllegalArgumentException e) {
+					Message.sendConsoleMessage(ChatColor.RED + "Invalid configuration for blacklisted types! Unknown entity: " + u);
 				}
 			}
-			blacklist.add(EntityType.PLAYER);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid configuration for disallowed mob types at " + config + "!");
