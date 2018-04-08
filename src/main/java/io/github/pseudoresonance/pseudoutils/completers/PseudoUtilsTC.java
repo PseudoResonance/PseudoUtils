@@ -1,4 +1,4 @@
-package io.github.pseudoresonance.pseudoplayers.completers;
+package io.github.pseudoresonance.pseudoutils.completers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,23 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
-
-public class PlayerTC implements TabCompleter {
+public class PseudoUtilsTC implements TabCompleter {
 
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> possible = new ArrayList<String>();
 		if (args.length == 1) {
-			if (sender.hasPermission("pseudospawners.view.others")) {
-				possible.addAll(PlayerDataController.getNames());
+			possible.add("help");
+			if (sender.hasPermission("pseudoutils.reload")) {
+				possible.add("reload");
+			}
+			if (sender.hasPermission("pseudoutils.reset")) {
+				possible.add("reset");
+			}
+			if (sender.hasPermission("pseudoutils.brand")) {
+				possible.add("brand");
+			}
+			if (sender.hasPermission("pseudoutils.metrics")) {
+				possible.add("metrics");
 			}
 			if (args[0].equalsIgnoreCase("")) {
 				return possible;

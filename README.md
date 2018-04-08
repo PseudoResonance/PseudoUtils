@@ -1,2 +1,2 @@
-# PseudoPlayers
-PseudoPlayers Plugin
+# PseudoUtils
+PseudoUtils Plugin

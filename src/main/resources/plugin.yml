@@ -1,39 +1,58 @@
-name: PseudoPlayers
+name: PseudoUtils
 author: PseudoResonance
-main: io.github.pseudoresonance.pseudoplayers.PseudoPlayers
-version: 0.0.4
-description: Stores and gets data about players
+main: io.github.pseudoresonance.pseudoutils.PseudoUtils
+version: 0.0.1
+description: Adds useful utilities
 depend: [PseudoAPI]
-softdepend: [VoxelSniper]
 commands:
-  pseudoplayers:
-    description: PseudoPlayers Menu
-  player:
-    description: Shows player information
-    aliases: [p,seen,lastseen,whois]
+  pseudoutils:
+    description: PseudoUtils Menu
+  metrics:
+    description: System metrics
+    permission: pseudoutils.metrics
+    aliases: [lag,tps]
+  brand:
+    description: Player client brand
+    permission: pseudoutils.brand
 permissions:
-  pseudoplayers.reset:
+  pseudoutils.brand:
+    description: Allows the player to see user's client brands
+    default: op
+  pseudoutils.metrics:
+    description: Allows the player to see detailed system metrics
+    default: op
+    children:
+      pseudoutils.metrics.tps: true
+  pseudoutils.metrics.other:
+    description: Allows the player to see miscellaneous details in system metrics
+    default: op
+  pseudoutils.metrics.tps:
+    description: Allows the player to see tps details in system metrics
+    default: op
+  pseudoutils.metrics.java:
+    description: Allows the player to see java details in system metrics
+    default: op
+  pseudoutils.metrics.cpu:
+    description: Allows the player to see cpu details in system metrics
+    default: op
+  pseudoutils.metrics.memory:
+    description: Allows the player to see memory details in system metrics
+    default: op
+  pseudoutils.reset:
     description: Allows the player to reset the config
     default: op
-  pseudoplayers.reload:
+  pseudoutils.reload:
     description: Allows the player to reload the plugin
     default: op
-  pseudoplayers.view:
-    description: Allows the player to view player information about themselves
-    default: true
-  pseudoplayers.view.others:
-    description: Allows the player to view player information about others
-    default: true
-    children:
-      pseudoplayers.view: true
-  pseudoplayers.view.logoutlocation:
-    description: Allows the player to see where a player last logged off
-    default: op
-  pseudoplayers.*:
-    description: Gives the user all PseudoPlayers permissions
+  pseudoutils.*:
+    description: Gives the user all PseudoUtils permissions
     default: op
     children:
-      pseudoplayers.reset: true
-      pseudoplayers.reload: true
-      pseudoplayers.view.others: true
-      pseudoplayers.view.logoutlocation: true
+      pseudoutils.reset: true
+      pseudoutils.reload: true
+      pseudoutils.brand: true
+      pseudoutils.metrics: true
+      pseudoutils.metrics.java: true
+      pseudoutils.metrics.cpu: true
+      pseudoutils.metrics.memory: true
+      pseudoutils.metrics.other: true

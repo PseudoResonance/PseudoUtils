@@ -1,44 +1,30 @@
-######################
-#PseudoPlayers Config#
-######################
+####################
+#PseudoUtils Config#
+####################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
-Version: 3
+Version: 1
 
 
 #########
 #Formats#
 #########
 
-#Time format of first join if greater than difference specified below
+#Time Format
 #Use following codes:
 #https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
-FirstJoinTimeFormat: "MM-dd-yy h:mm:ss a"
+TimeFormat: "HH:mm:ss"
 
-#Difference between now and first join time that switches from a relative to absolute format
-#In days
-FirstJoinTimeDifference: 7
-
-#Time format of last join/leave if greater than difference specified below
+#Date Format
 #Use following codes:
 #https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
-JoinLeaveTimeFormat: "MM-dd-yy h:mm:ss a"
-
-#Difference between now and last join/leave time that switches from a relative to absolute format
-#In days
-JoinLeaveTimeDifference: 30
-
-#Teleportation Format
-#{world} = world name
-#{x} = x coordinate
-#{y} = y coordinate
-#{z} = z coordinate
-TeleportationFormat: "tp @p {x} {y} {z}"
+DateFormat: "yyyy-MM-dd"
 
 
 #######
 #Other#
 #######
 
-#Aggressively take over /p command
-AggressiveCommands: false
+#How frequently TPS is checked for
+#In ticks, how often the plugin will calculate the current TPS
+TPSUpdateFrequency: 40
