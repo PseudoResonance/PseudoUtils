@@ -1,60 +1,38 @@
-name: PseudoSpawners
+name: PseudoPlayers
 author: PseudoResonance
-main: io.github.pseudoresonance.pseudospawners.PseudoSpawners
-version: 1.0.7
-description: Adds the ability to collect and change spawner types
+main: io.github.pseudoresonance.pseudoplayers.PseudoPlayers
+version: 0.0.2
+description: Stores and gets data about players
 depend: [PseudoAPI]
 commands:
-  pseudospawners:
-    description: PseudoSpawners Menu
-  spawner:
-    description: Alias for PseudoSpawners spawner
-  editspawner:
-    description: Alias for PseudoSpawners editspawner
+  pseudoplayers:
+    description: PseudoPlayers Menu
+  player:
+    description: Shows player information
+    aliases: [p,seen,lastseen,whois]
 permissions:
-  pseudospawners.reset:
+  pseudoplayers.reset:
     description: Allows the player to reset the config
     default: op
-  pseudospawners.reload:
+  pseudoplayers.reload:
     description: Allows the player to reload the plugin
     default: op
-  pseudospawners.craft:
-    description: Allows the player to craft spawners
+  pseudoplayers.view:
+    description: Allows the player to view player information about themselves
     default: true
-  pseudospawners.collect:
-    description: Allows the player to collect spawners
+  pseudoplayers.view.others:
+    description: Allows the player to view player information about others
     default: true
-  pseudospawners.collect.nosilk:
-    description: Allows the player to collect spawners without silk touch
+    children:
+      pseudoplayers.view: true
+  pseudoplayers.view.logoutlocation:
+    description: Allows the player to see where a player last logged off
+    default: op
+  pseudoplayers.*:
+    description: Gives the user all PseudoPlayers permissions
     default: op
     children:
-      pseudospawners.collect: true
-  pseudospawners.modify:
-    description: Allows the player to change spawner types
-    default: true
-  pseudospawners.spawner:
-    description: Allows the player to change spawner types without an egg
-    default: op
-    children:
-      pseudospawners.modify: true
-  pseudospawners.spawn:
-    description: Allows the player to spawn spawners
-    default: op
-  pseudospawners.edit:
-    description: Allows the player to edit spawner data
-    default: op
-  pseudospawners.override:
-    description: Allows the player to change override disallowed spawner types
-    default: false
-  pseudospawners.*:
-    description: Gives the user all PseudoSpawners permissions
-    default: op
-    children:
-      pseudospawners.reset: true
-      pseudospawners.reload: true
-      pseudospawners.collect.nosilk: true
-      pseudospawners.spawner: true
-      pseudospawners.override: true
-      pseudospawners.craft: true
-      pseudospawners.spawn: true
-      pseudospawners.edit: true
+      pseudoplayers.reset: true
+      pseudoplayers.reload: true
+      pseudoplayers.view.others: true
+      pseudoplayers.view.logoutlocation: true

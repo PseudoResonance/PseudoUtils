@@ -1,2 +1,2 @@
-# PseudoSpawners
-PseudoSpawners Plugin
+# PseudoPlayers
+PseudoPlayers Plugin

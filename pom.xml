@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.PseudoResonance</groupId>
-	<artifactId>PseudoSpawners</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
+	<artifactId>PseudoPlayers</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -52,14 +52,6 @@
 			<groupId>io.github.PseudoResonance</groupId>
 			<artifactId>PseudoAPI</artifactId>
 			<version>-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.12.2-R0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>system</scope>
-			<systemPath>${basedir}/../../Dependencies/craftbukkit-1.12.2.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

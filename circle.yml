@@ -8,4 +8,4 @@ dependencies:
     - mvn clean install
 general:
   artifacts:
-    - "target/PseudoSpawners.jar"
+    - "target/PseudoPlayers.jar"

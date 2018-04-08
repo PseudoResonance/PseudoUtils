@@ -1,140 +1,29 @@
-#######################
-#PseudoSpawners Config#
-#######################
+######################
+#PseudoPlayers Config#
+######################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
 Version: 1
 
 
-#####
-#GUI#
-#####
+#########
+#Formats#
+#########
 
-#Interface Name
-InterfaceName: "&c&lPseudoSpawners"
+#Time format of first join if greater than difference specified below
+#Use following codes:
+#https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+FirstJoinTimeFormat: "MM-dd-yy h:mm:ss a"
 
-#Last Page Button
-#{page} = Page number
-LastPageName: "Page {page}"
-LastPageItem: Paper
-#Number between 1-9
-LastPageLocation: 2
+#Difference between now and first join time that switches from a relative to absolute format
+#In days
+FirstJoinTimeDifference: 7
 
-#Next Page Button
-#{page} = Page number
-NextPageName: "Page {page}"
-NextPageItem: Paper
-#Number between 1-9
-NextPageLocation: 8
+#Time format of last join/leave if greater than difference specified below
+#Use following codes:
+#https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+JoinLeaveTimeFormat: "MM-dd-yy h:mm:ss a"
 
-
-##########
-#Spawners#
-##########
-
-#What mob types are not allowed?
-#List of possible mob types here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
-Blacklist:
-  - area_effect_cloud
-  - armor_stand
-  - arrow
-  - boat
-  - complex_part
-  - dragon_fireball
-  - dropped_item
-  - egg
-  - ender_crystal
-  - ender_pearl
-  - ender_signal
-  - evoker_fangs
-  - experience_orb
-  - falling_block
-  - fireball
-  - firework
-  - fishing_hook
-  - giant
-  - item_frame
-  - leash_hitch
-  - lightning
-  - lingering_potion
-  - llama_spit
-  - minecart
-  - minecart_chest
-  - minecart_command
-  - minecart_furnace
-  - minecart_hopper
-  - minecart_mob_spawner
-  - minecart_tnt
-  - painting
-  - primed_tnt
-  - shulker_bullet
-  - small_fireball
-  - snowball
-  - spectral_arrow
-  - splash_potion
-  - thrown_exp_bottle
-  - tipped_arrow
-  - unknown
-  - weather
-  - wither_skull
-
-
-###########
-#Mob Names#
-###########
-
-#What chat color should the mob type be?
-Color: e
-
-#What are the names of different mob types?
-#List of possible mob types here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
-Names:
-  bat: "Bat"
-  blaze: "Blaze"
-  cave_spider: "Cave Spider"
-  chicken: "Chicken"
-  cow: "Cow"
-  creeper: "Creeper"
-  donkey: "Donkey"
-  elder_guardian: "Elder Guardian"
-  ender_dragon: "Ender Dragon"
-  enderman: "Enderman"
-  endermite: "Endermite"
-  evoker: "Evoker"
-  ghast: "Ghast"
-  giant: "Giant"
-  guardian: "Guardian"
-  horse: "Horse"
-  husk: "Husk"
-  illusioner: "Illusioner"
-  iron_golem: "Iron Golem"
-  llama: "Llama"
-  magma_cube: "Magma Cube"
-  mule: "Mule"
-  mushroom_cow: "Mooshroom"
-  ocelot: "Ocelot"
-  parrot: "Parrot"
-  pig: "Pig"
-  pig_zombie: "Zombie Pigman"
-  polar_bear: "Polar Bear"
-  rabbit: "Rabbit"
-  sheep: "Sheep"
-  shulker: "Shulker"
-  silverfish: "Silverfish"
-  skeleton: "Skeleton"
-  skeleton_horse: "Skeleton Horse"
-  slime: "Slime"
-  snowman: "Snow Golem"
-  spider: "Spider"
-  squid: "Squid"
-  stray: "Stray"
-  vex: "Vex"
-  villager: "Villager"
-  vindicator: "Vindicator"
-  witch: "Witch"
-  wither: "Wither"
-  wither_skeleton: "Wither Skeleton"
-  wolf: "Wolf"
-  zombie: "Zombie"
-  zombie_horse: "Zombie Horse"
-  zombie_villager: "Zombie Villager"
+#Difference between now and last join/leave time that switches from a relative to absolute format
+#In days
+JoinLeaveTimeDifference: 30
