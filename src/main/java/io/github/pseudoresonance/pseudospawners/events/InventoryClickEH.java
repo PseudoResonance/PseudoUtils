@@ -31,27 +31,31 @@ public class InventoryClickEH implements Listener {
 	
 	@EventHandler
 	public void onPrepareItemCraft(PrepareItemCraftEvent e) {
-		Player p = (Player) e.getViewers().get(0);
-		CraftingInventory inv = e.getInventory();
-		ItemStack[] matrix = inv.getMatrix();
-		if (matrix[0] != null && matrix[1] != null && matrix[2] != null && matrix[3] != null && matrix[4] != null && matrix[5] != null && matrix[6] != null && matrix[7] != null && matrix[8] != null) {
-			if (matrix[0].getType() == Material.IRON_FENCE && matrix[1].getType() == Material.IRON_FENCE && matrix[2].getType() == Material.IRON_FENCE && matrix[3].getType() == Material.IRON_FENCE && matrix[4].getType() == Material.MONSTER_EGG && matrix[5].getType() == Material.IRON_FENCE && matrix[6].getType() == Material.IRON_FENCE && matrix[7].getType() == Material.IRON_FENCE && matrix[8].getType() == Material.IRON_FENCE) {
-				SpawnEggMeta sem = (SpawnEggMeta) matrix[4].getItemMeta();
-				EntityType et = sem.getSpawnedType();
-				if (p.hasPermission("pseudospawners.craft")) {
-					try {
-						if (p.hasPermission("pseudospawners.craft." + et.toString().toLowerCase()) || p.hasPermission("pseudospawners.override")) {
-							ItemStack spawner = newSpawner(ConfigOptions.color + ConfigOptions.getName(et) + " Spawner");
-							inv.setResult(spawner);
+		try {
+			Player p = (Player) e.getViewers().get(0);
+			CraftingInventory inv = e.getInventory();
+			ItemStack[] matrix = inv.getMatrix();
+			if (matrix.length == 9) {
+				if (matrix[0] != null && matrix[1] != null && matrix[2] != null && matrix[3] != null && matrix[4] != null && matrix[5] != null && matrix[6] != null && matrix[7] != null && matrix[8] != null) {
+					if (matrix[0].getType() == Material.IRON_FENCE && matrix[1].getType() == Material.IRON_FENCE && matrix[2].getType() == Material.IRON_FENCE && matrix[3].getType() == Material.IRON_FENCE && matrix[4].getType() == Material.MONSTER_EGG && matrix[5].getType() == Material.IRON_FENCE && matrix[6].getType() == Material.IRON_FENCE && matrix[7].getType() == Material.IRON_FENCE && matrix[8].getType() == Material.IRON_FENCE) {
+						SpawnEggMeta sem = (SpawnEggMeta) matrix[4].getItemMeta();
+						EntityType et = sem.getSpawnedType();
+						if (p.hasPermission("pseudospawners.craft")) {
+							try {
+								if (p.hasPermission("pseudospawners.craft." + et.toString().toLowerCase()) || p.hasPermission("pseudospawners.override")) {
+									ItemStack spawner = newSpawner(ConfigOptions.color + ConfigOptions.getName(et) + " Spawner");
+									inv.setResult(spawner);
+									p.updateInventory();
+									return;
+								}
+							} catch (NullPointerException ex) {}
+							inv.setResult(null);
 							p.updateInventory();
-							return;
 						}
-					} catch (NullPointerException ex) {}
-					inv.setResult(null);
-					p.updateInventory();
+					}
 				}
 			}
-		}
+		} catch (IndexOutOfBoundsException ex) {}
 	}
 	
 	@EventHandler
