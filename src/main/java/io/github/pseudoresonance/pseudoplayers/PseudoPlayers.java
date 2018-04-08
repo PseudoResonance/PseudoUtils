@@ -11,6 +11,7 @@ import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataControlle
 import io.github.pseudoresonance.pseudoplayers.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoplayers.commands.ResetSC;
 import io.github.pseudoresonance.pseudoplayers.commands.PlayerSC;
+import io.github.pseudoresonance.pseudoplayers.completers.PlayerTC;
 import io.github.pseudoresonance.pseudoplayers.completers.PseudoPlayersTC;
 import io.github.pseudoresonance.pseudoplayers.listeners.PlayerJoinLeaveL;
 
@@ -67,6 +68,7 @@ public class PseudoPlayers extends PseudoPlugin {
 
 	private void initializeTabcompleters() {
 		this.getCommand("pseudoplayers").setTabCompleter(new PseudoPlayersTC());
+		this.getCommand("player").setTabCompleter(new PlayerTC());
 	}
 
 	private void initializeListeners() {
