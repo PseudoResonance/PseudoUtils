@@ -4,6 +4,7 @@ main: io.github.pseudoresonance.pseudoplayers.PseudoPlayers
 version: 0.0.4
 description: Stores and gets data about players
 depend: [PseudoAPI]
+softdepend: [VoxelSniper]
 commands:
   pseudoplayers:
     description: PseudoPlayers Menu
