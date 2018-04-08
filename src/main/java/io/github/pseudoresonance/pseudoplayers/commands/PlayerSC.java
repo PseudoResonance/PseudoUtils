@@ -14,7 +14,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import io.github.pseudoresonance.pseudoapi.bukkit.ChatComponent;
+import io.github.pseudoresonance.pseudoapi.bukkit.ChatElement;
+import io.github.pseudoresonance.pseudoapi.bukkit.ComponentType;
 import io.github.pseudoresonance.pseudoapi.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudoapi.bukkit.ElementBuilder;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoAPI;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
@@ -81,7 +85,7 @@ public class PlayerSC implements SubCommandExecutor {
 				}
 			} else
 				firstJoinTime = "Unknown";
-			messages.add(ConfigOptions.description + "First Joined: " + firstJoinTime);
+			messages.add(ConfigOptions.description + "First Joined: " + ConfigOptions.command + firstJoinTime);
 			Object joinLeaveO = PlayerDataController.getPlayerSetting(uuid, "lastjoinleave");
 			String joinLeaveTime = "";
 			if (joinLeaveO != null) {
@@ -92,13 +96,13 @@ public class PlayerSC implements SubCommandExecutor {
 				LocalDate joinLeaveDate = joinLeaveTS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				long joinLeaveDays = ChronoUnit.DAYS.between(joinLeaveDate, Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate());
 				if (joinLeaveDays >= io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeDifference) {
-					joinLeaveTime = "Since: " + new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeFormat).format(joinLeaveTS);
+					joinLeaveTime = "Since: " + ConfigOptions.command + new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeFormat).format(joinLeaveTS);
 				} else {
 					long diff = System.currentTimeMillis() - joinLeaveTS.getTime();
 					if (diff < 0) {
 						diff = 0 - diff;
 					}
-					joinLeaveTime = "For: " + Utils.millisToHumanFormat(diff);
+					joinLeaveTime = "For: " + ConfigOptions.command + Utils.millisToHumanFormat(diff);
 				}
 			} else
 				joinLeaveTime = "Unknown";
@@ -113,7 +117,7 @@ public class PlayerSC implements SubCommandExecutor {
 							String s = (String) logoutLocationO;
 							String[] split = s.split(",");
 							if (split.length >= 4)
-								messages.add(ConfigOptions.description + "Logout Location: World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3]);
+								messages.add(new ElementBuilder(new ChatElement(ConfigOptions.description + "Logout Location: "), new ChatElement(ConfigOptions.command + "World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3], new ChatComponent(ComponentType.SUGGEST_COMMAND, "/tp @p " + split[1] + " " + split[2] + " " + split[3]), new ChatComponent(ComponentType.SHOW_TEXT, ConfigOptions.description + "Click to teleport to coordinates"))).build());
 						}
 					}
 				}
