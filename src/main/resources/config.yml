@@ -3,7 +3,7 @@
 ######################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
-Version: 1
+Version: 2
 
 
 #########
@@ -27,3 +27,10 @@ JoinLeaveTimeFormat: "MM-dd-yy h:mm:ss a"
 #Difference between now and last join/leave time that switches from a relative to absolute format
 #In days
 JoinLeaveTimeDifference: 30
+
+#Teleportation Format
+#{world} = world name
+#{x} = x coordinate
+#{y} = y coordinate
+#{z} = z coordinate
+TeleportationFormat: "tp @p {x} {y} {z}"

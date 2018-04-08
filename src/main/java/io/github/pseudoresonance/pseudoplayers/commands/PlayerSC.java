@@ -116,8 +116,14 @@ public class PlayerSC implements SubCommandExecutor {
 						if (logoutLocationO instanceof String) {
 							String s = (String) logoutLocationO;
 							String[] split = s.split(",");
-							if (split.length >= 4)
-								messages.add(new ElementBuilder(new ChatElement(ConfigOptions.description + "Logout Location: "), new ChatElement(ConfigOptions.command + "World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3], new ChatComponent(ComponentType.SUGGEST_COMMAND, "/tp @p " + split[1] + " " + split[2] + " " + split[3]), new ChatComponent(ComponentType.SHOW_TEXT, ConfigOptions.description + "Click to teleport to coordinates"))).build());
+							if (split.length >= 4) {
+								String tpCommand = io.github.pseudoresonance.pseudoplayers.ConfigOptions.teleportationFormat;
+								tpCommand = tpCommand.replaceAll("\\{world\\}", split[0]);
+								tpCommand = tpCommand.replaceAll("\\{x\\}", split[1]);
+								tpCommand = tpCommand.replaceAll("\\{y\\}", split[2]);
+								tpCommand = tpCommand.replaceAll("\\{z\\}", split[3]);
+								messages.add(new ElementBuilder(new ChatElement(ConfigOptions.description + "Logout Location: "), new ChatElement(ConfigOptions.command + "World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3], new ChatComponent(ComponentType.SUGGEST_COMMAND, "/" + tpCommand), new ChatComponent(ComponentType.SHOW_TEXT, ConfigOptions.description + "Click to teleport to coordinates"))).build());
+							}
 						}
 					}
 				}

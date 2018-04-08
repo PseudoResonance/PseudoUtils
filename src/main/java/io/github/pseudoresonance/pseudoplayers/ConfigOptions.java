@@ -17,6 +17,8 @@ public class ConfigOptions implements ConfigOption {
 	public static String joinLeaveTimeFormat = "MM-dd-yy h:mm:ss a";
 	public static int joinLeaveTimeDifference = 30;
 	
+	public static String teleportationFormat = "tp @p {x} {y} {z}";
+	
 	public static boolean updateConfig() {
 		boolean error = false;
 		InputStream configin = PseudoPlayers.plugin.getClass().getResourceAsStream("/config.yml"); 
@@ -65,6 +67,7 @@ public class ConfigOptions implements ConfigOption {
 		firstJoinTimeFormat = "MM-dd-yy h:mm:ss a";
 		firstJoinTimeDifference = 7;
 		joinLeaveTimeFormat = "MM-dd-yy h:mm:ss a";
+		teleportationFormat = "tp @p {x} {y} {z}";
 		if (PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat") != "") {
 			firstJoinTimeFormat = PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat");
 		} else {
@@ -86,6 +89,11 @@ public class ConfigOptions implements ConfigOption {
 			joinLeaveTimeFormat = PseudoPlayers.plugin.getConfig().getString("JoinLeaveTimeFormat");
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for JoinLeaveTimeFormat!");
+		}
+		if (PseudoPlayers.plugin.getConfig().getString("TeleportationFormat") != "") {
+			teleportationFormat = PseudoPlayers.plugin.getConfig().getString("TeleportationFormat");
+		} else {
+			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for TeleportationFormat!");
 		}
 	}
 	
