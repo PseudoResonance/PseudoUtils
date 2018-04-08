@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import org.bukkit.configuration.file.YamlConfiguration;
 import io.github.pseudoresonance.pseudoapi.bukkit.ConfigOption;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message;
-import io.github.pseudoresonance.pseudoapi.bukkit.PseudoAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class ConfigOptions implements ConfigOption {
@@ -66,25 +65,25 @@ public class ConfigOptions implements ConfigOption {
 		firstJoinTimeFormat = "MM-dd-yy h:mm:ss a";
 		firstJoinTimeDifference = 7;
 		joinLeaveTimeFormat = "MM-dd-yy h:mm:ss a";
-		if (PseudoAPI.plugin.getConfig().getString("FirstJoinTimeFormat") != "") {
-			firstJoinTimeFormat = PseudoAPI.plugin.getConfig().getString("FirstJoinTimeFormat");
+		if (PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat") != "") {
+			firstJoinTimeFormat = PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat");
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for FirstJoinTimeFormat!");
 		}
-		String firstJoinTime = PseudoAPI.plugin.getConfig().getString("FirstJoinTimeDifference");
+		String firstJoinTime = PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeDifference");
 		if (isInteger(firstJoinTime)) {
 			firstJoinTimeDifference = Integer.valueOf(firstJoinTime);
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for FirstJoinTimeDifference!");
 		}
-		String joinLeaveTime = PseudoAPI.plugin.getConfig().getString("JoinLeaveTimeDifference");
+		String joinLeaveTime = PseudoPlayers.plugin.getConfig().getString("JoinLeaveTimeDifference");
 		if (isInteger(joinLeaveTime)) {
 			joinLeaveTimeDifference = Integer.valueOf(joinLeaveTime);
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for JoinLeaveTimeDifference!");
 		}
-		if (PseudoAPI.plugin.getConfig().getString("JoinLeaveTimeFormat") != "") {
-			joinLeaveTimeFormat = PseudoAPI.plugin.getConfig().getString("JoinLeaveTimeFormat");
+		if (PseudoPlayers.plugin.getConfig().getString("JoinLeaveTimeFormat") != "") {
+			joinLeaveTimeFormat = PseudoPlayers.plugin.getConfig().getString("JoinLeaveTimeFormat");
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for JoinLeaveTimeFormat!");
 		}

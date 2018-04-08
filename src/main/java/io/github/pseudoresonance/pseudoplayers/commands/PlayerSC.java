@@ -62,43 +62,59 @@ public class PlayerSC implements SubCommandExecutor {
 			List<Object> messages = new ArrayList<Object>();
 			messages.add(ConfigOptions.border + "===---" + ConfigOptions.title + name + " Details" + ConfigOptions.border + "---===");
 			Object firstJoinO = PlayerDataController.getPlayerSetting(uuid, "firstjoin");
-			Timestamp firstJoinTS = new Timestamp(System.currentTimeMillis());
-			if (firstJoinO instanceof Timestamp) {
-				firstJoinTS = (Timestamp) firstJoinO;
-			}
 			String firstJoinTime = "";
-			LocalDate firstJoinDate = firstJoinTS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			long firstJoinDays = ChronoUnit.DAYS.between(firstJoinDate, Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate());
-			if (firstJoinDays >= io.github.pseudoresonance.pseudoplayers.ConfigOptions.firstJoinTimeDifference) {
-				firstJoinTime = new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.firstJoinTimeFormat).format(firstJoinTS);
-			} else {
-				firstJoinTime = Utils.millisToHumanFormat(System.currentTimeMillis() - firstJoinTS.getTime()) + " ago";
-			}
+			if (firstJoinO != null) {
+				Timestamp firstJoinTS = new Timestamp(System.currentTimeMillis());
+				if (firstJoinO instanceof Timestamp) {
+					firstJoinTS = (Timestamp) firstJoinO;
+				}
+				LocalDate firstJoinDate = firstJoinTS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				long firstJoinDays = ChronoUnit.DAYS.between(firstJoinDate, Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate());
+				if (firstJoinDays >= io.github.pseudoresonance.pseudoplayers.ConfigOptions.firstJoinTimeDifference) {
+					firstJoinTime = new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.firstJoinTimeFormat).format(firstJoinTS);
+				} else {
+					long diff = System.currentTimeMillis() - firstJoinTS.getTime();
+					if (diff < 0) {
+						diff = 0 - diff;
+					}
+					firstJoinTime = Utils.millisToHumanFormat(diff) + " ago";
+				}
+			} else
+				firstJoinTime = "Unknown";
 			messages.add(ConfigOptions.description + "First Joined: " + firstJoinTime);
 			Object joinLeaveO = PlayerDataController.getPlayerSetting(uuid, "lastjoinleave");
-			Timestamp joinLeaveTS = new Timestamp(System.currentTimeMillis());
-			if (joinLeaveO instanceof Timestamp) {
-				joinLeaveTS = (Timestamp) joinLeaveO;
-			}
 			String joinLeaveTime = "";
-			LocalDate joinLeaveDate = joinLeaveTS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			long joinLeaveDays = ChronoUnit.DAYS.between(joinLeaveDate, Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate());
-			if (joinLeaveDays >= io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeDifference) {
-				joinLeaveTime = "Since: " + new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeFormat).format(joinLeaveTS);
-			} else {
-				joinLeaveTime = "For: " + Utils.millisToHumanFormat(System.currentTimeMillis() - joinLeaveTS.getTime());
-			}
+			if (joinLeaveO != null) {
+				Timestamp joinLeaveTS = new Timestamp(System.currentTimeMillis());
+				if (joinLeaveO instanceof Timestamp) {
+					joinLeaveTS = (Timestamp) joinLeaveO;
+				}
+				LocalDate joinLeaveDate = joinLeaveTS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				long joinLeaveDays = ChronoUnit.DAYS.between(joinLeaveDate, Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault()).toLocalDate());
+				if (joinLeaveDays >= io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeDifference) {
+					joinLeaveTime = "Since: " + new SimpleDateFormat(io.github.pseudoresonance.pseudoplayers.ConfigOptions.joinLeaveTimeFormat).format(joinLeaveTS);
+				} else {
+					long diff = System.currentTimeMillis() - joinLeaveTS.getTime();
+					if (diff < 0) {
+						diff = 0 - diff;
+					}
+					joinLeaveTime = "For: " + Utils.millisToHumanFormat(diff);
+				}
+			} else
+				joinLeaveTime = "Unknown";
 			if (Bukkit.getServer().getPlayer(name) != null)
 				messages.add(ConfigOptions.description + "Online " + joinLeaveTime);
 			else {
 				messages.add(ConfigOptions.description + "Offline " + joinLeaveTime);
 				if (sender.hasPermission("pseudoplayers.view.logoutlocation")) {
 					Object logoutLocationO = PlayerDataController.getPlayerSetting(uuid, "logoutLocation");
-					if (logoutLocationO instanceof String) {
-						String s = (String) logoutLocationO;
-						String[] split = s.split(",");
-						if (split.length >= 4)
-							messages.add(ConfigOptions.description + "Logout Location: World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3]);
+					if (logoutLocationO != null) {
+						if (logoutLocationO instanceof String) {
+							String s = (String) logoutLocationO;
+							String[] split = s.split(",");
+							if (split.length >= 4)
+								messages.add(ConfigOptions.description + "Logout Location: World: " + split[0] + " X: " + split[1] + " Y: " + split[2] + " Z: " + split[3]);
+						}
 					}
 				}
 			}
