@@ -3,7 +3,7 @@
 ######################
 
 #DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
-Version: 2
+Version: 3
 
 
 #########
@@ -34,3 +34,11 @@ JoinLeaveTimeDifference: 30
 #{y} = y coordinate
 #{z} = z coordinate
 TeleportationFormat: "tp @p {x} {y} {z}"
+
+
+#######
+#Other#
+#######
+
+#Aggressively take over /p command
+AggressiveCommands: false

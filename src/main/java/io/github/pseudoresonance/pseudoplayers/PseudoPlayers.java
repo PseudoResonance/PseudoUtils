@@ -1,5 +1,9 @@
 package io.github.pseudoresonance.pseudoplayers;
 
+import java.util.ArrayList;
+
+import org.bukkit.command.PluginCommand;
+
 import io.github.pseudoresonance.pseudoapi.bukkit.CommandDescription;
 import io.github.pseudoresonance.pseudoapi.bukkit.HelpSC;
 import io.github.pseudoresonance.pseudoapi.bukkit.MainCommand;
@@ -22,6 +26,9 @@ public class PseudoPlayers extends PseudoPlugin {
 	
 	private static MainCommand mainCommand;
 	private static HelpSC helpSubCommand;
+
+	private static PlayerSC playerSubCommand;
+	private static PlayerTC playerTabCompleter;
 	
 	private static ConfigOptions configOptions;
 	
@@ -33,15 +40,17 @@ public class PseudoPlayers extends PseudoPlugin {
 		PlayerDataController.addColumn(new Column("logoutLocation", "VARCHAR(81)", "NULL"));
 		configOptions = new ConfigOptions();
 		ConfigOptions.updateConfig();
+		configOptions.reloadConfig();
 		message = new Message(this);
 		mainCommand = new MainCommand(plugin);
 		helpSubCommand = new HelpSC(plugin);
+		playerSubCommand = new PlayerSC();
+		playerTabCompleter = new PlayerTC();
 		initializeCommands();
 		initializeTabcompleters();
 		initializeSubCommands();
 		initializeListeners();
 		setCommandDescriptions();
-		configOptions.reloadConfig();
 		PseudoAPI.registerConfig(configOptions);
 	}
 	
@@ -56,7 +65,19 @@ public class PseudoPlayers extends PseudoPlugin {
 
 	private void initializeCommands() {
 		this.getCommand("pseudoplayers").setExecutor(mainCommand);
-		this.getCommand("player").setExecutor(new PlayerSC());
+		this.getCommand("player").setExecutor(playerSubCommand);
+		if (ConfigOptions.aggressiveCommands) {
+			PluginCommand pc = getServer().getPluginCommand("p");
+			pc.setExecutor(playerSubCommand);
+			pc.setTabCompleter(playerTabCompleter);
+			pc.setAliases(new ArrayList<String>());
+			pc.setDescription("Shows player information");
+			pc.setLabel("player");
+			pc.setName("player");
+			pc.setPermission("");
+			pc.setPermissionMessage("");
+			pc.setUsage("");
+		}
 	}
 
 	private void initializeSubCommands() {
@@ -68,7 +89,7 @@ public class PseudoPlayers extends PseudoPlugin {
 
 	private void initializeTabcompleters() {
 		this.getCommand("pseudoplayers").setTabCompleter(new PseudoPlayersTC());
-		this.getCommand("player").setTabCompleter(new PlayerTC());
+		this.getCommand("player").setTabCompleter(playerTabCompleter);
 	}
 
 	private void initializeListeners() {

@@ -19,6 +19,8 @@ public class ConfigOptions implements ConfigOption {
 	
 	public static String teleportationFormat = "tp @p {x} {y} {z}";
 	
+	public static boolean aggressiveCommands = false;
+	
 	public static boolean updateConfig() {
 		boolean error = false;
 		InputStream configin = PseudoPlayers.plugin.getClass().getResourceAsStream("/config.yml"); 
@@ -68,6 +70,7 @@ public class ConfigOptions implements ConfigOption {
 		firstJoinTimeDifference = 7;
 		joinLeaveTimeFormat = "MM-dd-yy h:mm:ss a";
 		teleportationFormat = "tp @p {x} {y} {z}";
+		aggressiveCommands = false;
 		if (PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat") != "") {
 			firstJoinTimeFormat = PseudoPlayers.plugin.getConfig().getString("FirstJoinTimeFormat");
 		} else {
@@ -94,6 +97,19 @@ public class ConfigOptions implements ConfigOption {
 			teleportationFormat = PseudoPlayers.plugin.getConfig().getString("TeleportationFormat");
 		} else {
 			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for TeleportationFormat!");
+		}
+		try {
+			String s = PseudoPlayers.plugin.getConfig().getString("AggressiveCommands");
+			if (s.equalsIgnoreCase("true")) {
+				aggressiveCommands = true;
+			} else if (s.equalsIgnoreCase("false")) {
+				aggressiveCommands = false;
+			} else {
+				aggressiveCommands = false;
+				Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for AggressiveCommands!");
+			}
+		} catch (Exception e) {
+			Message.sendConsoleMessage(ChatColor.RED + "Invalid config option for AggressiveCommands!");
 		}
 	}
 	
