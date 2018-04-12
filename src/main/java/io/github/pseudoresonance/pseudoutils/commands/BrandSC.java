@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
-import io.github.pseudoresonance.pseudoapi.bukkit.Utils;
+import io.github.pseudoresonance.pseudoutils.PlayerBrand;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 import net.md_5.bungee.api.ChatColor;
 
@@ -18,7 +18,7 @@ public class BrandSC implements SubCommandExecutor {
 			if (args.length > 0) {
 				Player p = Bukkit.getServer().getPlayer(args[0]);
 				if (p != null) {
-					PseudoUtils.message.sendPluginMessage(sender, "Player: " + p.getName() + "'s Client Brand: " + ChatColor.RED + Utils.getBrand(p.getName()));
+					PseudoUtils.message.sendPluginMessage(sender, "Player: " + p.getName() + "'s Client Brand: " + ChatColor.RED + PlayerBrand.getBrand(p.getName()));
 					return true;
 				} else
 					PseudoUtils.message.sendPluginError(sender, Errors.NOT_ONLINE, args[0]);

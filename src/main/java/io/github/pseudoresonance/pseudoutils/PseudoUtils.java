@@ -6,12 +6,18 @@ import io.github.pseudoresonance.pseudoapi.bukkit.MainCommand;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoAPI;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoPlugin;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.Column;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
+import io.github.pseudoresonance.pseudoutils.commands.FlySC;
+import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.listeners.ClientBrandL;
+import io.github.pseudoresonance.pseudoutils.listeners.EntityDamageL;
+import io.github.pseudoresonance.pseudoutils.listeners.FoodChangeL;
 import io.github.pseudoresonance.pseudoutils.listeners.PlayerJoinLeaveL;
 
 public class PseudoUtils extends PseudoPlugin {
@@ -23,6 +29,8 @@ public class PseudoUtils extends PseudoPlugin {
 	private static HelpSC helpSubCommand;
 	private static MetricsSC metricsSubCommand;
 	private static BrandSC brandSubCommand;
+	private static GodSC godSubCommand;
+	private static FlySC flySubCommand;
 
 	private static ConfigOptions configOptions;
 
@@ -31,6 +39,8 @@ public class PseudoUtils extends PseudoPlugin {
 		super.onEnable();
 		this.saveDefaultConfig();
 		plugin = this;
+		PlayerDataController.addColumn(new Column("godMode", "BIT", "0"));
+		PlayerDataController.addColumn(new Column("ip", "VARCHAR(15)", "'0.0.0.0'"));
 		TPS.startTps();
 		configOptions = new ConfigOptions();
 		ConfigOptions.updateConfig();
@@ -40,6 +50,8 @@ public class PseudoUtils extends PseudoPlugin {
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();
 		brandSubCommand = new BrandSC();
+		godSubCommand = new GodSC();
+		flySubCommand = new FlySC();
 		initializeCommands();
 		initializeTabcompleters();
 		initializeSubCommands();
@@ -61,6 +73,8 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("pseudoutils").setExecutor(mainCommand);
 		this.getCommand("metrics").setExecutor(metricsSubCommand);
 		this.getCommand("brand").setExecutor(brandSubCommand);
+		this.getCommand("god").setExecutor(godSubCommand);
+		this.getCommand("fly").setExecutor(flySubCommand);
 	}
 
 	private void initializeSubCommands() {
@@ -69,6 +83,8 @@ public class PseudoUtils extends PseudoPlugin {
 		subCommands.put("reset", new ResetSC());
 		subCommands.put("metrics", metricsSubCommand);
 		subCommands.put("brand", brandSubCommand);
+		subCommands.put("god", godSubCommand);
+		subCommands.put("fly", flySubCommand);
 	}
 
 	private void initializeTabcompleters() {
@@ -77,6 +93,8 @@ public class PseudoUtils extends PseudoPlugin {
 
 	private void initializeListeners() {
 		getServer().getPluginManager().registerEvents(new PlayerJoinLeaveL(), this);
+		getServer().getPluginManager().registerEvents(new EntityDamageL(), this);
+		getServer().getPluginManager().registerEvents(new FoodChangeL(), this);
 		getServer().getMessenger().registerIncomingPluginChannel(PseudoAPI.plugin, "MC|Brand", new ClientBrandL());
 	}
 
@@ -85,6 +103,8 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("pseudoutils help", "Shows PseudoUtils commands", ""));
 		commandDescriptions.add(new CommandDescription("pseudoutils reload", "Reloads PseudoUtils config", "pseudoutils.reload"));
 		commandDescriptions.add(new CommandDescription("pseudoutils reset", "Resets PseudoUtils config", "pseudoutils.reset"));
+		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
+		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
 		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
 		commandDescriptions.add(new CommandDescription("brand <player>", "Shows user client brand", "pseudoutils.brand", false));
 	}

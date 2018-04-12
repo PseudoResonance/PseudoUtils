@@ -1,7 +1,7 @@
 name: PseudoUtils
 author: PseudoResonance
 main: io.github.pseudoresonance.pseudoutils.PseudoUtils
-version: 0.0.1
+version: 0.0.2
 description: Adds useful utilities
 depend: [PseudoAPI]
 commands:
@@ -14,7 +14,29 @@ commands:
   brand:
     description: Player client brand
     permission: pseudoutils.brand
+  god:
+    description: Sets god mode
+    permission: pseudoutils.god
+  fly:
+    description: Sets fly mode
+    permission: pseudoutils.fly
 permissions:
+  pseudoutils.god:
+    description: Allows the player to set their god mode
+    default: op
+  pseudoutils.god.others:
+    description: Allows the player to set god mode of other players
+    default: op
+    children:
+      pseudoutils.god: true
+  pseudoutils.fly:
+    description: Allows the player to set their fly mode
+    default: op
+  pseudoutils.fly.others:
+    description: Allows the player to set fly mode of other players
+    default: op
+    children:
+      pseudoutils.fly: true
   pseudoutils.brand:
     description: Allows the player to see user's client brands
     default: op
@@ -56,3 +78,5 @@ permissions:
       pseudoutils.metrics.cpu: true
       pseudoutils.metrics.memory: true
       pseudoutils.metrics.other: true
+      pseudoutils.god.others: true
+      pseudoutils.fly.others: true
