@@ -30,8 +30,6 @@ public class PseudoUtils extends PseudoPlugin {
 	private static HelpSC helpSubCommand;
 	private static MetricsSC metricsSubCommand;
 	private static BrandSC brandSubCommand;
-	private static GodSC godSubCommand;
-	private static FlySC flySubCommand;
 
 	private static ConfigOptions configOptions;
 	
@@ -54,8 +52,6 @@ public class PseudoUtils extends PseudoPlugin {
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();
 		brandSubCommand = new BrandSC();
-		godSubCommand = new GodSC();
-		flySubCommand = new FlySC();
 		initializeCommands();
 		initializeTabcompleters();
 		initializeSubCommands();
@@ -72,8 +68,8 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("pseudoutils").setExecutor(mainCommand);
 		this.getCommand("metrics").setExecutor(metricsSubCommand);
 		this.getCommand("brand").setExecutor(brandSubCommand);
-		this.getCommand("god").setExecutor(godSubCommand);
-		this.getCommand("fly").setExecutor(flySubCommand);
+		this.getCommand("god").setExecutor(new GodSC());
+		this.getCommand("fly").setExecutor(new FlySC());
 	}
 
 	private void initializeSubCommands() {
@@ -82,8 +78,6 @@ public class PseudoUtils extends PseudoPlugin {
 		subCommands.put("reset", new ResetSC());
 		subCommands.put("metrics", metricsSubCommand);
 		subCommands.put("brand", brandSubCommand);
-		subCommands.put("god", godSubCommand);
-		subCommands.put("fly", flySubCommand);
 	}
 
 	private void initializeTabcompleters() {

@@ -20,6 +20,9 @@ public class GodSC implements SubCommandExecutor {
 				if (sender instanceof Player) {
 					p = (Player) sender;
 					Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+					if (o == null) {
+						o = false;
+					}
 					if (o instanceof Boolean) {
 						boolean b = (Boolean) o;
 						PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);
@@ -31,8 +34,7 @@ public class GodSC implements SubCommandExecutor {
 							PseudoUtils.message.sendPluginMessage(sender, "Disabled god mode!");
 						return true;
 					}
-				}
-				else {
+				} else {
 					PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "Please specify a player!");
 					return false;
 				}
@@ -51,6 +53,9 @@ public class GodSC implements SubCommandExecutor {
 			}
 			if (p != null) {
 				Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+				if (o == null) {
+					o = false;
+				}
 				if (o instanceof Boolean) {
 					boolean b = (Boolean) o;
 					PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);

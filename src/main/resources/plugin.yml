@@ -1,7 +1,7 @@
 name: PseudoUtils
 author: PseudoResonance
 main: io.github.pseudoresonance.pseudoutils.PseudoUtils
-version: 0.0.3
+version: 0.0.4
 description: Adds useful utilities
 depend: [PseudoAPI]
 commands:
