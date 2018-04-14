@@ -6,6 +6,7 @@ import io.github.pseudoresonance.pseudoapi.bukkit.MainCommand;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoAPI;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoPlugin;
+import io.github.pseudoresonance.pseudoapi.bukkit.PseudoUpdater;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.Column;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
@@ -33,8 +34,11 @@ public class PseudoUtils extends PseudoPlugin {
 	private static FlySC flySubCommand;
 
 	private static ConfigOptions configOptions;
+	
+	public void onLoad() {
+		PseudoUpdater.registerPlugin(this);
+	}
 
-	@Override
 	public void onEnable() {
 		super.onEnable();
 		this.saveDefaultConfig();
@@ -58,11 +62,6 @@ public class PseudoUtils extends PseudoPlugin {
 		initializeListeners();
 		setCommandDescriptions();
 		PseudoAPI.registerConfig(configOptions);
-	}
-
-	@Override
-	public void onDisable() {
-		super.onDisable();
 	}
 
 	public static ConfigOptions getConfigOptions() {
