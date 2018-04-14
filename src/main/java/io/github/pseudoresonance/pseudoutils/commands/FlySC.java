@@ -48,13 +48,15 @@ public class FlySC implements SubCommandExecutor {
 				if (!b) {
 					PseudoUtils.message.sendPluginMessage(sender, "Enabled fly mode for " + p.getName() + "!");
 					if (sender instanceof Player)
-						PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by " + ((Player) sender).getName() + "!");
+						if (!sender.getName().equals(p.getName()))
+							PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by " + ((Player) sender).getName() + "!");
 					else
 						PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by Console!");
 				} else {
 					PseudoUtils.message.sendPluginMessage(sender, "Disabled fly mode for " + p.getName() + "!");
 					if (sender instanceof Player)
-						PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by " + ((Player) sender).getName() + "!");
+						if (!sender.getName().equals(p.getName()))
+							PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by " + ((Player) sender).getName() + "!");
 					else
 						PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by Console!");
 				}
