@@ -1,8 +1,9 @@
 name: PseudoUtils
 author: PseudoResonance
 main: io.github.pseudoresonance.pseudoutils.PseudoUtils
-version: 0.0.6
+version: 0.0.7
 description: Adds useful utilities
+api-version: 1.13
 depend: [PseudoAPI]
 commands:
   pseudoutils:
@@ -51,6 +52,9 @@ permissions:
   pseudoutils.metrics.tps:
     description: Allows the player to see tps details in system metrics
     default: op
+  pseudoutils.metrics.storage:
+    description: Allows the player to see storage details in system metrics
+    default: op
   pseudoutils.metrics.java:
     description: Allows the player to see java details in system metrics
     default: op
@@ -74,6 +78,7 @@ permissions:
       pseudoutils.reload: true
       pseudoutils.brand: true
       pseudoutils.metrics: true
+      pseudoutils.metrics.storage: true
       pseudoutils.metrics.java: true
       pseudoutils.metrics.cpu: true
       pseudoutils.metrics.memory: true
