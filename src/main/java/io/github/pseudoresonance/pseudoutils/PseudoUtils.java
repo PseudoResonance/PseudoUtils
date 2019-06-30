@@ -88,7 +88,7 @@ public class PseudoUtils extends PseudoPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerJoinLeaveL(), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageL(), this);
 		getServer().getPluginManager().registerEvents(new FoodChangeL(), this);
-		getServer().getMessenger().registerIncomingPluginChannel(PseudoAPI.plugin, "MC|Brand", new ClientBrandL());
+		getServer().getMessenger().registerIncomingPluginChannel(PseudoAPI.plugin, "minecraft:brand", new ClientBrandL());
 	}
 
 	private void setCommandDescriptions() {
