@@ -9,9 +9,11 @@ import io.github.pseudoresonance.pseudoapi.bukkit.PseudoPlugin;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoUpdater;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.Column;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoutils.commands.BackSC;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
 import io.github.pseudoresonance.pseudoutils.commands.FlySC;
 import io.github.pseudoresonance.pseudoutils.commands.GodSC;
+import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
@@ -19,7 +21,9 @@ import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.listeners.ClientBrandL;
 import io.github.pseudoresonance.pseudoutils.listeners.EntityDamageL;
 import io.github.pseudoresonance.pseudoutils.listeners.FoodChangeL;
+import io.github.pseudoresonance.pseudoutils.listeners.GamemodeChangeL;
 import io.github.pseudoresonance.pseudoutils.listeners.PlayerJoinLeaveL;
+import io.github.pseudoresonance.pseudoutils.listeners.PlayerTeleportL;
 
 public class PseudoUtils extends PseudoPlugin {
 
@@ -42,7 +46,9 @@ public class PseudoUtils extends PseudoPlugin {
 		this.saveDefaultConfig();
 		plugin = this;
 		PlayerDataController.addColumn(new Column("godMode", "BIT", "0"));
+		PlayerDataController.addColumn(new Column("flyMode", "BIT", "0"));
 		PlayerDataController.addColumn(new Column("ip", "VARCHAR(15)", "'0.0.0.0'"));
+		PlayerDataController.addColumn(new Column("backLocation", "VARCHAR(186)", "NULL"));
 		TPS.startTps();
 		configOptions = new ConfigOptions();
 		ConfigOptions.updateConfig();
@@ -70,6 +76,8 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("brand").setExecutor(brandSubCommand);
 		this.getCommand("god").setExecutor(new GodSC());
 		this.getCommand("fly").setExecutor(new FlySC());
+		this.getCommand("heal").setExecutor(new HealSC());
+		this.getCommand("back").setExecutor(new BackSC());
 	}
 
 	private void initializeSubCommands() {
@@ -88,6 +96,8 @@ public class PseudoUtils extends PseudoPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerJoinLeaveL(), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageL(), this);
 		getServer().getPluginManager().registerEvents(new FoodChangeL(), this);
+		getServer().getPluginManager().registerEvents(new GamemodeChangeL(), this);
+		getServer().getPluginManager().registerEvents(new PlayerTeleportL(), this);
 		getServer().getMessenger().registerIncomingPluginChannel(PseudoAPI.plugin, "minecraft:brand", new ClientBrandL());
 	}
 
@@ -98,6 +108,8 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("pseudoutils reset", "Resets PseudoUtils config", "pseudoutils.reset"));
 		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
 		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
+		commandDescriptions.add(new CommandDescription("heal", "Heals player", "pseudoutils.heal"));
+		commandDescriptions.add(new CommandDescription("back", "Return to previous location", "pseudoutils.back"));
 		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
 		commandDescriptions.add(new CommandDescription("brand <player>", "Shows user client brand", "pseudoutils.brand", false));
 	}

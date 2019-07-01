@@ -1,7 +1,7 @@
 name: PseudoUtils
 author: PseudoResonance
 main: io.github.pseudoresonance.pseudoutils.PseudoUtils
-version: 0.0.8
+version: 0.0.9
 description: Adds useful utilities
 api-version: 1.13
 depend: [PseudoAPI]
@@ -21,6 +21,12 @@ commands:
   fly:
     description: Sets fly mode
     permission: pseudoutils.fly
+  heal:
+    description: Heals player
+    permission: pseudoutils.heal
+  back:
+    description: Returns player to their last location
+    permission: pseudoutils.back
 permissions:
   pseudoutils.god:
     description: Allows the player to set their god mode
@@ -38,6 +44,27 @@ permissions:
     default: op
     children:
       pseudoutils.fly: true
+  pseudoutils.heal:
+    description: Allows the player to heal themself
+    default: op
+  pseudoutils.heal.others:
+    description: Allows the player to heal other players
+    default: op
+    children:
+      pseudoutils.heal: true
+  pseudoutils.back:
+    description: Allows the player to teleport to their last location
+    default: op
+  pseudoutils.back.others:
+    description: Allows the player to teleport other players to their last location
+    default: op
+    children:
+      pseudoutils.back: true
+  pseudoutils.back.ondeath:
+    description: Allows the player to teleport to their death location
+    default: op
+    children:
+      pseudoutils.back: true
   pseudoutils.brand:
     description: Allows the player to see user's client brands
     default: op
@@ -85,3 +112,6 @@ permissions:
       pseudoutils.metrics.other: true
       pseudoutils.god.others: true
       pseudoutils.fly.others: true
+      pseudoutils.heal.others: true
+      pseudoutils.back.others: true
+      pseudoutils.back.ondeath: true
