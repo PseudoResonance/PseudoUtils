@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -21,7 +21,7 @@ public class BackSC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
-					Object backLocationO = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
+					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
 					if (backLocationO != null) {
 						if (backLocationO instanceof String) {
 							String s = (String) backLocationO;
@@ -51,7 +51,7 @@ public class BackSC implements SubCommandExecutor {
 							return false;
 						}
 					}
-					Object backLocationO = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
+					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
 					if (backLocationO != null) {
 						if (backLocationO instanceof String) {
 							String s = (String) backLocationO;

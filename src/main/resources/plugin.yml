@@ -1,7 +1,7 @@
-name: PseudoUtils
+name: ${project.artifactId}
 author: PseudoResonance
 main: io.github.pseudoresonance.pseudoutils.PseudoUtils
-version: 0.0.9
+version: ${version}
 description: Adds useful utilities
 api-version: 1.13
 depend: [PseudoAPI]
@@ -11,7 +11,7 @@ commands:
   metrics:
     description: System metrics
     permission: pseudoutils.metrics
-    aliases: [lag,tps]
+    aliases: [lag]
   brand:
     description: Player client brand
     permission: pseudoutils.brand
@@ -27,6 +27,10 @@ commands:
   back:
     description: Returns player to their last location
     permission: pseudoutils.back
+  tp:
+    description: Teleports player
+    permission: pseudoutils.tp
+    aliases: [teleport]
 permissions:
   pseudoutils.god:
     description: Allows the player to set their god mode
@@ -54,7 +58,7 @@ permissions:
       pseudoutils.heal: true
   pseudoutils.back:
     description: Allows the player to teleport to their last location
-    default: op
+    default: true
   pseudoutils.back.others:
     description: Allows the player to teleport other players to their last location
     default: op
@@ -62,23 +66,32 @@ permissions:
       pseudoutils.back: true
   pseudoutils.back.ondeath:
     description: Allows the player to teleport to their death location
-    default: op
+    default: true
     children:
       pseudoutils.back: true
+  pseudoutils.tp:
+    description: Allows the player to teleport themselves
+    default: op
+  pseudoutils.tp.coordinates:
+    description: Allows the player to teleport to coordinates
+    default: op
+  pseudoutils.tp.others:
+    description: Allows the player to teleport other players
+    default: op
+    children:
+      pseudoutils.tp: true
   pseudoutils.brand:
     description: Allows the player to see user's client brands
     default: op
   pseudoutils.metrics:
     description: Allows the player to see detailed system metrics
-    default: op
-    children:
-      pseudoutils.metrics.tps: true
+    default: true
   pseudoutils.metrics.other:
     description: Allows the player to see miscellaneous details in system metrics
-    default: op
+    default: true
   pseudoutils.metrics.tps:
     description: Allows the player to see tps details in system metrics
-    default: op
+    default: true
   pseudoutils.metrics.storage:
     description: Allows the player to see storage details in system metrics
     default: op
@@ -105,6 +118,7 @@ permissions:
       pseudoutils.reload: true
       pseudoutils.brand: true
       pseudoutils.metrics: true
+      pseudoutils.metrics.tps: true
       pseudoutils.metrics.storage: true
       pseudoutils.metrics.java: true
       pseudoutils.metrics.cpu: true
@@ -115,3 +129,5 @@ permissions:
       pseudoutils.heal.others: true
       pseudoutils.back.others: true
       pseudoutils.back.ondeath: true
+      pseudoutils.tp.coordinates: true
+      pseudoutils.tp.others: true

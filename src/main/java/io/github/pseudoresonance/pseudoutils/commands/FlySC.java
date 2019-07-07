@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -18,20 +18,13 @@ public class FlySC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
-					Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "flyMode");
-					if (o == null) {
-						o = false;
-					}
-					if (o instanceof Boolean) {
-						boolean b = (Boolean) o;
-						p.setAllowFlight(!b);
-						PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "flyMode", !b);
-						if (!b) {
-							PseudoUtils.message.sendPluginMessage(sender, "Enabled fly mode");
-						} else
-							PseudoUtils.message.sendPluginMessage(sender, "Disabled fly mode");
-						return true;
-					}
+					boolean b = p.getAllowFlight();
+					p.setAllowFlight(!b);
+					if (!b) {
+						PseudoUtils.message.sendPluginMessage(sender, "Enabled fly mode");
+					} else
+						PseudoUtils.message.sendPluginMessage(sender, "Disabled fly mode");
+					return true;
 				}
 				else {
 					PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "Please specify a player!");
@@ -51,31 +44,25 @@ public class FlySC implements SubCommandExecutor {
 				}
 			}
 			if (p != null) {
-				Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "flyMode");
-				if (o == null) {
-					o = false;
+				boolean b = p.getAllowFlight();
+				p.setAllowFlight(!b);
+				ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "flyMode", !b);
+				if (!b) {
+					PseudoUtils.message.sendPluginMessage(sender, "Enabled fly mode for " + p.getName());
+					if (sender instanceof Player)
+						if (!sender.getName().equals(p.getName()))
+							PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by " + ((Player) sender).getName());
+					else
+						PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by Console");
+				} else {
+					PseudoUtils.message.sendPluginMessage(sender, "Disabled fly mode for " + p.getName());
+					if (sender instanceof Player)
+						if (!sender.getName().equals(p.getName()))
+							PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by " + ((Player) sender).getName());
+					else
+						PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by Console");
 				}
-				if (o instanceof Boolean) {
-					boolean b = (Boolean) o;
-					p.setAllowFlight(!b);
-					PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "flyMode", !b);
-					if (!b) {
-						PseudoUtils.message.sendPluginMessage(sender, "Enabled fly mode for " + p.getName());
-						if (sender instanceof Player)
-							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by " + ((Player) sender).getName());
-						else
-							PseudoUtils.message.sendPluginMessage(p, "Fly mode enabled by Console");
-					} else {
-						PseudoUtils.message.sendPluginMessage(sender, "Disabled fly mode for " + p.getName());
-						if (sender instanceof Player)
-							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by " + ((Player) sender).getName());
-						else
-							PseudoUtils.message.sendPluginMessage(p, "Fly mode disabled by Console");
-					}
-					return true;
-				}
+				return true;
 			}
 		} else
 			PseudoUtils.message.sendPluginError(sender, Errors.NO_PERMISSION, "use fly mode!");

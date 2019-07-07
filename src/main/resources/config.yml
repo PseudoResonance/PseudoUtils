@@ -1,30 +1,69 @@
-####################
-#PseudoUtils Config#
-####################
+######################
+# PseudoUtils Config #
+######################
 
-#DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
+# DO NOT CHANGE THIS LINE! YOUR CONFIG WILL BE RESET UPON LOADING IF THIS LINE IS EDITED!
 Version: 1
 
 
-#########
-#Formats#
-#########
+#######################
+# Join/Leave Messages #
+#######################
 
-#Time Format
-#Use following codes:
-#https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+# Enable custom join/leave messages
+EnableJoinLeave: true
+
+# Join message format
+# {name} = Full player name
+# {nickname} = Player Nickname (If present, otherwise the full name will be used)
+# {uuid} = Player UUID
+# Color Codes Enabled
+# Leave empty for no message
+JoinFormat: "&e{name} joined the game"
+
+# Leave message format
+# {name} = Full player name
+# {nickname} = Player Nickname (If present, otherwise the full name will be used)
+# {uuid} = Player UUID
+# Color Codes Enabled
+# Leave empty for no message
+LeaveFormat: "&e{name} left the game"
+
+
+###########
+# Formats #
+###########
+
+# Time Format
+# Use following codes:
+# https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
 TimeFormat: "HH:mm:ss"
 
-#Date Format
-#Use following codes:
-#https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+# Date Format
+# Use following codes:
+# https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
 DateFormat: "yyyy-MM-dd"
 
 
 #######
-#Other#
+# Bed #
 #######
 
-#How frequently TPS is checked for
-#In ticks, how often the plugin will calculate the current TPS
-TPSUpdateFrequency: 40
+# Enable skipping night without all players sleeping
+SleepEnable: true
+
+# What percentage of players must be sleeping to skip the night
+RequiredSleepPercentage: 35
+
+
+#########
+# Other #
+#########
+
+# How frequently TPS is checked for
+# In ticks, how often the plugin will calculate the current TPS
+TPSUpdateFrequency: 20
+
+# Size of TPS history to average for final result
+# The greater the number, the less TPS will fluctuate, but the less accurate it will be at a specific moment
+TPSHistorySize: 15

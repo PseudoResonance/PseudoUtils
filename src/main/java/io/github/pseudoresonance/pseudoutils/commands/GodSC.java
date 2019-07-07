@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -19,13 +19,13 @@ public class GodSC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
-					Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+					Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
 					if (o == null) {
 						o = false;
 					}
 					if (o instanceof Boolean) {
 						boolean b = (Boolean) o;
-						PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);
+						ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);
 						if (!b) {
 							p.setFoodLevel(20);
 							p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
@@ -52,13 +52,13 @@ public class GodSC implements SubCommandExecutor {
 				}
 			}
 			if (p != null) {
-				Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+				Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
 				if (o == null) {
 					o = false;
 				}
 				if (o instanceof Boolean) {
 					boolean b = (Boolean) o;
-					PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);
+					ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "godMode", !b);
 					if (!b) {
 						p.setFoodLevel(20);
 						p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());

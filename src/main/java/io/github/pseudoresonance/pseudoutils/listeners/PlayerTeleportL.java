@@ -8,17 +8,17 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 
 public class PlayerTeleportL implements Listener {
 
 	@EventHandler
 	public void onTeleport(PlayerTeleportEvent e) {
 		Player p = e.getPlayer();
-		if (e.getCause() == TeleportCause.COMMAND || e.getCause() == TeleportCause.PLUGIN || e.getCause() == TeleportCause.UNKNOWN) {
+		if (e.getCause() == TeleportCause.COMMAND || e.getCause() == TeleportCause.PLUGIN) {
 			Location l = e.getFrom();
 			String location = l.getWorld().getUID().toString() + "," + l.getX() + "," + l.getY() + "," + l.getZ() + "," + l.getYaw() + "," + l.getPitch();
-			PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "backLocation", location);
+			ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "backLocation", location);
 		}
 	}
 	
@@ -28,7 +28,7 @@ public class PlayerTeleportL implements Listener {
 		if (p.hasPermission("pseudoutils.back.ondeath")) {
 			Location l = p.getLocation();
 			String location = l.getWorld().getUID().toString() + "," + l.getX() + "," + l.getY() + "," + l.getZ() + "," + l.getYaw() + "," + l.getPitch();
-			PlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "backLocation", location);
+			ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "backLocation", location);
 		}
 	}
 

@@ -14,12 +14,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.ConfigOptions;
+import io.github.pseudoresonance.pseudoapi.bukkit.Config;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message;
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.utils.Utils;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
-import io.github.pseudoresonance.pseudoapi.bukkit.Utils;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 import io.github.pseudoresonance.pseudoutils.TPS;
 import oshi.SystemInfo;
@@ -39,30 +39,32 @@ public class MetricsSC implements SubCommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics"))) {
 			List<Object> messages = new ArrayList<Object>();
-			OperatingSystemMXBean osb = ManagementFactory.getOperatingSystemMXBean();
-			RuntimeMXBean rsb = ManagementFactory.getRuntimeMXBean();
-			CentralProcessor cpu = info.getHardware().getProcessor();
-			messages.add(ConfigOptions.border + "===---" + ConfigOptions.title + "Server Metrics" + ConfigOptions.border + "---===");
+			CentralProcessor cpu = null;
+			messages.add(Config.borderColor + "===---" + Config.titleColor + "Server Metrics" + Config.borderColor + "---===");
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.other"))) {
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "Other" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "Unique Players Joined: " + ConfigOptions.command + PlayerDataController.getUniquePlayers());
+				messages.add(Config.borderColor + "---" + Config.titleColor + "Other" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "Unique Players Joined: " + Config.commandColor + PlayerDataController.getUniquePlayers());
 			}
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.java"))) {
+				OperatingSystemMXBean osb = ManagementFactory.getOperatingSystemMXBean();
 				OperatingSystem os = info.getOperatingSystem();
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "Java & OS" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "Java Version: " + ConfigOptions.command + System.getProperty("java.version"));
-				messages.add(ConfigOptions.description + "Java Vendor: " + ConfigOptions.command + System.getProperty("java.vendor"));
-				messages.add(ConfigOptions.description + "OS Manufacturer: " + ConfigOptions.command + os.getManufacturer());
-				messages.add(ConfigOptions.description + "OS: " + ConfigOptions.command + os.getFamily() + " " + os.getVersion());
-				messages.add(ConfigOptions.description + "OS Arch: " + ConfigOptions.command + osb.getArch() + " " + os.getBitness() + "-bit");
-				messages.add(ConfigOptions.description + "System Time: " + ConfigOptions.command + LocalDateTime.now().format(DateTimeFormatter.ofPattern(io.github.pseudoresonance.pseudoutils.ConfigOptions.timeFormat)));
-				messages.add(ConfigOptions.description + "System Date: " + ConfigOptions.command + LocalDateTime.now().format(DateTimeFormatter.ofPattern(io.github.pseudoresonance.pseudoutils.ConfigOptions.dateFormat)));
+				messages.add(Config.borderColor + "---" + Config.titleColor + "Java & OS" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "Java Version: " + Config.commandColor + System.getProperty("java.version"));
+				messages.add(Config.descriptionColor + "Java Vendor: " + Config.commandColor + System.getProperty("java.vendor"));
+				messages.add(Config.descriptionColor + "OS Manufacturer: " + Config.commandColor + os.getManufacturer());
+				messages.add(Config.descriptionColor + "OS: " + Config.commandColor + os.getFamily() + " " + os.getVersion());
+				messages.add(Config.descriptionColor + "OS Arch: " + Config.commandColor + osb.getArch() + " " + os.getBitness() + "-bit");
+				messages.add(Config.descriptionColor + "System Time: " + Config.commandColor + LocalDateTime.now().format(DateTimeFormatter.ofPattern(io.github.pseudoresonance.pseudoutils.Config.timeFormat)));
+				messages.add(Config.descriptionColor + "System Date: " + Config.commandColor + LocalDateTime.now().format(DateTimeFormatter.ofPattern(io.github.pseudoresonance.pseudoutils.Config.dateFormat)));
 			}
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.tps"))) {
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "TPS and Time" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "TPS: " + ConfigOptions.command + TPS.getTps());
-				messages.add(ConfigOptions.description + "Uptime: " + ConfigOptions.command + Utils.millisToHumanFormat(rsb.getUptime()));
-				messages.add(ConfigOptions.description + "System Uptime: " + ConfigOptions.command + secsToHumanFormat(cpu.getSystemUptime()));
+				if (cpu == null)
+					cpu = info.getHardware().getProcessor();
+				RuntimeMXBean rsb = ManagementFactory.getRuntimeMXBean();
+				messages.add(Config.borderColor + "---" + Config.titleColor + "TPS and Time" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "TPS: " + Config.commandColor + TPS.getTps());
+				messages.add(Config.descriptionColor + "Uptime: " + Config.commandColor + Utils.millisToHumanFormat(rsb.getUptime()));
+				messages.add(Config.descriptionColor + "System Uptime: " + Config.commandColor + secsToHumanFormat(cpu.getSystemUptime()));
 			}
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.storage"))) {
 				long totalBytes = 0;
@@ -73,34 +75,36 @@ public class MetricsSC implements SubCommandExecutor {
 					freeBytes += fs.getUsableSpace();
 				}
 				usedBytes = totalBytes - freeBytes;
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "Storage" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "Space Used: " + ConfigOptions.command + bytesToHumanFormat(usedBytes, useSi));
-				messages.add(ConfigOptions.description + "Free Space: " + ConfigOptions.command + bytesToHumanFormat(freeBytes, useSi));
-				messages.add(ConfigOptions.description + "Total Space: " + ConfigOptions.command + bytesToHumanFormat(totalBytes, useSi));
+				messages.add(Config.borderColor + "---" + Config.titleColor + "Storage" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "Space Used: " + Config.commandColor + bytesToHumanFormat(usedBytes, useSi));
+				messages.add(Config.descriptionColor + "Free Space: " + Config.commandColor + bytesToHumanFormat(freeBytes, useSi));
+				messages.add(Config.descriptionColor + "Total Space: " + Config.commandColor + bytesToHumanFormat(totalBytes, useSi));
 			}
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.cpu"))) {
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "CPU" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "Model: " + ConfigOptions.command + cpu.getName());
-				messages.add(ConfigOptions.description + "Cores: " + ConfigOptions.command + cpu.getPhysicalProcessorCount());
+				if (cpu == null)
+					cpu = info.getHardware().getProcessor();
+				messages.add(Config.borderColor + "---" + Config.titleColor + "CPU" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "Model: " + Config.commandColor + cpu.getName());
+				messages.add(Config.descriptionColor + "Cores: " + Config.commandColor + cpu.getPhysicalProcessorCount());
 				if (cpu.getPhysicalPackageCount() > 1) {
-					messages.add(ConfigOptions.description + "Sockets: " + ConfigOptions.command + cpu.getPhysicalPackageCount());
-					messages.add(ConfigOptions.description + "Cores per Socket: " + ConfigOptions.command + ((Integer) (cpu.getPhysicalProcessorCount() / cpu.getPhysicalPackageCount())));
+					messages.add(Config.descriptionColor + "Sockets: " + Config.commandColor + cpu.getPhysicalPackageCount());
+					messages.add(Config.descriptionColor + "Cores per Socket: " + Config.commandColor + ((Integer) (cpu.getPhysicalProcessorCount() / cpu.getPhysicalPackageCount())));
 				}
-				messages.add(ConfigOptions.description + "Threads: " + ConfigOptions.command + cpu.getLogicalProcessorCount());
-				messages.add(ConfigOptions.description + "Clock: " + ConfigOptions.command + (cpu.getVendorFreq() >= 0 ? Double.valueOf(df.format(cpu.getVendorFreq() / 1000000000.0)) + "GHz" : "Unknown"));
-				messages.add(ConfigOptions.description + "Load: " + ConfigOptions.command + (cpu.getSystemCpuLoad() >= 0 ? Double.valueOf(df.format(cpu.getSystemCpuLoad() * 100.0)) + "%" : "Unknown"));
+				messages.add(Config.descriptionColor + "Threads: " + Config.commandColor + cpu.getLogicalProcessorCount());
+				messages.add(Config.descriptionColor + "Clock: " + Config.commandColor + (cpu.getVendorFreq() >= 0 ? Double.valueOf(df.format(cpu.getVendorFreq() / 1000000000.0)) + "GHz" : "Unknown"));
+				messages.add(Config.descriptionColor + "Load: " + Config.commandColor + (cpu.getSystemCpuLoad() >= 0 ? Double.valueOf(df.format(cpu.getSystemCpuLoad() * 100.0)) + "%" : "Unknown"));
 			}
 			if (!(sender instanceof Player) || (sender.hasPermission("pseudoutils.metrics.memory"))) {
 				GlobalMemory ram = info.getHardware().getMemory();
-				messages.add(ConfigOptions.border + "---" + ConfigOptions.title + "Memory" + ConfigOptions.border + "---");
-				messages.add(ConfigOptions.description + "Used Memory: " + ConfigOptions.command + bytesToHumanFormat(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory(), useSi));
-				messages.add(ConfigOptions.description + "Free JVM Memory: " + ConfigOptions.command + bytesToHumanFormat(Runtime.getRuntime().freeMemory(), useSi));
-				messages.add(ConfigOptions.description + "Total JVM Memory: " + ConfigOptions.command + bytesToHumanFormat(Runtime.getRuntime().totalMemory(), useSi));
-				messages.add(ConfigOptions.description + "Max JVM Memory: " + ConfigOptions.command + (Runtime.getRuntime().maxMemory() == Long.MAX_VALUE ? "Unlimited" : bytesToHumanFormat(Runtime.getRuntime().maxMemory(), useSi)));
-				messages.add(ConfigOptions.description + "Available Memory: " + ConfigOptions.command + bytesToHumanFormat(ram.getAvailable(), useSi));
-				messages.add(ConfigOptions.description + "Total Memory: " + ConfigOptions.command + bytesToHumanFormat(ram.getTotal(), useSi));
-				messages.add(ConfigOptions.description + "Used Swap File: " + ConfigOptions.command + bytesToHumanFormat(ram.getSwapUsed(), useSi));
-				messages.add(ConfigOptions.description + "Total Swap File: " + ConfigOptions.command + bytesToHumanFormat(ram.getSwapTotal(), useSi));
+				messages.add(Config.borderColor + "---" + Config.titleColor + "Memory" + Config.borderColor + "---");
+				messages.add(Config.descriptionColor + "Used Memory: " + Config.commandColor + bytesToHumanFormat(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory(), useSi));
+				messages.add(Config.descriptionColor + "Free JVM Memory: " + Config.commandColor + bytesToHumanFormat(Runtime.getRuntime().freeMemory(), useSi));
+				messages.add(Config.descriptionColor + "Total JVM Memory: " + Config.commandColor + bytesToHumanFormat(Runtime.getRuntime().totalMemory(), useSi));
+				messages.add(Config.descriptionColor + "Max JVM Memory: " + Config.commandColor + (Runtime.getRuntime().maxMemory() == Long.MAX_VALUE ? "Unlimited" : bytesToHumanFormat(Runtime.getRuntime().maxMemory(), useSi)));
+				messages.add(Config.descriptionColor + "Available Memory: " + Config.commandColor + bytesToHumanFormat(ram.getAvailable(), useSi));
+				messages.add(Config.descriptionColor + "Total Memory: " + Config.commandColor + bytesToHumanFormat(ram.getTotal(), useSi));
+				messages.add(Config.descriptionColor + "Used Swap File: " + Config.commandColor + bytesToHumanFormat(ram.getSwapUsed(), useSi));
+				messages.add(Config.descriptionColor + "Total Swap File: " + Config.commandColor + bytesToHumanFormat(ram.getSwapTotal(), useSi));
 			}
 			Message.sendMessage(sender, messages);
 			return true;

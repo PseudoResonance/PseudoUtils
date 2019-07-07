@@ -9,6 +9,7 @@ public class TPS {
 	private static long lastPoll = System.nanoTime();
 	private final static LinkedList<Double> history = new LinkedList<Double>();
 	private static long tickInterval = 20;
+	private static long historyMaxSize = 15;
 
 	private static int taskID;
 
@@ -16,7 +17,8 @@ public class TPS {
 
 	public static void startTps() {
 		df.setRoundingMode(RoundingMode.HALF_UP);
-		tickInterval = ConfigOptions.tpsUpdateFrequency;
+		tickInterval = Config.tpsUpdateFrequency;
+		historyMaxSize = Config.tpsHistorySize;
 		taskID = PseudoUtils.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(PseudoUtils.plugin, new Runnable() {
 			@Override
 			public void run() {
@@ -29,7 +31,7 @@ public class TPS {
 				if (tps <= 21) {
 					history.add(tps);
 				}
-				if (history.size() > 10) {
+				if (history.size() > historyMaxSize) {
 					history.remove();
 				}
 				lastPoll = startTime;
