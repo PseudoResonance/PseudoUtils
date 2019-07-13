@@ -62,18 +62,18 @@ public class GodSC implements SubCommandExecutor {
 					if (!b) {
 						p.setFoodLevel(20);
 						p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-						PseudoUtils.message.sendPluginMessage(sender, "Enabled god mode for " + p.getName());
-						if (sender instanceof Player)
+						PseudoUtils.message.sendPluginMessage(sender, "Enabled god mode for " + p.getDisplayName());
+						if (sender instanceof Player) {
 							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "God mode enabled by " + ((Player) sender).getName());
-						else
+								PseudoUtils.message.sendPluginMessage(p, "God mode enabled by " + ((Player) sender).getDisplayName());
+						} else
 							PseudoUtils.message.sendPluginMessage(p, "God mode enabled by Console");
 					} else {
-						PseudoUtils.message.sendPluginMessage(sender, "Disabled god mode for " + p.getName());
-						if (sender instanceof Player)
+						PseudoUtils.message.sendPluginMessage(sender, "Disabled god mode for " + p.getDisplayName());
+						if (sender instanceof Player) {
 							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "God mode disabled by " + ((Player) sender).getName());
-						else
+								PseudoUtils.message.sendPluginMessage(p, "God mode disabled by " + ((Player) sender).getDisplayName());
+						} else
 							PseudoUtils.message.sendPluginMessage(p, "God mode disabled by Console");
 					}
 				}

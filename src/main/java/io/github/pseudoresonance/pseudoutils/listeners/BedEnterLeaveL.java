@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -37,11 +38,11 @@ public class BedEnterLeaveL implements Listener {
 				int playersInWorld = p.getWorld().getPlayers().size();
 				int requiredPlayers = (int) Math.ceil(playersInWorld * (Config.requiredSleepPercentage / 100.0));
 				int playersLeft = requiredPlayers - playersInBed.get(p.getWorld().getUID()).size();
-				String msg = e.getPlayer().getName() + " is sleeping. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
+				String msg = e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor + " is sleeping. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
 				if (playersLeft > 0) {
-					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "%)";
+					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "% Minimum)";
 				} else {
-					msg += " (" + Config.requiredSleepPercentage + "%)";
+					msg += " (" + Config.requiredSleepPercentage + "% Minimum)";
 				}
 				for (Player pl : p.getWorld().getPlayers()) {
 					PseudoUtils.message.sendPluginMessage(pl, msg);
@@ -67,11 +68,11 @@ public class BedEnterLeaveL implements Listener {
 				int playersInWorld = p.getWorld().getPlayers().size();
 				int requiredPlayers = (int) Math.ceil(playersInWorld * (Config.requiredSleepPercentage / 100.0));
 				int playersLeft = requiredPlayers - playersInBed.get(p.getWorld().getUID()).size();
-				String msg = e.getPlayer().getName() + " left bed. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
+				String msg = e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor + " left bed. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
 				if (playersLeft > 0) {
-					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "%)";
+					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "% Minimum)";
 				} else {
-					msg += " (" + Config.requiredSleepPercentage + "%)";
+					msg += " (" + Config.requiredSleepPercentage + "% Minimum)";
 				}
 				for (Player pl : p.getWorld().getPlayers()) {
 					PseudoUtils.message.sendPluginMessage(pl, msg);
@@ -110,6 +111,10 @@ public class BedEnterLeaveL implements Listener {
 					w.setThunderDuration(0);
 			}
 			justSlept.add(w.getUID());
+			for (UUID uuid : playersInBed.get(w.getUID())) {
+				Player p = Bukkit.getPlayer(uuid);
+				p.wakeup(true);
+			}
 			playersInBed.get(w.getUID()).clear();
 			PseudoUtils.plugin.getServer().getScheduler().scheduleSyncDelayedTask(PseudoUtils.plugin, new Runnable() {
 				@Override

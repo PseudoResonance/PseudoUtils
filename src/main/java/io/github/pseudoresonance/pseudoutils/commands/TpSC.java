@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
+import io.github.pseudoresonance.pseudoapi.bukkit.Config;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoapi.bukkit.utils.CommandUtils;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
@@ -28,7 +29,10 @@ public class TpSC implements SubCommandExecutor {
 						Entity entity = CommandUtils.getTarget(sender, args[0]);
 						if (entity != null) {
 							p.teleport(entity);
-							PseudoUtils.message.sendPluginMessage(sender, "Teleported to " + entity.getName());
+							if (entity instanceof Player)
+								PseudoUtils.message.sendPluginMessage(sender, "Teleported to " + ((Player) entity).getDisplayName());
+							else
+								PseudoUtils.message.sendPluginMessage(sender, "Teleported to " + entity.getName());
 							return true;
 						} else {
 							PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "No target found!");
@@ -56,9 +60,18 @@ public class TpSC implements SubCommandExecutor {
 								e.teleport(entity);
 							}
 							if (entities.length == 1) {
-								PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + entity.getName());
+								String target = entity.getName();
+								if (entity instanceof Player)
+									target = ((Player) entity).getDisplayName();
+								if (entities[0] instanceof Player)
+									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + ((Player) entities[0]).getDisplayName() + Config.textColor + " to " + target);
+								else
+									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + target);
 							} else {
-								PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + entity.getName());
+								if (entity instanceof Player)
+									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + ((Player) entity).getDisplayName());
+								else
+									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + entity.getName());
 							}
 							return true;
 						} else {
@@ -128,7 +141,10 @@ public class TpSC implements SubCommandExecutor {
 										e.teleport(new Location(e.getWorld(), coords[0], coords[1], coords[2], e.getLocation().getYaw(), e.getLocation().getPitch()));
 									}
 									if (entities.length == 1) {
-										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2]);
+										if (entities[0] instanceof Player)
+											PseudoUtils.message.sendPluginMessage(sender, "Teleported " + ((Player) entities[0]).getDisplayName() + Config.textColor + " to " + coords[0] + ", " + coords[1] + ", " + coords[2]);
+										else
+											PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2]);
 									} else {
 										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + coords[0] + ", " + coords[1] + ", " + coords[2]);
 									}
@@ -169,7 +185,10 @@ public class TpSC implements SubCommandExecutor {
 												e.teleport(new Location(w, coords[0], coords[1], coords[2], e.getLocation().getYaw(), e.getLocation().getPitch()));
 											}
 											if (entities.length == 1) {
-												PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " in world: " + w.getName());
+												if (entities[0] instanceof Player)
+													PseudoUtils.message.sendPluginMessage(sender, "Teleported " + ((Player) entities[0]).getDisplayName() + Config.textColor + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " in world: " + w.getName());
+												else
+													PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " in world: " + w.getName());
 											} else {
 												PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " in world: " + w.getName());
 											}
@@ -250,7 +269,10 @@ public class TpSC implements SubCommandExecutor {
 										e.teleport(new Location(e.getWorld(), coords[0], coords[1], coords[2], yaw, pitch));
 									}
 									if (entities.length == 1) {
-										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch);
+										if (entities[0] instanceof Player)
+											PseudoUtils.message.sendPluginMessage(sender, "Teleported " + ((Player) entities[0]).getDisplayName() + Config.textColor + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch);
+										else
+											PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch);
 									} else {
 										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch);
 									}
@@ -290,7 +312,10 @@ public class TpSC implements SubCommandExecutor {
 									e.teleport(new Location(w, coords[0], coords[1], coords[2], yaw, pitch));
 								}
 								if (entities.length == 1) {
-									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch + " in world: " + w.getName());
+									if (entities[0] instanceof Player)
+										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + ((Player) entities[0]).getDisplayName() + Config.textColor + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch + " in world: " + w.getName());
+									else
+										PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities[0].getName() + " to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch + " in world: " + w.getName());
 								} else {
 									PseudoUtils.message.sendPluginMessage(sender, "Teleported " + entities.length + " entities to " + coords[0] + ", " + coords[1] + ", " + coords[2] + " yaw: " + yaw + " pitch: " + pitch + " in world: " + w.getName());
 								}

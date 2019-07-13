@@ -6,6 +6,23 @@
 Version: 1
 
 
+#########
+# Spawn #
+#########
+
+# New players always spawn at spawn
+NewAtSpawn: true
+
+# Players always respawn at spawn (unless they have a bed)
+RespawnAtSpawn: true
+
+# Override bed respawn
+OverrideBeds: false
+
+# Is the spawnpoint global for the server?
+GlobalSpawn: false
+
+
 #######################
 # Join/Leave Messages #
 #######################
@@ -67,3 +84,7 @@ TPSUpdateFrequency: 20
 # Size of TPS history to average for final result
 # The greater the number, the less TPS will fluctuate, but the less accurate it will be at a specific moment
 TPSHistorySize: 15
+
+# Allow bows to have both mending and infinity
+# NOTE: The server MUST restart in order for changes to this to take effect! Reloading the config will not work!
+AllowMendingInfinity: false

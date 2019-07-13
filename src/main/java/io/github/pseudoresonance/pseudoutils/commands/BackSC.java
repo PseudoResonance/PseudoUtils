@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.Config;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -58,9 +59,9 @@ public class BackSC implements SubCommandExecutor {
 							String[] split = s.split(",");
 							if (split.length >= 6) {
 								p.teleport(new Location(PseudoUtils.plugin.getServer().getWorld(UUID.fromString(split[0])), Double.valueOf(split[1]), Double.valueOf(split[2]), Double.valueOf(split[3]), Float.valueOf(split[4]), Float.valueOf(split[5])));
-								PseudoUtils.message.sendPluginMessage(sender, "Returned " + p.getName() + " to previous location ");
+								PseudoUtils.message.sendPluginMessage(sender, "Returned " + p.getDisplayName() + Config.textColor + " to previous location ");
 								if (sender instanceof Player)
-									PseudoUtils.message.sendPluginMessage(p, "Returned to previous location by " + ((Player) sender).getName());
+									PseudoUtils.message.sendPluginMessage(p, "Returned to previous location by " + ((Player) sender).getDisplayName());
 								else
 									PseudoUtils.message.sendPluginMessage(p, "Returned to previous location by Console");
 								return true;

@@ -11,13 +11,16 @@ import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.Column;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 import io.github.pseudoresonance.pseudoutils.commands.BackSC;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
+import io.github.pseudoresonance.pseudoutils.commands.EnchantSC;
 import io.github.pseudoresonance.pseudoutils.commands.FlySC;
 import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
+import io.github.pseudoresonance.pseudoutils.commands.ShowitemSC;
 import io.github.pseudoresonance.pseudoutils.commands.TpSC;
+import io.github.pseudoresonance.pseudoutils.completers.EnchantTC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.listeners.BedEnterLeaveL;
 import io.github.pseudoresonance.pseudoutils.listeners.ClientBrandL;
@@ -48,12 +51,16 @@ public class PseudoUtils extends PseudoPlugin {
 		plugin = this;
 		ServerPlayerDataController.addColumn(new Column("godMode", "BIT", "0"));
 		ServerPlayerDataController.addColumn(new Column("flyMode", "BIT", "0"));
-		ServerPlayerDataController.addColumn(new Column("backLocation", "VARCHAR(111)", "NULL"));
+		ServerPlayerDataController.addColumn(new Column("backLocation", "VARCHAR(200)", "NULL"));
 		TPS.startTps();
 		config = new Config(this);
 		config.updateConfig();
+		config.firstInit();
 		config.reloadConfig();
 		message = new Message(this);
+		if (Config.allowMendingInfinity) {
+			InfinityMendingReplacement.replaceDefaultInfinityClass();
+		}
 		mainCommand = new MainCommand(plugin);
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();
@@ -79,6 +86,8 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("heal").setExecutor(new HealSC());
 		this.getCommand("back").setExecutor(new BackSC());
 		this.getCommand("tp").setExecutor(new TpSC());
+		this.getCommand("showitem").setExecutor(new ShowitemSC());
+		this.getCommand("enchant").setExecutor(new EnchantSC());
 	}
 
 	private void initializeSubCommands() {
@@ -91,6 +100,7 @@ public class PseudoUtils extends PseudoPlugin {
 
 	private void initializeTabcompleters() {
 		this.getCommand("pseudoutils").setTabCompleter(new PseudoUtilsTC());
+		this.getCommand("enchant").setTabCompleter(new EnchantTC());
 	}
 
 	private void initializeListeners() {
@@ -107,13 +117,15 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("pseudoutils help", "Shows PseudoUtils commands", ""));
 		commandDescriptions.add(new CommandDescription("pseudoutils reload", "Reloads PseudoUtils config", "pseudoutils.reload"));
 		commandDescriptions.add(new CommandDescription("pseudoutils reset", "Resets PseudoUtils config", "pseudoutils.reset"));
-		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
-		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
-		commandDescriptions.add(new CommandDescription("heal", "Heals player", "pseudoutils.heal"));
 		commandDescriptions.add(new CommandDescription("back", "Return to previous location", "pseudoutils.back"));
-		commandDescriptions.add(new CommandDescription("tp (player) <x> <y> <z> (yaw) (pitch)", "Teleports player", "pseudoutils.tp", false));
-		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
 		commandDescriptions.add(new CommandDescription("brand <player>", "Shows user client brand", "pseudoutils.brand", false));
+		commandDescriptions.add(new CommandDescription("enchant <enchantment> <level>", "Enchants an item", "pseudoutils.enchant", false));
+		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
+		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
+		commandDescriptions.add(new CommandDescription("heal", "Heals player", "pseudoutils.heal"));
+		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
+		commandDescriptions.add(new CommandDescription("showitem <player>", "Shows an item to a player", "pseudoutils.showitem", false));
+		commandDescriptions.add(new CommandDescription("tp (player) <x> <y> <z> (yaw) (pitch)", "Teleports player", "pseudoutils.tp", false));
 	}
 
 }

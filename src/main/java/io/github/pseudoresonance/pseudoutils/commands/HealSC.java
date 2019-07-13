@@ -44,9 +44,9 @@ public class HealSC implements SubCommandExecutor {
 					p.setExhaustion(0);
 					p.setSaturation(20);
 					p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-					PseudoUtils.message.sendPluginMessage(sender, "Healed " + p.getName());
+					PseudoUtils.message.sendPluginMessage(sender, "Healed " + p.getDisplayName());
 					if (sender instanceof Player)
-						PseudoUtils.message.sendPluginMessage(p, "Healed by " + ((Player) sender).getName());
+						PseudoUtils.message.sendPluginMessage(p, "Healed by " + ((Player) sender).getDisplayName());
 					else
 						PseudoUtils.message.sendPluginMessage(p, "Healed by Console");
 					return true;

@@ -6,6 +6,11 @@ import io.github.pseudoresonance.pseudoapi.bukkit.data.PluginConfig;
 
 public class Config extends PluginConfig {
 	
+	public static boolean newAtSpawn = true;
+	public static boolean respawnAtSpawn = true;
+	public static boolean overrideBeds = true;
+	public static boolean globalSpawn = true;
+	
 	public static boolean enableJoinLeave = true;
 	public static String joinFormat = "&e{name} joined the game";
 	public static String leaveFormat = "&e{name} left the game";
@@ -18,9 +23,20 @@ public class Config extends PluginConfig {
 
 	public static int tpsUpdateFrequency = 20;
 	public static int tpsHistorySize = 15;
+	public static boolean allowMendingInfinity = false;
+	
+	public void firstInit() {
+		FileConfiguration fc = PseudoUtils.plugin.getConfig();
+		allowMendingInfinity = PluginConfig.getBoolean(fc, "AllowMendingInfinity", allowMendingInfinity);
+	}
 	
 	public void reloadConfig() {
 		FileConfiguration fc = PseudoUtils.plugin.getConfig();
+
+		newAtSpawn = PluginConfig.getBoolean(fc, "NewAtSpawn", newAtSpawn);
+		respawnAtSpawn = PluginConfig.getBoolean(fc, "RespawnAtSpawn", respawnAtSpawn);
+		overrideBeds = PluginConfig.getBoolean(fc, "OverrideBeds", overrideBeds);
+		globalSpawn = PluginConfig.getBoolean(fc, "GlobalSpawn", globalSpawn);
 		
 		enableJoinLeave = PluginConfig.getBoolean(fc, "EnableJoinLeave", enableJoinLeave);
 		joinFormat = PluginConfig.getString(fc, "JoinFormat", joinFormat);

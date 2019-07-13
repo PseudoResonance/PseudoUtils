@@ -31,6 +31,14 @@ commands:
     description: Teleports player
     permission: pseudoutils.tp
     aliases: [teleport]
+  showitem:
+    description: Shows an item in chat
+    permission: pseudoutils.showitem
+    aliases: [show]
+  enchant:
+    description: Enchants an item in your hand
+    permission: pseudoutils.enchant
+    aliases: [ench]
 permissions:
   pseudoutils.god:
     description: Allows the player to set their god mode
@@ -48,6 +56,14 @@ permissions:
     default: op
     children:
       pseudoutils.fly: true
+  pseudoutils.enchant:
+    description: Allows the player to set enchantments
+    default: op
+  pseudoutils.enchant.unsafe:
+    description: Allows the player to set unsafe enchantments
+    default: op
+    children:
+      pseudoutils.enchant: true
   pseudoutils.heal:
     description: Allows the player to heal themself
     default: op
@@ -56,6 +72,19 @@ permissions:
     default: op
     children:
       pseudoutils.heal: true
+  pseudoutils.showitem:
+    description: Allows the player to show an item to a player
+    default: true
+  pseudoutils.showitem.multiple:
+    description: Allows the player to show an item to multiple players at once
+    default: op
+    children:
+      pseudoutils.showitem: true
+  pseudoutils.showitem.all:
+    description: Allows the player to show an item to all players at once
+    default: op
+    children:
+      pseudoutils.showitem.multiple: true
   pseudoutils.back:
     description: Allows the player to teleport to their last location
     default: true
