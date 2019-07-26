@@ -13,15 +13,20 @@ import io.github.pseudoresonance.pseudoutils.commands.BackSC;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
 import io.github.pseudoresonance.pseudoutils.commands.EnchantSC;
 import io.github.pseudoresonance.pseudoutils.commands.FlySC;
+import io.github.pseudoresonance.pseudoutils.commands.FlySpeedSC;
 import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
+import io.github.pseudoresonance.pseudoutils.commands.MoonPhaseSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
 import io.github.pseudoresonance.pseudoutils.commands.ShowitemSC;
+import io.github.pseudoresonance.pseudoutils.commands.SpeedSC;
 import io.github.pseudoresonance.pseudoutils.commands.TpSC;
+import io.github.pseudoresonance.pseudoutils.commands.WalkSpeedSC;
 import io.github.pseudoresonance.pseudoutils.completers.EnchantTC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
+import io.github.pseudoresonance.pseudoutils.completers.SpeedTC;
 import io.github.pseudoresonance.pseudoutils.listeners.BedEnterLeaveL;
 import io.github.pseudoresonance.pseudoutils.listeners.ClientBrandL;
 import io.github.pseudoresonance.pseudoutils.listeners.EntityDamageL;
@@ -38,6 +43,7 @@ public class PseudoUtils extends PseudoPlugin {
 	private static HelpSC helpSubCommand;
 	private static MetricsSC metricsSubCommand;
 	private static BrandSC brandSubCommand;
+	private static SpeedTC speedTabCompleter;
 
 	private static Config config;
 	
@@ -65,6 +71,7 @@ public class PseudoUtils extends PseudoPlugin {
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();
 		brandSubCommand = new BrandSC();
+		speedTabCompleter = new SpeedTC();
 		initializeCommands();
 		initializeTabcompleters();
 		initializeSubCommands();
@@ -88,6 +95,10 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("tp").setExecutor(new TpSC());
 		this.getCommand("showitem").setExecutor(new ShowitemSC());
 		this.getCommand("enchant").setExecutor(new EnchantSC());
+		this.getCommand("moonphase").setExecutor(new MoonPhaseSC());
+		this.getCommand("speed").setExecutor(new SpeedSC());
+		this.getCommand("flyspeed").setExecutor(new FlySpeedSC());
+		this.getCommand("walkspeed").setExecutor(new WalkSpeedSC());
 	}
 
 	private void initializeSubCommands() {
@@ -101,6 +112,9 @@ public class PseudoUtils extends PseudoPlugin {
 	private void initializeTabcompleters() {
 		this.getCommand("pseudoutils").setTabCompleter(new PseudoUtilsTC());
 		this.getCommand("enchant").setTabCompleter(new EnchantTC());
+		this.getCommand("speed").setTabCompleter(speedTabCompleter);
+		this.getCommand("flyspeed").setTabCompleter(speedTabCompleter);
+		this.getCommand("walkspeed").setTabCompleter(speedTabCompleter);
 	}
 
 	private void initializeListeners() {
@@ -121,11 +135,15 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("brand <player>", "Shows user client brand", "pseudoutils.brand", false));
 		commandDescriptions.add(new CommandDescription("enchant <enchantment> <level>", "Enchants an item", "pseudoutils.enchant", false));
 		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
+		commandDescriptions.add(new CommandDescription("flyspeed (player) <speed>", "Sets a player's fly speed", "pseudoutils.speed", false));
 		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
 		commandDescriptions.add(new CommandDescription("heal", "Heals player", "pseudoutils.heal"));
 		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
+		commandDescriptions.add(new CommandDescription("moonphase", "Shows the current moon phase", "pseudoutils.moonphase"));
 		commandDescriptions.add(new CommandDescription("showitem <player>", "Shows an item to a player", "pseudoutils.showitem", false));
+		commandDescriptions.add(new CommandDescription("speed (player) <speed>", "Sets a player's fly or walk speed", "pseudoutils.speed", false));
 		commandDescriptions.add(new CommandDescription("tp (player) <x> <y> <z> (yaw) (pitch)", "Teleports player", "pseudoutils.tp", false));
+		commandDescriptions.add(new CommandDescription("walkspeed (player) <speed>", "Sets a player's walk speed", "pseudoutils.speed", false));
 	}
 
 }

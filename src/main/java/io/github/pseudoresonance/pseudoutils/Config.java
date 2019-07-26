@@ -23,6 +23,8 @@ public class Config extends PluginConfig {
 
 	public static int tpsUpdateFrequency = 20;
 	public static int tpsHistorySize = 15;
+	public static double maxFlySpeed = 5;
+	public static double maxWalkSpeed = 5;
 	public static boolean allowMendingInfinity = false;
 	
 	public void firstInit() {
@@ -50,6 +52,8 @@ public class Config extends PluginConfig {
 
 		tpsUpdateFrequency = PluginConfig.getInt(fc, "TPSUpdateFrequency", tpsUpdateFrequency);
 		tpsHistorySize = PluginConfig.getInt(fc, "TPSHistorySize", tpsHistorySize);
+		maxFlySpeed = PluginConfig.getDouble(fc, "MaxFlySpeed", maxFlySpeed);
+		maxWalkSpeed = PluginConfig.getDouble(fc, "MaxWalkSpeed", maxWalkSpeed);
 		
 		TPS.stopTps();
 		TPS.startTps();

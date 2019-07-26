@@ -39,7 +39,22 @@ commands:
     description: Enchants an item in your hand
     permission: pseudoutils.enchant
     aliases: [ench]
+  moonphase:
+    description: Shows the current moonphase
+    permission: pseudoutils.moonphase
+  speed:
+    description: Shows a player's fly or walk speed
+    permission: pseudoutils.speed
+  flyspeed:
+    description: Shows a player's fly speed
+    permission: pseudoutils.speed
+  walkspeed:
+    description: Shows a player's walk speed
+    permission: pseudoutils.speed
 permissions:
+  pseudoutils.moonphase:
+    description: Allows the player to see the current moon phase
+    default: true
   pseudoutils.god:
     description: Allows the player to set their god mode
     default: op
@@ -109,6 +124,19 @@ permissions:
     default: op
     children:
       pseudoutils.tp: true
+  pseudoutils.speed:
+    description: Allows the player to set their fly or walk speed
+    default: op
+  pseudoutils.speed.others:
+    description: Allows the player to set the fly or walk speed of other players
+    default: op
+    children:
+      pseudoutils.speed: true
+  pseudoutils.speed.override:
+    description: Allows the player to override the default maximum fly or walk speed
+    default: op
+    children:
+      pseudoutils.speed: true
   pseudoutils.brand:
     description: Allows the player to see user's client brands
     default: op
@@ -160,3 +188,5 @@ permissions:
       pseudoutils.back.ondeath: true
       pseudoutils.tp.coordinates: true
       pseudoutils.tp.others: true
+      pseudoutils.speed.others: true
+      pseudoutils.speed.override: true
