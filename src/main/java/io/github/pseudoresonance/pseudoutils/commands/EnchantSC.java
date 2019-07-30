@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
+import io.github.pseudoresonance.pseudoenchants.enchantments.PseudoEnchantment;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
 public class EnchantSC implements SubCommandExecutor {
@@ -81,11 +82,21 @@ public class EnchantSC implements SubCommandExecutor {
 								int level = Integer.valueOf(args[1]);
 								try {
 									is.addEnchantment(ench, level);
+									if (PseudoUtils.pseudoEnchantsLoaded) {
+										if (ench instanceof PseudoEnchantment) {
+											is = PseudoEnchantment.addLoreEnchantment(is, (PseudoEnchantment) ench, level);
+										}
+									}
 									PseudoUtils.message.sendPluginMessage(sender, "Enchanted your " + WordUtils.capitalizeFully(is.getType().toString().replace('_', ' ')) + " with " + WordUtils.capitalizeFully(ench.getKey().getKey().replace('_', ' ')) + " " + level);
 									return true;
 								} catch (IllegalArgumentException e) {
 									if (p.hasPermission("pseudoutils.enchant.unsafe")) {
 										is.addUnsafeEnchantment(ench, level);
+										if (PseudoUtils.pseudoEnchantsLoaded) {
+											if (ench instanceof PseudoEnchantment) {
+												is = PseudoEnchantment.addLoreEnchantment(is, (PseudoEnchantment) ench, level);
+											}
+										}
 										PseudoUtils.message.sendPluginMessage(sender, "Enchanted your " + WordUtils.capitalizeFully(is.getType().toString().replace('_', ' ')) + " with " + WordUtils.capitalizeFully(ench.getKey().getKey().replace('_', ' ')) + " " + level);
 										return true;
 									} else {

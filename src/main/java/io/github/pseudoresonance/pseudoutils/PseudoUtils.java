@@ -1,5 +1,7 @@
 package io.github.pseudoresonance.pseudoutils;
 
+import org.bukkit.Bukkit;
+
 import io.github.pseudoresonance.pseudoapi.bukkit.CommandDescription;
 import io.github.pseudoresonance.pseudoapi.bukkit.HelpSC;
 import io.github.pseudoresonance.pseudoapi.bukkit.MainCommand;
@@ -47,6 +49,8 @@ public class PseudoUtils extends PseudoPlugin {
 
 	private static Config config;
 	
+	public static boolean pseudoEnchantsLoaded = false;
+	
 	public void onLoad() {
 		PseudoUpdater.registerPlugin(this);
 	}
@@ -78,6 +82,7 @@ public class PseudoUtils extends PseudoPlugin {
 		initializeListeners();
 		setCommandDescriptions();
 		PseudoAPI.registerConfig(config);
+		pseudoEnchantsLoaded = Bukkit.getPluginManager().getPlugin("PseudoEnchants") != null ? true : false;
 	}
 
 	public static Config getConfigOptions() {
