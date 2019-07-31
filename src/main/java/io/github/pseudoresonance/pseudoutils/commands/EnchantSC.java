@@ -81,19 +81,32 @@ public class EnchantSC implements SubCommandExecutor {
 							try {
 								int level = Integer.valueOf(args[1]);
 								try {
-									is.addEnchantment(ench, level);
-									if (PseudoUtils.pseudoEnchantsLoaded) {
-										if (ench instanceof PseudoEnchantment) {
-											is = PseudoEnchantment.addLoreEnchantment(is, (PseudoEnchantment) ench, level);
+									if (level == 0) {
+										is.removeEnchantment(ench);
+										if (PseudoUtils.pseudoEnchantsLoaded) {
+											if (ench instanceof PseudoEnchantment) {
+												is = PseudoEnchantment.stripLoreEnchantment(is, (PseudoEnchantment) ench);
+											}
 										}
+										PseudoUtils.message.sendPluginMessage(sender, "Removed " + WordUtils.capitalizeFully(ench.getKey().getKey().replace('_', ' ')) + " from your " + WordUtils.capitalizeFully(is.getType().toString().replace('_', ' ')));
+										return true;
+									} else {
+										is.addEnchantment(ench, level);
+										if (PseudoUtils.pseudoEnchantsLoaded) {
+											if (ench instanceof PseudoEnchantment) {
+												is = PseudoEnchantment.stripLoreEnchantment(is, (PseudoEnchantment) ench);
+												is = PseudoEnchantment.addLoreEnchantment(is, (PseudoEnchantment) ench, level);
+											}
+										}
+										PseudoUtils.message.sendPluginMessage(sender, "Enchanted your " + WordUtils.capitalizeFully(is.getType().toString().replace('_', ' ')) + " with " + WordUtils.capitalizeFully(ench.getKey().getKey().replace('_', ' ')) + " " + level);
+										return true;
 									}
-									PseudoUtils.message.sendPluginMessage(sender, "Enchanted your " + WordUtils.capitalizeFully(is.getType().toString().replace('_', ' ')) + " with " + WordUtils.capitalizeFully(ench.getKey().getKey().replace('_', ' ')) + " " + level);
-									return true;
 								} catch (IllegalArgumentException e) {
 									if (p.hasPermission("pseudoutils.enchant.unsafe")) {
 										is.addUnsafeEnchantment(ench, level);
 										if (PseudoUtils.pseudoEnchantsLoaded) {
 											if (ench instanceof PseudoEnchantment) {
+												is = PseudoEnchantment.stripLoreEnchantment(is, (PseudoEnchantment) ench);
 												is = PseudoEnchantment.addLoreEnchantment(is, (PseudoEnchantment) ench, level);
 											}
 										}
