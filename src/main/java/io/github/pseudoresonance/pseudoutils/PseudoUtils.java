@@ -38,7 +38,7 @@ import io.github.pseudoresonance.pseudoutils.listeners.PlayerTeleportL;
 
 public class PseudoUtils extends PseudoPlugin {
 
-	public static PseudoPlugin plugin;
+	public static PseudoUtils plugin;
 	public static Message message;
 
 	private static MainCommand mainCommand;
@@ -149,6 +149,14 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("speed (player) <speed>", "Sets a player's fly or walk speed", "pseudoutils.speed", false));
 		commandDescriptions.add(new CommandDescription("tp (player) <x> <y> <z> (yaw) (pitch)", "Teleports player", "pseudoutils.tp", false));
 		commandDescriptions.add(new CommandDescription("walkspeed (player) <speed>", "Sets a player's walk speed", "pseudoutils.speed", false));
+	}
+	
+	public void doSync(Runnable run) {
+		Bukkit.getScheduler().runTask(this, run);
+	}
+	
+	public void doAsync(Runnable run) {
+		Bukkit.getScheduler().runTaskAsynchronously(this, run);
 	}
 
 }

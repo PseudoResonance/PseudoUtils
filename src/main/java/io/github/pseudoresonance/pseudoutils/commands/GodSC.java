@@ -19,7 +19,7 @@ public class GodSC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
-					Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+					Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode").join();
 					if (o == null) {
 						o = false;
 					}
@@ -52,7 +52,7 @@ public class GodSC implements SubCommandExecutor {
 				}
 			}
 			if (p != null) {
-				Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+				Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode").join();
 				if (o == null) {
 					o = false;
 				}

@@ -15,7 +15,7 @@ public class FoodChangeL implements Listener {
 		Entity ent = e.getEntity();
 		if (ent instanceof Player) {
 			Player p = (Player) ent;
-			Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode");
+			Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode").join();
 			if (o instanceof Boolean) {
 				boolean b = (Boolean) o;
 				if (b) {

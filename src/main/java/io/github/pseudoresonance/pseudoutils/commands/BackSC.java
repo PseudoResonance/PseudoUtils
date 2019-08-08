@@ -22,7 +22,7 @@ public class BackSC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
-					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
+					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation").join();
 					if (backLocationO != null) {
 						if (backLocationO instanceof String) {
 							String s = (String) backLocationO;
@@ -52,7 +52,7 @@ public class BackSC implements SubCommandExecutor {
 							return false;
 						}
 					}
-					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation");
+					Object backLocationO = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "backLocation").join();
 					if (backLocationO != null) {
 						if (backLocationO instanceof String) {
 							String s = (String) backLocationO;

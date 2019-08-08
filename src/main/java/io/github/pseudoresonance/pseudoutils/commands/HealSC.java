@@ -21,6 +21,7 @@ public class HealSC implements SubCommandExecutor {
 					p.setFoodLevel(20);
 					p.setExhaustion(0);
 					p.setSaturation(20);
+					p.setRemainingAir(p.getMaximumAir());
 					p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 					PseudoUtils.message.sendPluginMessage(sender, "Healed");
 					return true;
@@ -43,6 +44,7 @@ public class HealSC implements SubCommandExecutor {
 					p.setFoodLevel(20);
 					p.setExhaustion(0);
 					p.setSaturation(20);
+					p.setRemainingAir(p.getMaximumAir());
 					p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 					PseudoUtils.message.sendPluginMessage(sender, "Healed " + p.getDisplayName());
 					if (sender instanceof Player)

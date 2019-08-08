@@ -16,7 +16,7 @@ public class PlayerJoinLeaveL implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "flyMode");
+		Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "flyMode").join();
 		if (o != null && o instanceof Boolean && (Boolean) o == true) {
 			p.setAllowFlight(true);
 			if (!p.isOnGround())
@@ -41,7 +41,7 @@ public class PlayerJoinLeaveL implements Listener {
 		Player p = e.getPlayer();
 		String name = p.getName();
 		PlayerBrand.playerLogout(name);
-		ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "flyMode", p.getAllowFlight());
+		ServerPlayerDataController.setPlayerSetting(p.getUniqueId().toString(), "flyMode", p.getAllowFlight()).join();
 		if (Config.enableJoinLeave) {
 			if (Config.leaveFormat.equals("")) {
 				e.setQuitMessage("");
