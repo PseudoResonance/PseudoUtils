@@ -64,7 +64,7 @@ public class BedEnterLeaveL implements Listener {
 				playersInBed.put(p.getWorld().getUID(), new ArrayList<UUID>());
 			}
 			playersInBed.get(p.getWorld().getUID()).remove(p.getUniqueId());
-			if (Config.sleepEnable && !(p.getWorld().getTime() >= 24000 && p.getWorld().getTime() <= 24001)) {
+			if (Config.sleepEnable && !(p.getWorld().getTime() >= 23450 && p.getWorld().getTime() <= 23500)) {
 				int playersInWorld = p.getWorld().getPlayers().size();
 				int requiredPlayers = (int) Math.ceil(playersInWorld * (Config.requiredSleepPercentage / 100.0));
 				int playersLeft = requiredPlayers - playersInBed.get(p.getWorld().getUID()).size();
