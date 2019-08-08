@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.PlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
 
 public class FoodChangeL implements Listener {
 
@@ -15,7 +15,7 @@ public class FoodChangeL implements Listener {
 		Entity ent = e.getEntity();
 		if (ent instanceof Player) {
 			Player p = (Player) ent;
-			Object o = PlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode").join();
+			Object o = ServerPlayerDataController.getPlayerSetting(p.getUniqueId().toString(), "godMode").join();
 			if (o instanceof Boolean) {
 				boolean b = (Boolean) o;
 				if (b) {
