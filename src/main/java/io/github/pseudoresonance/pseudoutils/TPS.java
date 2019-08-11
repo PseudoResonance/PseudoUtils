@@ -2,12 +2,12 @@ package io.github.pseudoresonance.pseudoutils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class TPS {
 
 	private static long lastPoll = System.nanoTime();
-	private final static LinkedList<Double> history = new LinkedList<Double>();
+	private final static ConcurrentLinkedQueue<Double> history = new ConcurrentLinkedQueue<Double>();
 	private static long tickInterval = 20;
 	private static long historyMaxSize = 15;
 
