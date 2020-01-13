@@ -47,21 +47,6 @@ JoinFormat: "&e{name} joined the game"
 LeaveFormat: "&e{name} left the game"
 
 
-###########
-# Formats #
-###########
-
-# Time Format
-# Use following codes:
-# https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
-TimeFormat: "HH:mm:ss"
-
-# Date Format
-# Use following codes:
-# https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
-DateFormat: "yyyy-MM-dd"
-
-
 #######
 # Bed #
 #######

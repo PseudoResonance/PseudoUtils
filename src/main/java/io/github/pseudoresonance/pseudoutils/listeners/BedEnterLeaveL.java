@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import io.github.pseudoresonance.pseudoapi.bukkit.language.LanguageManager;
 import io.github.pseudoresonance.pseudoutils.Config;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -38,14 +39,11 @@ public class BedEnterLeaveL implements Listener {
 				int playersInWorld = p.getWorld().getPlayers().size();
 				int requiredPlayers = (int) Math.ceil(playersInWorld * (Config.requiredSleepPercentage / 100.0));
 				int playersLeft = requiredPlayers - playersInBed.get(p.getWorld().getUID()).size();
-				String msg = e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor + " is sleeping. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
-				if (playersLeft > 0) {
-					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "% Minimum)";
-				} else {
-					msg += " (" + Config.requiredSleepPercentage + "% Minimum)";
-				}
 				for (Player pl : p.getWorld().getPlayers()) {
-					PseudoUtils.message.sendPluginMessage(pl, msg);
+					if (playersLeft > 0)
+						PseudoUtils.plugin.getChat().sendPluginMessage(pl, LanguageManager.getLanguage(pl).getMessage("pseudoutils.player_is_sleeping_more", e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor, playersInBed.get(p.getWorld().getUID()).size(), playersInWorld, playersLeft, Config.requiredSleepPercentage));
+					else
+						PseudoUtils.plugin.getChat().sendPluginMessage(pl, LanguageManager.getLanguage(pl).getMessage("pseudoutils.player_is_sleeping", e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor, playersInBed.get(p.getWorld().getUID()).size(), playersInWorld, Config.requiredSleepPercentage));
 				}
 				if (playersInBed.get(p.getWorld().getUID()).size() >= requiredPlayers) {
 					if (!sleepTimers.containsKey(p.getWorld().getUID())) {
@@ -68,14 +66,11 @@ public class BedEnterLeaveL implements Listener {
 				int playersInWorld = p.getWorld().getPlayers().size();
 				int requiredPlayers = (int) Math.ceil(playersInWorld * (Config.requiredSleepPercentage / 100.0));
 				int playersLeft = requiredPlayers - playersInBed.get(p.getWorld().getUID()).size();
-				String msg = e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor + " left bed. " + playersInBed.get(p.getWorld().getUID()).size() + "/" + playersInWorld;
-				if (playersLeft > 0) {
-					msg += " " + playersLeft + " more must sleep to skip! (" + Config.requiredSleepPercentage + "% Minimum)";
-				} else {
-					msg += " (" + Config.requiredSleepPercentage + "% Minimum)";
-				}
 				for (Player pl : p.getWorld().getPlayers()) {
-					PseudoUtils.message.sendPluginMessage(pl, msg);
+					if (playersLeft > 0)
+						PseudoUtils.plugin.getChat().sendPluginMessage(pl, LanguageManager.getLanguage(pl).getMessage("pseudoutils.player_left_bed_more", e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor, playersInBed.get(p.getWorld().getUID()).size(), playersInWorld, playersLeft, Config.requiredSleepPercentage));
+					else
+						PseudoUtils.plugin.getChat().sendPluginMessage(pl, LanguageManager.getLanguage(pl).getMessage("pseudoutils.player_left_bed", e.getPlayer().getDisplayName() + io.github.pseudoresonance.pseudoapi.bukkit.Config.textColor, playersInBed.get(p.getWorld().getUID()).size(), playersInWorld, Config.requiredSleepPercentage));
 				}
 				if (!(playersInBed.get(p.getWorld().getUID()).size() >= requiredPlayers)) {
 					if (sleepTimers.containsKey(p.getWorld().getUID())) {
@@ -97,7 +92,7 @@ public class BedEnterLeaveL implements Listener {
 	public void sleepWorld(World w) {
 		if (Config.sleepEnable) {
 			for (Player p : w.getPlayers()) {
-				PseudoUtils.message.sendPluginMessage(p, "Skipped to morning!");
+				PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.skipped_to_morning"));
 			}
 			if (w.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE)) {
 				w.setTime(24000);

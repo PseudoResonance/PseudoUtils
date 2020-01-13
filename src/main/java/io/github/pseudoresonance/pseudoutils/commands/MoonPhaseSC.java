@@ -6,7 +6,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
+import io.github.pseudoresonance.pseudoapi.bukkit.Chat.Errors;
+import io.github.pseudoresonance.pseudoapi.bukkit.language.LanguageManager;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -20,41 +21,19 @@ public class MoonPhaseSC implements SubCommandExecutor {
 				if (w.getEnvironment() == Environment.NORMAL) {
 					long day = w.getFullTime()/24000;
 					int phase = (int) (day % 8);
-					String phaseName = "Full Moon";
-					switch (phase) {
-						case 1:
-							phaseName = "Waning Gibbous";
-							break;
-						case 2:
-							phaseName = "Last Quarter";
-							break;
-						case 3:
-							phaseName = "Waning Crescent";
-							break;
-						case 4:
-							phaseName = "New Moon";
-							break;
-						case 5:
-							phaseName = "Waxing Crescent";
-							break;
-						case 6:
-							phaseName = "First Quarter";
-							break;
-						case 7:
-							phaseName = "Waxing Gibbous";
-					}
-					PseudoUtils.message.sendPluginMessage(sender, "The current phase is: " + phaseName);
+					String phaseName = LanguageManager.getLanguage(sender).getMessage("pseudoutils.moonphase_" + phase);
+					PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.current_moonphase", phaseName));
 					return true;
 				} else {
-					PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "You can only run this command in the overworld!");
+					PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.CUSTOM, LanguageManager.getLanguage(sender).getMessage("pseudoutils.error_not_in_overworld"));
 					return false;
 				}
 			} else {
-				PseudoUtils.message.sendPluginError(sender, Errors.NO_PERMISSION, "get current moon phase!");
+				PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoutils.permission_moonphase"));
 				return false;
 			}
 		} else {
-			PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "Only players can run this command!");
+			PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.CUSTOM, LanguageManager.getLanguage(sender).getMessage("pseudoutils.error_players_only_moonphase"));
 			return false;
 		}
 	}

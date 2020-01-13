@@ -6,8 +6,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.playerdata.ServerPlayerDataController;
+import io.github.pseudoresonance.pseudoapi.bukkit.Chat.Errors;
+import io.github.pseudoresonance.pseudoapi.bukkit.language.LanguageManager;
+import io.github.pseudoresonance.pseudoapi.bukkit.Config;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
@@ -29,25 +31,24 @@ public class GodSC implements SubCommandExecutor {
 						if (!b) {
 							p.setFoodLevel(20);
 							p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-							PseudoUtils.message.sendPluginMessage(sender, "Enabled god mode");
-						} else
-							PseudoUtils.message.sendPluginMessage(sender, "Disabled god mode");
+						}
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.god_mode", LanguageManager.getLanguage(sender).getMessage("pseudoutils." + (!b ? "enabled" : "disabled"))));
 						return true;
 					}
 				} else {
-					PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "Please specify a player!");
+					PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.CUSTOM, LanguageManager.getLanguage(sender).getMessage("pseudoutils.error_specify_player"));
 					return false;
 				}
 			} else {
 				p = Bukkit.getServer().getPlayer(args[0]);
 				if (p == null) {
-					PseudoUtils.message.sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
+					PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
 					return false;
 				}
 			}
 			if (sender instanceof Player) {
 				if (!(p.getName().equals(((Player) sender).getName()) || sender.hasPermission("pseudoutils.god.others"))) {
-					PseudoUtils.message.sendPluginError(sender, Errors.NO_PERMISSION, "use god mode on other players!");
+					PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoutils.permission_god_others"));
 					return false;
 				}
 			}
@@ -62,24 +63,13 @@ public class GodSC implements SubCommandExecutor {
 					if (!b) {
 						p.setFoodLevel(20);
 						p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-						PseudoUtils.message.sendPluginMessage(sender, "Enabled god mode for " + p.getDisplayName());
-						if (sender instanceof Player) {
-							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "God mode enabled by " + ((Player) sender).getDisplayName());
-						} else
-							PseudoUtils.message.sendPluginMessage(p, "God mode enabled by Console");
-					} else {
-						PseudoUtils.message.sendPluginMessage(sender, "Disabled god mode for " + p.getDisplayName());
-						if (sender instanceof Player) {
-							if (!sender.getName().equals(p.getName()))
-								PseudoUtils.message.sendPluginMessage(p, "God mode disabled by " + ((Player) sender).getDisplayName());
-						} else
-							PseudoUtils.message.sendPluginMessage(p, "God mode disabled by Console");
 					}
+					PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.god_mode_others", p.getDisplayName() + Config.textColor, LanguageManager.getLanguage(sender).getMessage("pseudoutils." + (!b ? "enabled" : "disabled"))));
+					PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.god_mode_by", LanguageManager.getLanguage(p).getMessage("pseudoutils." + (!b ? "enabled" : "disabled")), sender instanceof Player ? ((Player) sender).getDisplayName() + Config.textColor : LanguageManager.getLanguage(p).getMessage("pseudoutils.console")));
 				}
 			}
 		} else
-			PseudoUtils.message.sendPluginError(sender, Errors.NO_PERMISSION, "use god mode!");
+			PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoutils.permission_god"));
 		return false;
 	}
 

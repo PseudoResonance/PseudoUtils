@@ -1,11 +1,11 @@
 package io.github.pseudoresonance.pseudoutils;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 
 import io.github.pseudoresonance.pseudoapi.bukkit.CommandDescription;
 import io.github.pseudoresonance.pseudoapi.bukkit.HelpSC;
 import io.github.pseudoresonance.pseudoapi.bukkit.MainCommand;
-import io.github.pseudoresonance.pseudoapi.bukkit.Message;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoAPI;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoPlugin;
 import io.github.pseudoresonance.pseudoapi.bukkit.PseudoUpdater;
@@ -15,17 +15,16 @@ import io.github.pseudoresonance.pseudoutils.commands.BackSC;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
 import io.github.pseudoresonance.pseudoutils.commands.EnchantSC;
 import io.github.pseudoresonance.pseudoutils.commands.FlySC;
-import io.github.pseudoresonance.pseudoutils.commands.FlySpeedSC;
 import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
 import io.github.pseudoresonance.pseudoutils.commands.MoonPhaseSC;
+import io.github.pseudoresonance.pseudoutils.commands.ReloadLocalizationSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
+import io.github.pseudoresonance.pseudoutils.commands.ResetLocalizationSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
 import io.github.pseudoresonance.pseudoutils.commands.ShowitemSC;
 import io.github.pseudoresonance.pseudoutils.commands.SpeedSC;
-import io.github.pseudoresonance.pseudoutils.commands.TpSC;
-import io.github.pseudoresonance.pseudoutils.commands.WalkSpeedSC;
 import io.github.pseudoresonance.pseudoutils.completers.EnchantTC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.completers.SpeedTC;
@@ -39,17 +38,20 @@ import io.github.pseudoresonance.pseudoutils.listeners.PlayerTeleportL;
 public class PseudoUtils extends PseudoPlugin {
 
 	public static PseudoUtils plugin;
-	public static Message message;
 
 	private static MainCommand mainCommand;
 	private static HelpSC helpSubCommand;
 	private static MetricsSC metricsSubCommand;
 	private static BrandSC brandSubCommand;
+	private static SpeedSC speedSubCommand;
 	private static SpeedTC speedTabCompleter;
 
 	private static Config config;
 	
 	public static boolean pseudoEnchantsLoaded = false;
+	
+	@SuppressWarnings("unused")
+	private static Metrics metrics = null;
 	
 	public void onLoad() {
 		PseudoUpdater.registerPlugin(this);
@@ -67,7 +69,6 @@ public class PseudoUtils extends PseudoPlugin {
 		config.updateConfig();
 		config.firstInit();
 		config.reloadConfig();
-		message = new Message(this);
 		if (Config.allowMendingInfinity) {
 			InfinityMendingReplacement.replaceDefaultInfinityClass();
 		}
@@ -75,6 +76,7 @@ public class PseudoUtils extends PseudoPlugin {
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();
 		brandSubCommand = new BrandSC();
+		speedSubCommand = new SpeedSC();
 		speedTabCompleter = new SpeedTC();
 		initializeCommands();
 		initializeTabcompleters();
@@ -83,6 +85,15 @@ public class PseudoUtils extends PseudoPlugin {
 		setCommandDescriptions();
 		PseudoAPI.registerConfig(config);
 		pseudoEnchantsLoaded = Bukkit.getPluginManager().getPlugin("PseudoEnchants") != null ? true : false;
+		initializeMetrics();
+	}
+
+	public void onDisable() {
+		super.onDisable();
+	}
+	
+	private void initializeMetrics() {
+		metrics = new Metrics(this);
 	}
 
 	public static Config getConfigOptions() {
@@ -97,19 +108,20 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("fly").setExecutor(new FlySC());
 		this.getCommand("heal").setExecutor(new HealSC());
 		this.getCommand("back").setExecutor(new BackSC());
-		this.getCommand("tp").setExecutor(new TpSC());
 		this.getCommand("showitem").setExecutor(new ShowitemSC());
 		this.getCommand("enchant").setExecutor(new EnchantSC());
 		this.getCommand("moonphase").setExecutor(new MoonPhaseSC());
-		this.getCommand("speed").setExecutor(new SpeedSC());
-		this.getCommand("flyspeed").setExecutor(new FlySpeedSC());
-		this.getCommand("walkspeed").setExecutor(new WalkSpeedSC());
+		this.getCommand("speed").setExecutor(speedSubCommand);
+		this.getCommand("flyspeed").setExecutor(speedSubCommand);
+		this.getCommand("walkspeed").setExecutor(speedSubCommand);
 	}
 
 	private void initializeSubCommands() {
 		subCommands.put("help", helpSubCommand);
 		subCommands.put("reload", new ReloadSC());
+		subCommands.put("reloadlocalization", new ReloadLocalizationSC());
 		subCommands.put("reset", new ResetSC());
+		subCommands.put("resetlocalization", new ResetLocalizationSC());
 		subCommands.put("metrics", metricsSubCommand);
 		subCommands.put("brand", brandSubCommand);
 	}
@@ -132,23 +144,24 @@ public class PseudoUtils extends PseudoPlugin {
 	}
 
 	private void setCommandDescriptions() {
-		commandDescriptions.add(new CommandDescription("pseudoutils", "Shows PseudoUtils information", ""));
-		commandDescriptions.add(new CommandDescription("pseudoutils help", "Shows PseudoUtils commands", ""));
-		commandDescriptions.add(new CommandDescription("pseudoutils reload", "Reloads PseudoUtils config", "pseudoutils.reload"));
-		commandDescriptions.add(new CommandDescription("pseudoutils reset", "Resets PseudoUtils config", "pseudoutils.reset"));
-		commandDescriptions.add(new CommandDescription("back", "Return to previous location", "pseudoutils.back"));
-		commandDescriptions.add(new CommandDescription("brand <player>", "Shows user client brand", "pseudoutils.brand", false));
-		commandDescriptions.add(new CommandDescription("enchant <enchantment> <level>", "Enchants an item", "pseudoutils.enchant", false));
-		commandDescriptions.add(new CommandDescription("fly", "Sets fly mode", "pseudoutils.fly"));
-		commandDescriptions.add(new CommandDescription("flyspeed (player) <speed>", "Sets a player's fly speed", "pseudoutils.speed", false));
-		commandDescriptions.add(new CommandDescription("god", "Sets god mode", "pseudoutils.god"));
-		commandDescriptions.add(new CommandDescription("heal", "Heals player", "pseudoutils.heal"));
-		commandDescriptions.add(new CommandDescription("metrics", "Shows server metrics", "pseudoutils.metrics"));
-		commandDescriptions.add(new CommandDescription("moonphase", "Shows the current moon phase", "pseudoutils.moonphase"));
-		commandDescriptions.add(new CommandDescription("showitem <player>", "Shows an item to a player", "pseudoutils.showitem", false));
-		commandDescriptions.add(new CommandDescription("speed (player) <speed>", "Sets a player's fly or walk speed", "pseudoutils.speed", false));
-		commandDescriptions.add(new CommandDescription("tp (player) <x> <y> <z> (yaw) (pitch)", "Teleports player", "pseudoutils.tp", false));
-		commandDescriptions.add(new CommandDescription("walkspeed (player) <speed>", "Sets a player's walk speed", "pseudoutils.speed", false));
+		commandDescriptions.add(new CommandDescription("pseudoutils", "pseudoutils.pseudoutils_help", ""));
+		commandDescriptions.add(new CommandDescription("pseudoutils help", "pseudoutils.pseudoutils_help_help", ""));
+		commandDescriptions.add(new CommandDescription("pseudoutils reload", "pseudoutils.pseudoutils_reload_help", "pseudoutils.reload"));
+		commandDescriptions.add(new CommandDescription("pseudoutils reload", "pseudoutils.pseudoutils_reloadlocalization_help", "pseudoutils.reloadlocalization"));
+		commandDescriptions.add(new CommandDescription("pseudoutils reset", "pseudoutils.pseudoutils_reset_help", "pseudoutils.reset"));
+		commandDescriptions.add(new CommandDescription("pseudoutils reset", "pseudoutils.pseudoutils_resetlocalization_help", "pseudoutils.resetlocalization"));
+		commandDescriptions.add(new CommandDescription("back", "pseudoutils.back_help", "pseudoutils.back"));
+		commandDescriptions.add(new CommandDescription("brand <player>", "pseudoutils.brand_help", "pseudoutils.brand", false));
+		commandDescriptions.add(new CommandDescription("enchant <enchantment> <level>", "pseudoutils.enchant_help", "pseudoutils.enchant", false));
+		commandDescriptions.add(new CommandDescription("fly", "pseudoutils.fly_help", "pseudoutils.fly"));
+		commandDescriptions.add(new CommandDescription("flyspeed (player) <speed>", "pseudoutils.flyspeed_help", "pseudoutils.speed", false));
+		commandDescriptions.add(new CommandDescription("god", "pseudoutils.god_help", "pseudoutils.god"));
+		commandDescriptions.add(new CommandDescription("heal", "pseudoutils.heal_help", "pseudoutils.heal"));
+		commandDescriptions.add(new CommandDescription("metrics", "pseudoutils.metrics_help", "pseudoutils.metrics"));
+		commandDescriptions.add(new CommandDescription("moonphase", "pseudoutils.moonphase_help", "pseudoutils.moonphase"));
+		commandDescriptions.add(new CommandDescription("showitem <player>", "pseudoutils.showitem_help", "pseudoutils.showitem", false));
+		commandDescriptions.add(new CommandDescription("speed (player) <speed>", "pseudoutils.speed_help", "pseudoutils.speed", false));
+		commandDescriptions.add(new CommandDescription("walkspeed (player) <speed>", "pseudoutils.walkspeed_help", "pseudoutils.speed", false));
 	}
 	
 	public void doSync(Runnable run) {

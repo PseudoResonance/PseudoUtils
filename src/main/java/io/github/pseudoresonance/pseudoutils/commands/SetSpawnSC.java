@@ -4,8 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.pseudoresonance.pseudoapi.bukkit.Message.Errors;
+import io.github.pseudoresonance.pseudoapi.bukkit.Chat.Errors;
 import io.github.pseudoresonance.pseudoapi.bukkit.SubCommandExecutor;
+import io.github.pseudoresonance.pseudoapi.bukkit.language.LanguageManager;
 import io.github.pseudoresonance.pseudoutils.PseudoUtils;
 
 public class SetSpawnSC implements SubCommandExecutor {
@@ -16,7 +17,7 @@ public class SetSpawnSC implements SubCommandExecutor {
 				if (sender instanceof Player) {
 					
 				} else {
-					PseudoUtils.message.sendPluginError(sender, Errors.CUSTOM, "Please specify a spawnpoint and world!");
+					PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.CUSTOM, LanguageManager.getLanguage(sender).getMessage("pseudoutils.error_specify_spawnpoint"));
 					return false;
 				}
 			} else if (args.length == 3) {
@@ -25,7 +26,7 @@ public class SetSpawnSC implements SubCommandExecutor {
 				
 			}
 		} else
-			PseudoUtils.message.sendPluginError(sender, Errors.NO_PERMISSION, "set the spawnpoint!");
+			PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoutils.permission_setspawn"));
 		return false;
 	}
 

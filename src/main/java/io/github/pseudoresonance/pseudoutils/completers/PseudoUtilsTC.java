@@ -16,8 +16,14 @@ public class PseudoUtilsTC implements TabCompleter {
 			if (sender.hasPermission("pseudoutils.reload")) {
 				possible.add("reload");
 			}
+			if (sender.hasPermission("pseudoutils.reloadlocalization")) {
+				possible.add("reloadlocalization");
+			}
 			if (sender.hasPermission("pseudoutils.reset")) {
 				possible.add("reset");
+			}
+			if (sender.hasPermission("pseudoutils.resetlocalization")) {
+				possible.add("resetlocalization");
 			}
 			if (sender.hasPermission("pseudoutils.brand")) {
 				possible.add("brand");

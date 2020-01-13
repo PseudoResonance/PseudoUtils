@@ -28,10 +28,6 @@ commands:
   back:
     description: Returns player to their last location
     permission: pseudoutils.back
-  tp:
-    description: Teleports player
-    permission: pseudoutils.tp
-    aliases: [teleport]
   showitem:
     description: Shows an item in chat
     permission: pseudoutils.showitem
@@ -114,17 +110,6 @@ permissions:
     default: true
     children:
       pseudoutils.back: true
-  pseudoutils.tp:
-    description: Allows the player to teleport themselves
-    default: op
-  pseudoutils.tp.coordinates:
-    description: Allows the player to teleport to coordinates
-    default: op
-  pseudoutils.tp.others:
-    description: Allows the player to teleport other players
-    default: op
-    children:
-      pseudoutils.tp: true
   pseudoutils.speed:
     description: Allows the player to set their fly or walk speed
     default: op
@@ -187,7 +172,5 @@ permissions:
       pseudoutils.heal.others: true
       pseudoutils.back.others: true
       pseudoutils.back.ondeath: true
-      pseudoutils.tp.coordinates: true
-      pseudoutils.tp.others: true
       pseudoutils.speed.others: true
       pseudoutils.speed.override: true

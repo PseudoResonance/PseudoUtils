@@ -14,9 +14,6 @@ public class Config extends PluginConfig {
 	public static boolean enableJoinLeave = true;
 	public static String joinFormat = "&e{name} joined the game";
 	public static String leaveFormat = "&e{name} left the game";
-
-	public static String timeFormat = "HH:mm:ss";
-	public static String dateFormat = "yyyy-MM-dd";
 	
 	public static boolean sleepEnable = true;
 	public static int requiredSleepPercentage = 35;
@@ -43,9 +40,6 @@ public class Config extends PluginConfig {
 		enableJoinLeave = PluginConfig.getBoolean(fc, "EnableJoinLeave", enableJoinLeave);
 		joinFormat = PluginConfig.getString(fc, "JoinFormat", joinFormat);
 		leaveFormat = PluginConfig.getString(fc, "LeaveFormat", leaveFormat);
-		
-		timeFormat = PluginConfig.getString(fc, "TimeFormat", timeFormat);
-		dateFormat = PluginConfig.getString(fc, "DateFormat", dateFormat);
 
 		sleepEnable = PluginConfig.getBoolean(fc, "SleepEnable", sleepEnable);
 		requiredSleepPercentage = PluginConfig.getInt(fc, "RequiredSleepPercentage", requiredSleepPercentage);
