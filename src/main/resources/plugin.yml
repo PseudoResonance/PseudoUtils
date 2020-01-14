@@ -147,18 +147,28 @@ permissions:
   pseudoutils.metrics.memory:
     description: Allows the player to see memory details in system metrics
     default: op
-  pseudoutils.reset:
-    description: Allows the player to reset the config
-    default: op
   pseudoutils.reload:
     description: Allows the player to reload the plugin
     default: op
+  pseudoutils.reset:
+    description: Allows the player to reset the config
+    default: op
+    children:
+      pseudoutils.reload: true
+  pseudoutils.reloadlocalization:
+    description: Allows the player to reload the localization
+    default: op
+  pseudoutils.resetlocalization:
+    description: Allows the player to reset the localization
+    default: op
+    children:
+      pseudoutils.reloadlocalization: true
   pseudoutils.*:
     description: Gives the user all PseudoUtils permissions
     default: op
     children:
       pseudoutils.reset: true
-      pseudoutils.reload: true
+      pseudoutils.resetlocalization: true
       pseudoutils.brand: true
       pseudoutils.metrics: true
       pseudoutils.metrics.tps: true

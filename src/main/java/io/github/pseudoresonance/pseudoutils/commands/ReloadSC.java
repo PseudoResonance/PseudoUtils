@@ -12,22 +12,7 @@ import io.github.pseudoresonance.pseudoapi.bukkit.language.LanguageManager;
 public class ReloadSC implements SubCommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (sender instanceof Player) {
-			if (sender.hasPermission("pseudoutils.reload")) {
-				try {
-					PseudoUtils.plugin.reloadConfig();
-				} catch (Exception e) {
-					PseudoUtils.plugin.getChat().sendPluginError(sender, Chat.Errors.GENERIC);
-					return false;
-				}
-				PseudoUtils.getConfigOptions().reloadConfig();
-				PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoapi.config_reloaded"));
-				return true;
-			} else {
-				PseudoUtils.plugin.getChat().sendPluginError(sender, Chat.Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoapi.permission_reload_config"));
-				return false;
-			}
-		} else {
+		if (!(sender instanceof Player) || sender.hasPermission("pseudoutils.reload")) {
 			try {
 				PseudoUtils.plugin.reloadConfig();
 			} catch (Exception e) {
@@ -37,6 +22,9 @@ public class ReloadSC implements SubCommandExecutor {
 			PseudoUtils.getConfigOptions().reloadConfig();
 			PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoapi.config_reloaded"));
 			return true;
+		} else {
+			PseudoUtils.plugin.getChat().sendPluginError(sender, Chat.Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoapi.permission_reload_config"));
+			return false;
 		}
 	}
 
