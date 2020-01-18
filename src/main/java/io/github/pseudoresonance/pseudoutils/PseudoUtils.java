@@ -15,6 +15,7 @@ import io.github.pseudoresonance.pseudoutils.commands.BackSC;
 import io.github.pseudoresonance.pseudoutils.commands.BrandSC;
 import io.github.pseudoresonance.pseudoutils.commands.EnchantSC;
 import io.github.pseudoresonance.pseudoutils.commands.FlySC;
+import io.github.pseudoresonance.pseudoutils.commands.GamemodeSC;
 import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
@@ -26,6 +27,7 @@ import io.github.pseudoresonance.pseudoutils.commands.ResetSC;
 import io.github.pseudoresonance.pseudoutils.commands.ShowitemSC;
 import io.github.pseudoresonance.pseudoutils.commands.SpeedSC;
 import io.github.pseudoresonance.pseudoutils.completers.EnchantTC;
+import io.github.pseudoresonance.pseudoutils.completers.GamemodeTC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.completers.SpeedTC;
 import io.github.pseudoresonance.pseudoutils.listeners.BedEnterLeaveL;
@@ -111,6 +113,7 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("showitem").setExecutor(new ShowitemSC());
 		this.getCommand("enchant").setExecutor(new EnchantSC());
 		this.getCommand("moonphase").setExecutor(new MoonPhaseSC());
+		this.getCommand("gamemode").setExecutor(new GamemodeSC());
 		this.getCommand("speed").setExecutor(speedSubCommand);
 		this.getCommand("flyspeed").setExecutor(speedSubCommand);
 		this.getCommand("walkspeed").setExecutor(speedSubCommand);
@@ -129,6 +132,7 @@ public class PseudoUtils extends PseudoPlugin {
 	private void initializeTabcompleters() {
 		this.getCommand("pseudoutils").setTabCompleter(new PseudoUtilsTC());
 		this.getCommand("enchant").setTabCompleter(new EnchantTC());
+		this.getCommand("gamemode").setTabCompleter(new GamemodeTC());
 		this.getCommand("speed").setTabCompleter(speedTabCompleter);
 		this.getCommand("flyspeed").setTabCompleter(speedTabCompleter);
 		this.getCommand("walkspeed").setTabCompleter(speedTabCompleter);
@@ -155,6 +159,7 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("enchant <enchantment> <level>", "pseudoutils.enchant_help", "pseudoutils.enchant", false));
 		commandDescriptions.add(new CommandDescription("fly", "pseudoutils.fly_help", "pseudoutils.fly"));
 		commandDescriptions.add(new CommandDescription("flyspeed (player) <speed>", "pseudoutils.flyspeed_help", "pseudoutils.speed", false));
+		commandDescriptions.add(new CommandDescription("gamemode", "pseudoutils.gamemode_help", "pseudoutils.gamemode"));
 		commandDescriptions.add(new CommandDescription("god", "pseudoutils.god_help", "pseudoutils.god"));
 		commandDescriptions.add(new CommandDescription("heal", "pseudoutils.heal_help", "pseudoutils.heal"));
 		commandDescriptions.add(new CommandDescription("metrics", "pseudoutils.metrics_help", "pseudoutils.metrics"));

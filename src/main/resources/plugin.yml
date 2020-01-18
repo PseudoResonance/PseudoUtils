@@ -48,7 +48,18 @@ commands:
   walkspeed:
     description: Shows a player's walk speed
     permission: pseudoutils.speed
+  gamemode:
+    description: Sets a player's gamemode
+    permission: pseudoutils.gamemode
 permissions:
+  pseudoutils.gamemode:
+    description: Allows the player to set their gamemode
+    default: op
+  pseudoutils.gamemode.others:
+    description: Allows the player to set the gamemode of other players
+    default: op
+    children:
+      pseudoutils.gamemode: true
   pseudoutils.moonphase:
     description: Allows the player to see the current moon phase
     default: true
@@ -167,6 +178,7 @@ permissions:
     description: Gives the user all PseudoUtils permissions
     default: op
     children:
+      pseudoutils.gamemode.others: true
       pseudoutils.reset: true
       pseudoutils.resetlocalization: true
       pseudoutils.brand: true
