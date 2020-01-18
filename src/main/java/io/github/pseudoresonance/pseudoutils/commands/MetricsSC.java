@@ -101,8 +101,8 @@ public class MetricsSC implements SubCommandExecutor {
 						messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.cores_per_socket", Config.commandColor + ((Integer) (cpu.getPhysicalProcessorCount() / cpu.getPhysicalPackageCount()))));
 					}
 					messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.threads", Config.commandColor + cpu.getLogicalProcessorCount()));
-					messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.clock", Config.commandColor + (cpu.getMaxFreq() >= 0 ? FormatUtil.formatHertz(cpu.getMaxFreq()) : LanguageManager.getLanguage(sender).getMessage("pseudoutils.unknown"))));
-					messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.load", Config.commandColor + (cpu.getSystemLoadAverage(1)[0] >= 0 ? LanguageManager.getLanguage(sender).getMessage("pseudoutils.percent", Double.valueOf(df.format(cpu.getSystemLoadAverage(1)[0] * 100.0))) : LanguageManager.getLanguage(sender).getMessage("pseudoutils.unknown"))));
+					messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.clock", Config.commandColor + (cpu.getMaxFreq() >= 0 ? FormatUtil.formatHertz(average(cpu.getCurrentFreq())) : LanguageManager.getLanguage(sender).getMessage("pseudoutils.unknown"))));
+					messages.add(Config.descriptionColor + LanguageManager.getLanguage(sender).getMessage("pseudoutils.load", Config.commandColor + (cpu.getSystemLoadAverage(1)[0] >= 0 ? LanguageManager.getLanguage(sender).getMessage("pseudoutils.percent", Double.valueOf(df.format(cpu.getSystemLoadAverage(1)[0]))) : LanguageManager.getLanguage(sender).getMessage("pseudoutils.unknown"))));
 				}
 				if (memory) {
 					GlobalMemory ram = info.getHardware().getMemory();
@@ -125,6 +125,14 @@ public class MetricsSC implements SubCommandExecutor {
 			PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NO_PERMISSION, LanguageManager.getLanguage(sender).getMessage("pseudoutils.permission_metrics"));
 		}
 		return false;
+	}
+	
+	private static long average(long[] nums) {
+		long avg = 0;
+		for (long l : nums)
+			avg += l;
+		avg /= nums.length;
+		return avg;
 	}
 
 }
