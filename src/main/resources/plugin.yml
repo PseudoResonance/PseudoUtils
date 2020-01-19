@@ -51,6 +51,7 @@ commands:
   gamemode:
     description: Sets a player's gamemode
     permission: pseudoutils.gamemode
+    aliases: [gm,gms,gmc,gma,gmsp]
 permissions:
   pseudoutils.gamemode:
     description: Allows the player to set their gamemode
