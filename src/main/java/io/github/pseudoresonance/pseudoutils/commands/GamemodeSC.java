@@ -20,6 +20,25 @@ public class GamemodeSC implements SubCommandExecutor {
 			if (args.length == 0) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
+					switch (label.toLowerCase()) {
+					case "gms":
+						p.setGameMode(GameMode.SURVIVAL);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.survival")));
+						return true;
+					case "gmc":
+						p.setGameMode(GameMode.CREATIVE);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.creative")));
+						return true;
+					case "gma":
+						p.setGameMode(GameMode.ADVENTURE);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.adventure")));
+						return true;
+					case "gmsp":
+						p.setGameMode(GameMode.SPECTATOR);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.spectator")));
+						return true;
+					default:
+					}
 					if (p.getGameMode() == GameMode.CREATIVE) {
 						p.setGameMode(GameMode.SURVIVAL);
 						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.survival")));
@@ -36,6 +55,49 @@ public class GamemodeSC implements SubCommandExecutor {
 			} else if (args.length == 1) {
 				if (sender instanceof Player) {
 					p = (Player) sender;
+					switch (label.toLowerCase()) {
+					case "gms":
+						p = Bukkit.getPlayer(args[0]);
+						if (p == null) {
+							PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
+							return false;
+						}
+						p.setGameMode(GameMode.SURVIVAL);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode_others", p.getDisplayName() + Config.textColor, LanguageManager.getLanguage(sender).getMessage("pseudoutils.survival")));
+						PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.set_gamemode_by", ((Player) sender).getDisplayName() + Config.textColor, LanguageManager.getLanguage(p).getMessage("pseudoutils.survival")));
+						return true;
+					case "gmc":
+						p = Bukkit.getPlayer(args[0]);
+						if (p == null) {
+							PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
+							return false;
+						}
+						p.setGameMode(GameMode.CREATIVE);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode_others", p.getDisplayName() + Config.textColor, LanguageManager.getLanguage(sender).getMessage("pseudoutils.creative")));
+						PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.set_gamemode_by", ((Player) sender).getDisplayName() + Config.textColor, LanguageManager.getLanguage(p).getMessage("pseudoutils.creative")));
+						return true;
+					case "gma":
+						p = Bukkit.getPlayer(args[0]);
+						if (p == null) {
+							PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
+							return false;
+						}
+						p.setGameMode(GameMode.ADVENTURE);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode_others", p.getDisplayName() + Config.textColor, LanguageManager.getLanguage(sender).getMessage("pseudoutils.adventure")));
+						PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.set_gamemode_by", ((Player) sender).getDisplayName() + Config.textColor, LanguageManager.getLanguage(p).getMessage("pseudoutils.adventure")));
+						return true;
+					case "gmsp":
+						p = Bukkit.getPlayer(args[0]);
+						if (p == null) {
+							PseudoUtils.plugin.getChat().sendPluginError(sender, Errors.NOT_ONLINE, args[0]);
+							return false;
+						}
+						p.setGameMode(GameMode.SPECTATOR);
+						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode_others", p.getDisplayName() + Config.textColor, LanguageManager.getLanguage(sender).getMessage("pseudoutils.spectator")));
+						PseudoUtils.plugin.getChat().sendPluginMessage(p, LanguageManager.getLanguage(p).getMessage("pseudoutils.set_gamemode_by", ((Player) sender).getDisplayName() + Config.textColor, LanguageManager.getLanguage(p).getMessage("pseudoutils.spectator")));
+						return true;
+					default:
+					}
 					if (args[0].startsWith("sp") || args[0].equals("3")) {
 						p.setGameMode(GameMode.SPECTATOR);
 						PseudoUtils.plugin.getChat().sendPluginMessage(sender, LanguageManager.getLanguage(sender).getMessage("pseudoutils.set_gamemode", LanguageManager.getLanguage(sender).getMessage("pseudoutils.spectator")));

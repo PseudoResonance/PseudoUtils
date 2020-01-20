@@ -7,7 +7,7 @@
 	<version>${revision}</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<revision>0.3.5</revision>
+		<revision>0.3.6</revision>
 		<lowerName>pseudoutils</lowerName>
 	</properties>
 	<build>

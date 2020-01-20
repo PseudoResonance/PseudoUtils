@@ -13,7 +13,11 @@ public class GamemodeTC implements TabCompleter {
 
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> possible = new ArrayList<String>();
-		if (args.length == 1) {
+		if (args.length == 1 && label.equalsIgnoreCase("gms") && label.equalsIgnoreCase("gmc") && label.equalsIgnoreCase("gma") && label.equalsIgnoreCase("gmsp")) {
+			if (sender.hasPermission("pseudoutils.gamemode.others"))
+				for (Player p : Bukkit.getOnlinePlayers())
+					possible.add(p.getName().toLowerCase());
+		} else if (args.length == 1) {
 			if (sender.hasPermission("pseudoutils.gamemode")) {
 				possible.add("survival");
 				possible.add("creative");
