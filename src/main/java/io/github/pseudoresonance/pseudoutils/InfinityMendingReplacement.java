@@ -77,7 +77,7 @@ public class InfinityMendingReplacement {
 				.make()
 				.load(enchantmentInfiniteArrowsClass.getClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
 				PseudoUtils.plugin.getChat().sendPluginMessage(Bukkit.getConsoleSender(), LanguageManager.getLanguage().getMessage("pseudoutils.injection_complete"));
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				PseudoUtils.plugin.getChat().sendPluginError(Bukkit.getConsoleSender(), Errors.CUSTOM, LanguageManager.getLanguage().getMessage("pseudoutils.error_injecting"));
 			}
