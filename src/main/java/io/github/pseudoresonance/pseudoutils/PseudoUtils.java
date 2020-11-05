@@ -88,6 +88,8 @@ public class PseudoUtils extends PseudoPlugin {
 		PseudoAPI.registerConfig(config);
 		pseudoEnchantsLoaded = Bukkit.getPluginManager().getPlugin("PseudoEnchants") != null ? true : false;
 		initializeMetrics();
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+			new PseudoUtilsExpansion(this).register();
 	}
 
 	public void onDisable() {
@@ -95,7 +97,7 @@ public class PseudoUtils extends PseudoPlugin {
 	}
 	
 	private void initializeMetrics() {
-		metrics = new Metrics(this);
+		metrics = new Metrics(this, 6256);
 	}
 
 	public static Config getConfigOptions() {

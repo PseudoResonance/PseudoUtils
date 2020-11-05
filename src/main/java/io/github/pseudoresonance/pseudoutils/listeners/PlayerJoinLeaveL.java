@@ -13,6 +13,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class PlayerJoinLeaveL implements Listener {
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
