@@ -44,24 +44,24 @@ public class PseudoUtilsExpansion extends PlaceholderExpansion {
 	public String onPlaceholderRequest(Player player, String identifier) {
 		switch (identifier) {
 		case "tps":
-			return LanguageManager.getLanguage(player).getMessage("pseudoplaceholders.tps", TPS.getTps());
+			return LanguageManager.getLanguage(player).getMessage("pseudoutils.placeholder_tps", TPS.getTps());
 		case "brand":
 			if (player != null)
 				return PlayerBrand.getBrand(player.getName());
 			else
-				return LanguageManager.getLanguage(player).getMessage("pseudoplaceholders.not_player");
+				return LanguageManager.getLanguage(player).getMessage("pseudoutils.placeholder_not_player");
 		case "god_mode":
 			if (player != null) {
 				Object o = ServerPlayerDataController.getPlayerSetting(player.getUniqueId().toString(), "godMode");
 				if (o instanceof Boolean) {
 					boolean b = (Boolean) o;
 					if (b)
-						return LanguageManager.getLanguage(player).getMessage("pseudoplaceholders.true");
+						return LanguageManager.getLanguage(player).getMessage("pseudoutils.placeholder_true");
 					else
-						return LanguageManager.getLanguage(player).getMessage("pseudoplaceholders.false");
+						return LanguageManager.getLanguage(player).getMessage("pseudoutils.placeholder_false");
 				}
 			} else
-				return LanguageManager.getLanguage(player).getMessage("pseudoplaceholders.not_player");
+				return LanguageManager.getLanguage(player).getMessage("pseudoutils.placeholder_not_player");
 		default:
 			return "";
 		}

@@ -162,3 +162,7 @@ pseudoutils:
   permission_setspawn: "set the spawnpoint"
   permission_enchant: "use enchant"
   permission_metrics: "view server metrics"
+  placeholder_not_player: "Not a player"
+  placeholder_tps: "{$1$} TPS"
+  placeholder_true: "True"
+  placeholder_false: "False"
