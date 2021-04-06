@@ -52,6 +52,10 @@ commands:
     description: Sets a player's gamemode
     permission: pseudoutils.gamemode
     aliases: [gm,gms,gmc,gma,gmsp]
+  ptime:
+    description: Sets a player's player time
+    permission: pseudoutils.ptime
+    aliases: [playertime]
 permissions:
   pseudoutils.gamemode:
     description: Allows the player to set their gamemode
@@ -159,6 +163,14 @@ permissions:
   pseudoutils.metrics.memory:
     description: Allows the player to see memory details in system metrics
     default: op
+  pseudoutils.ptime:
+    description: Allows the player to set their player time
+    default: op
+  pseudoutils.ptime.others:
+    description: Allows the player to set the player time of other players
+    default: op
+    children:
+      pseudoutils.ptime: true
   pseudoutils.reload:
     description: Allows the player to reload the plugin
     default: op
@@ -197,3 +209,4 @@ permissions:
       pseudoutils.back.ondeath: true
       pseudoutils.speed.others: true
       pseudoutils.speed.override: true
+      pseudoutils.ptime.others: true

@@ -20,6 +20,7 @@ import io.github.pseudoresonance.pseudoutils.commands.GodSC;
 import io.github.pseudoresonance.pseudoutils.commands.HealSC;
 import io.github.pseudoresonance.pseudoutils.commands.MetricsSC;
 import io.github.pseudoresonance.pseudoutils.commands.MoonPhaseSC;
+import io.github.pseudoresonance.pseudoutils.commands.PTimeSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadLocalizationSC;
 import io.github.pseudoresonance.pseudoutils.commands.ReloadSC;
 import io.github.pseudoresonance.pseudoutils.commands.ResetLocalizationSC;
@@ -28,6 +29,7 @@ import io.github.pseudoresonance.pseudoutils.commands.ShowitemSC;
 import io.github.pseudoresonance.pseudoutils.commands.SpeedSC;
 import io.github.pseudoresonance.pseudoutils.completers.EnchantTC;
 import io.github.pseudoresonance.pseudoutils.completers.GamemodeTC;
+import io.github.pseudoresonance.pseudoutils.completers.PTimeTC;
 import io.github.pseudoresonance.pseudoutils.completers.PseudoUtilsTC;
 import io.github.pseudoresonance.pseudoutils.completers.SpeedTC;
 import io.github.pseudoresonance.pseudoutils.listeners.BedEnterLeaveL;
@@ -119,6 +121,7 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("speed").setExecutor(speedSubCommand);
 		this.getCommand("flyspeed").setExecutor(speedSubCommand);
 		this.getCommand("walkspeed").setExecutor(speedSubCommand);
+		this.getCommand("ptime").setExecutor(new PTimeSC());
 	}
 
 	private void initializeSubCommands() {
@@ -138,6 +141,7 @@ public class PseudoUtils extends PseudoPlugin {
 		this.getCommand("speed").setTabCompleter(speedTabCompleter);
 		this.getCommand("flyspeed").setTabCompleter(speedTabCompleter);
 		this.getCommand("walkspeed").setTabCompleter(speedTabCompleter);
+		this.getCommand("ptime").setTabCompleter(new PTimeTC());
 	}
 
 	private void initializeListeners() {
@@ -166,6 +170,11 @@ public class PseudoUtils extends PseudoPlugin {
 		commandDescriptions.add(new CommandDescription("heal", "pseudoutils.heal_help", "pseudoutils.heal"));
 		commandDescriptions.add(new CommandDescription("metrics", "pseudoutils.metrics_help", "pseudoutils.metrics"));
 		commandDescriptions.add(new CommandDescription("moonphase", "pseudoutils.moonphase_help", "pseudoutils.moonphase"));
+		commandDescriptions.add(new CommandDescription("ptime add <time> (player)", "pseudoutils.ptime_add_help", "pseudoutils.ptime", false));
+		commandDescriptions.add(new CommandDescription("ptime query <time> (player)", "pseudoutils.ptime_query_help", "pseudoutils.ptime", false));
+		commandDescriptions.add(new CommandDescription("ptime reset (player)", "pseudoutils.ptime_reset_help", "pseudoutils.ptime", false));
+		commandDescriptions.add(new CommandDescription("ptime set <time> (player)", "pseudoutils.ptime_set_help", "pseudoutils.ptime", false));
+		commandDescriptions.add(new CommandDescription("ptime toggleDaylightCycle (player)", "pseudoutils.ptime_toggleDaylightCycle_help", "pseudoutils.ptime", false));
 		commandDescriptions.add(new CommandDescription("showitem <player>", "pseudoutils.showitem_help", "pseudoutils.showitem", false));
 		commandDescriptions.add(new CommandDescription("speed (player) <speed>", "pseudoutils.speed_help", "pseudoutils.speed", false));
 		commandDescriptions.add(new CommandDescription("walkspeed (player) <speed>", "pseudoutils.walkspeed_help", "pseudoutils.speed", false));
