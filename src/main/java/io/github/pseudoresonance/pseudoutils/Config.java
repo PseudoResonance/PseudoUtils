@@ -22,12 +22,6 @@ public class Config extends PluginConfig {
 	public static int tpsHistorySize = 15;
 	public static double maxFlySpeed = 5;
 	public static double maxWalkSpeed = 5;
-	public static boolean allowMendingInfinity = false;
-	
-	public void firstInit() {
-		FileConfiguration fc = PseudoUtils.plugin.getConfig();
-		allowMendingInfinity = PluginConfig.getBoolean(fc, "AllowMendingInfinity", allowMendingInfinity);
-	}
 	
 	public void reloadConfig() {
 		FileConfiguration fc = PseudoUtils.plugin.getConfig();

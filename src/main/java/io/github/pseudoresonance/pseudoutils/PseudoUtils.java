@@ -71,11 +71,7 @@ public class PseudoUtils extends PseudoPlugin {
 		TPS.startTps();
 		config = new Config(this);
 		config.updateConfig();
-		config.firstInit();
 		config.reloadConfig();
-		if (Config.allowMendingInfinity) {
-			InfinityMendingReplacement.replaceDefaultInfinityClass();
-		}
 		mainCommand = new MainCommand(plugin);
 		helpSubCommand = new HelpSC(plugin);
 		metricsSubCommand = new MetricsSC();

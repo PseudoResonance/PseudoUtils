@@ -75,7 +75,3 @@ MaxFlySpeed: 5
 
 # Maximum walk speed for players without pseudoutils.speed.override
 MaxWalkSpeed: 5
-
-# Allow bows to have both mending and infinity
-# NOTE: The server MUST restart in order for changes to this to take effect! Reloading the config will not work!
-AllowMendingInfinity: false

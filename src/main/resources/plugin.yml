@@ -5,7 +5,7 @@ version: ${revision}
 description: Adds useful utilities
 api-version: 1.13
 depend: [PseudoAPI]
-softdepend: [PseudoEnchants]
+softdepend: [PseudoEnchants, PlaceholderAPI]
 commands:
   pseudoutils:
     description: PseudoUtils Menu

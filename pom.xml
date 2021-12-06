@@ -7,7 +7,7 @@
 	<version>${revision}</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<revision>0.3.11</revision>
+		<revision>0.3.12</revision>
 		<lowerName>pseudoutils</lowerName>
 	</properties>
 	<build>
@@ -162,7 +162,7 @@
 		<dependency>
 			<groupId>io.github.pseudoresonance</groupId>
 			<artifactId>PseudoAPI</artifactId>
-			<version>5.2.12</version>
+			<version>5.2.14</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -174,17 +174,7 @@
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
-			<version>4.3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.bytebuddy</groupId>
-			<artifactId>byte-buddy</artifactId>
-			<version>1.9.14</version>
-		</dependency>
-		<dependency>
-			<groupId>net.bytebuddy</groupId>
-			<artifactId>byte-buddy-agent</artifactId>
-			<version>1.9.14</version>
+			<version>5.8.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bstats</groupId>
